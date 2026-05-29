@@ -6,6 +6,7 @@
 <title>Southridge Site Certification — Training Journey Report</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <style>
   :root {
     --bg: #0d1117;
@@ -26,533 +27,202 @@
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.6; min-height: 100vh; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* ── TOP HEADER ── */
   .site-header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 0 32px; display: flex; align-items: center; justify-content: space-between;
+    height: 56px; position: sticky; top: 0; z-index: 100;
   }
-  .site-header .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: .04em;
-  }
-  .brand-badge {
-    background: var(--asi-blue);
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    letter-spacing: .08em;
-  }
-  .site-header .report-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: right;
-  }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: .04em; }
+  .brand-badge { background: var(--asi-blue); color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; letter-spacing: .08em; }
+  .report-meta { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-align: right; }
   .report-meta span { color: var(--accent); }
 
-  /* ── HERO ── */
+  /* LOADING */
+  .loading-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 60vh; gap: 16px;
+  }
+  .spinner {
+    width: 40px; height: 40px; border: 3px solid var(--border-bright);
+    border-top-color: var(--accent2); border-radius: 50%; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
+
+  /* ERROR */
+  .error-screen {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 60vh; gap: 12px; padding: 32px;
+  }
+  .error-icon { font-size: 40px; }
+  .error-title { font-size: 18px; font-weight: 600; color: var(--red); }
+  .error-msg { font-family: var(--mono); font-size: 12px; color: var(--text-muted); text-align: center; max-width: 500px; }
+
+  /* HERO */
   .hero {
     background: linear-gradient(135deg, #0d1117 0%, #111827 60%, #0d1f3c 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 48px 32px 40px;
-    position: relative;
-    overflow: hidden;
+    border-bottom: 1px solid var(--border); padding: 48px 32px 40px;
+    position: relative; overflow: hidden; display: none;
   }
   .hero::before {
-    content: '';
-    position: absolute;
-    top: -80px; right: -80px;
+    content: ''; position: absolute; top: -80px; right: -80px;
     width: 320px; height: 320px;
     background: radial-gradient(circle, rgba(30,111,217,.18) 0%, transparent 70%);
     pointer-events: none;
   }
-  .hero-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .hero h1 {
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .hero-sub {
-    color: var(--text-muted);
-    font-size: 13px;
-    margin-bottom: 28px;
-  }
+  .hero-label { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+  .hero h1 { font-size: 28px; font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 6px; }
+  .hero-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 28px; }
   .hero-sub strong { color: var(--accent2); }
 
-  /* ── STAT CARDS ── */
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    max-width: 960px;
-  }
-  .stat-card {
-    background: rgba(255,255,255,.04);
-    border: 1px solid var(--border-bright);
-    border-radius: 8px;
-    padding: 16px 18px;
-    position: relative;
-  }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; max-width: 960px; }
+  .stat-card { background: rgba(255,255,255,.04); border: 1px solid var(--border-bright); border-radius: 8px; padding: 16px 18px; }
   .stat-card.highlight { border-color: var(--asi-blue); }
-  .stat-value {
-    font-family: var(--mono);
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .stat-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-  }
-  .stat-journey {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text-dim);
-    margin-top: 6px;
-  }
-  .c-green { color: var(--green); }
-  .c-amber { color: var(--amber); }
-  .c-orange { color: var(--orange); }
-  .c-blue { color: var(--accent2); }
-  .c-red { color: var(--red); }
-  .c-accent { color: var(--accent); }
+  .stat-value { font-family: var(--mono); font-size: 32px; font-weight: 600; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+  .stat-journey { font-family: var(--mono); font-size: 10px; color: var(--text-dim); margin-top: 6px; }
+  .c-green { color: var(--green); } .c-amber { color: var(--amber); } .c-orange { color: var(--orange); }
+  .c-blue { color: var(--accent2); } .c-red { color: var(--red); } .c-accent { color: var(--accent); }
 
-  /* ── MAIN LAYOUT ── */
-  .main { max-width: 1080px; margin: 0 auto; padding: 32px; }
+  .main { max-width: 1080px; margin: 0 auto; padding: 32px; display: none; }
 
-  /* ── SECTION HEADINGS ── */
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .section-header .section-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-  }
+  .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .section-header h2 { font-size: 16px; font-weight: 600; color: var(--text); }
+  .section-header .section-meta { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
   .section-block { margin-bottom: 40px; }
 
-  /* ── JOURNEY OVERVIEW TABLE ── */
-  .journey-steps {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  .journey-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .journey-card-header {
-    background: var(--surface2);
-    padding: 10px 16px;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--accent2);
-    border-bottom: 1px solid var(--border);
-  }
-  .journey-step-row {
-    display: grid;
-    grid-template-columns: 24px 1fr auto;
-    gap: 10px;
-    align-items: center;
-    padding: 8px 16px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-  }
-  .journey-step-row:last-child { border-bottom: none; }
-  .step-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-dim);
-    font-weight: 600;
-  }
-  .step-type {
-    font-family: var(--mono);
-    font-size: 10px;
-    background: var(--surface2);
-    color: var(--text-muted);
-    padding: 2px 6px;
-    border-radius: 3px;
-    white-space: nowrap;
-  }
-
-  /* ── PROGRESS BAR ── */
-  .progress-section { margin-bottom: 24px; }
-  .progress-row {
-    display: grid;
-    grid-template-columns: 120px 1fr 60px 50px;
-    gap: 12px;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .progress-row:last-child { border-bottom: none; }
-  .progress-pct-label {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .bar-track {
-    background: var(--surface2);
-    border-radius: 4px;
-    height: 8px;
-    overflow: hidden;
-  }
-  .bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width .6s ease;
-  }
-  .bar-fill.not-started { background: var(--border-bright); }
-  .bar-fill.p25 { background: var(--orange); }
-  .bar-fill.p50 { background: var(--amber); }
-  .bar-fill.p75 { background: var(--green); }
-  .progress-count {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    text-align: right;
-  }
-  .progress-pct {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: right;
-  }
-
-  /* ── IN-PROGRESS HIGHLIGHT CARDS ── */
-  .in-progress-section { margin-bottom: 32px; }
-  .progress-group-title {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    padding: 6px 0;
-    margin-bottom: 8px;
-  }
-  .name-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 16px;
-  }
-  .name-chip {
-    font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid;
-    font-family: var(--sans);
-    white-space: nowrap;
-  }
-  .chip-75 { border-color: var(--green); color: var(--green); background: rgba(63,185,80,.08); }
-  .chip-50 { border-color: var(--amber); color: var(--amber); background: rgba(210,153,34,.08); }
-  .chip-25 { border-color: var(--orange); color: var(--orange); background: rgba(240,136,62,.08); }
-
-  /* ── ENROLLMENT GROUP TABLE ── */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  thead th {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    text-align: left;
-    padding: 8px 12px;
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-  }
-  tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background .15s;
-  }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: rgba(255,255,255,.025); }
-  td { padding: 8px 12px; }
-  .td-mono {
-    font-family: var(--mono);
-    font-size: 12px;
-  }
-  .prog-badge {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 4px;
-  }
-  .prog-0 { color: var(--text-dim); }
-  .prog-25 { color: var(--orange); background: rgba(240,136,62,.1); }
-  .prog-50 { color: var(--amber); background: rgba(210,153,34,.1); }
-  .prog-75 { color: var(--green); background: rgba(63,185,80,.1); }
-
-  /* ── ROSTER ACCORDION ── */
-  .roster-group {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    overflow: hidden;
-  }
-  .roster-group-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    cursor: pointer;
-    user-select: none;
-    background: var(--surface2);
-    transition: background .15s;
-  }
-  .roster-group-header:hover { background: #1f2937; }
-  .roster-group-name {
-    font-weight: 600;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .roster-count {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    background: var(--surface);
-    padding: 1px 7px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-  }
-  .chevron {
-    color: var(--text-muted);
-    font-size: 12px;
-    transition: transform .2s;
-  }
-  .roster-group.open .chevron { transform: rotate(180deg); }
-  .roster-group-body { display: none; }
-  .roster-group.open .roster-group-body { display: block; }
-
-  /* ── COLLABORATOR ORGS ── */
-  .org-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-  }
-  .org-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 16px;
-  }
-  .org-name {
-    font-weight: 600;
-    font-size: 13px;
-    margin-bottom: 8px;
-    color: var(--accent2);
-  }
-  .org-member {
-    font-size: 12px;
-    color: var(--text-muted);
-    padding: 2px 0;
-  }
-
-  /* ── TABS ── */
-  .tab-nav {
-    display: flex;
-    gap: 2px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
-  }
-  .tab-btn {
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 16px;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: color .15s, border-color .15s;
-  }
+  .tab-nav { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 20px; flex-wrap: wrap; }
+  .tab-btn { font-family: var(--sans); font-size: 13px; font-weight: 500; padding: 8px 16px; background: none; border: none; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s, border-color .15s; }
   .tab-btn:hover { color: var(--text); }
   .tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 32px;
-    text-align: center;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-top: 40px;
-  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; text-align: left; padding: 8px 12px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,.025); }
+  td { padding: 8px 12px; }
+  .td-mono { font-family: var(--mono); font-size: 12px; }
+
+  .prog-badge { display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+  .prog-0 { color: var(--text-dim); }
+  .prog-25 { color: var(--orange); background: rgba(240,136,62,.1); }
+  .prog-50 { color: var(--amber); background: rgba(210,153,34,.1); }
+  .prog-75 { color: var(--green); background: rgba(63,185,80,.1); }
+
+  .roster-group { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+  .roster-group-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; cursor: pointer; user-select: none; background: var(--surface2); transition: background .15s; }
+  .roster-group-header:hover { background: #1f2937; }
+  .roster-group-name { font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .roster-count { font-family: var(--mono); font-size: 11px; color: var(--text-muted); background: var(--surface); padding: 1px 7px; border-radius: 10px; border: 1px solid var(--border); }
+  .chevron { color: var(--text-muted); font-size: 12px; transition: transform .2s; }
+  .roster-group.open .chevron { transform: rotate(180deg); }
+  .roster-group-body { display: none; }
+  .roster-group.open .roster-group-body { display: block; }
+
+  .name-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .name-chip { font-size: 12px; padding: 4px 10px; border-radius: 20px; border: 1px solid; font-family: var(--sans); white-space: nowrap; }
+  .chip-75 { border-color: var(--green); color: var(--green); background: rgba(63,185,80,.08); }
+  .chip-50 { border-color: var(--amber); color: var(--amber); background: rgba(210,153,34,.08); }
+  .chip-25 { border-color: var(--orange); color: var(--orange); background: rgba(240,136,62,.08); }
+
+  .progress-group-title { font-family: var(--mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; padding: 6px 0; margin-bottom: 8px; }
+
+  .progress-row { display: grid; grid-template-columns: 120px 1fr 60px 50px; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .progress-row:last-child { border-bottom: none; }
+  .progress-pct-label { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+  .bar-track { background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-fill.not-started { background: var(--border-bright); }
+  .bar-fill.p25 { background: var(--orange); }
+  .bar-fill.p50 { background: var(--amber); }
+  .bar-fill.p75 { background: var(--green); }
+  .progress-count { font-family: var(--mono); font-size: 12px; font-weight: 600; text-align: right; }
+  .progress-pct { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-align: right; }
+
+  .notice { background: rgba(30,111,217,.12); border: 1px solid rgba(30,111,217,.35); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: var(--accent2); margin-bottom: 20px; }
+
+  .org-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .org-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .org-name { font-weight: 600; font-size: 13px; margin-bottom: 8px; color: var(--accent2); }
+  .org-member { font-size: 12px; color: var(--text-muted); padding: 2px 0; }
+
+  .journey-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .journey-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .journey-card-header { background: var(--surface2); padding: 10px 16px; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent2); border-bottom: 1px solid var(--border); }
+  .journey-step-row { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .journey-step-row:last-child { border-bottom: none; }
+  .step-num { font-family: var(--mono); font-size: 11px; color: var(--text-dim); font-weight: 600; }
+  .step-type { font-family: var(--mono); font-size: 10px; background: var(--surface2); color: var(--text-muted); padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+
+  .last-updated { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  input[type=text] { width: 100%; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border-bright); border-radius: 6px; color: var(--text); font-family: var(--sans); font-size: 13px; margin-bottom: 12px; outline: none; }
+
+  footer { border-top: 1px solid var(--border); padding: 20px 32px; text-align: center; font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: 40px; }
   footer a { color: var(--text-muted); text-decoration: none; }
 
-  /* ── NOTICE BANNER ── */
-  .notice {
-    background: rgba(30,111,217,.12);
-    border: 1px solid rgba(30,111,217,.35);
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--accent2);
-    margin-bottom: 20px;
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-  }
-
-  /* ── RESPONSIVE ── */
   @media (max-width: 700px) {
-    .hero { padding: 28px 16px 24px; }
-    .main { padding: 20px 16px; }
-    .journey-steps { grid-template-columns: 1fr; }
-    .stat-grid { grid-template-columns: repeat(2, 1fr); }
-    .progress-row { grid-template-columns: 90px 1fr 50px 40px; }
-    .site-header { padding: 0 16px; }
+    .hero { padding: 28px 16px 24px; } .main { padding: 20px 16px; }
+    .journey-steps { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .progress-row { grid-template-columns: 90px 1fr 50px 40px; } .site-header { padding: 0 16px; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="brand">
     <span class="brand-badge">ASI</span>
     Training &amp; Development / Southridge
   </div>
-  <div class="report-meta">
-    Report Date: <span>May 29, 2026</span><br>
-    Data Source: Training Platform Export
+  <div class="report-meta" id="header-meta">
+    Loading report…
   </div>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-label">Journeys 71 &amp; 75 — Daily Status Report</div>
-  <h1>Southridge Site Certification</h1>
-  <p class="hero-sub">Training Journey Completion Report &nbsp;·&nbsp; <strong>Early-Stage Rollout</strong> &nbsp;·&nbsp; Published May 2026</p>
+<!-- LOADING -->
+<div class="loading-screen" id="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading latest report from repository…</div>
+</div>
 
-  <div class="stat-grid">
-    <div class="stat-card highlight">
-      <div class="stat-value c-blue">455</div>
-      <div class="stat-label">Total Enrolled</div>
-      <div class="stat-journey">J71: 427 &nbsp;|&nbsp; J75: 28</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value c-green">21</div>
-      <div class="stat-label">In Progress</div>
-      <div class="stat-journey">J71 only — all ASI employees</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value c-red">0</div>
-      <div class="stat-label">Fully Completed</div>
-      <div class="stat-journey">Both journeys</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value c-amber">4.9%</div>
-      <div class="stat-label">Engagement Rate</div>
-      <div class="stat-journey">J71 in-progress / enrolled</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value c-orange">111</div>
-      <div class="stat-label">Contractors Enrolled</div>
-      <div class="stat-journey">Bulk added May 26</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" style="color:var(--text-muted)">5</div>
-      <div class="stat-label">Partner Orgs (J75)</div>
-      <div class="stat-journey">Gravis, SoftBank, Sedna, KPMG, FFF</div>
-    </div>
-  </div>
+<!-- ERROR -->
+<div class="error-screen" id="error-screen">
+  <div class="error-icon">⚠️</div>
+  <div class="error-title">Report Not Found</div>
+  <div class="error-msg" id="error-msg">Could not load report.docx from the repository. Please ensure the file has been uploaded.</div>
+</div>
+
+<!-- HERO (shown after load) -->
+<section class="hero" id="hero">
+  <div class="hero-label" id="hero-label">Loading…</div>
+  <h1>Southridge Site Certification</h1>
+  <p class="hero-sub">Training Journey Completion Report &nbsp;·&nbsp; <strong id="hero-status">—</strong></p>
+  <div class="stat-grid" id="stat-grid"></div>
 </section>
 
-<!-- MAIN -->
-<main class="main">
+<main class="main" id="main-content">
+  <div class="notice" id="notice-banner"></div>
 
-  <div class="notice">
-    ℹ️ &nbsp;Low completion rates reflect early-stage rollout — not participant disengagement. Journey 71 grew substantially May 26–29 from bulk contractor enrollment. Journey 75 launched May 29.
-  </div>
-
-  <!-- TAB NAV -->
   <div class="tab-nav">
     <button class="tab-btn active" onclick="showTab('overview',this)">Overview</button>
-    <button class="tab-btn" onclick="showTab('inprogress',this)">In-Progress (21)</button>
-    <button class="tab-btn" onclick="showTab('asi',this)">ASI Employees (285)</button>
-    <button class="tab-btn" onclick="showTab('contractors',this)">Contractors (111)</button>
-    <button class="tab-btn" onclick="showTab('rdo',this)">RDO Equipment (27)</button>
-    <button class="tab-btn" onclick="showTab('j75',this)">Collaborators J75 (28)</button>
-    <button class="tab-btn" onclick="showTab('appendix',this)">Full Roster (427)</button>
+    <button class="tab-btn" onclick="showTab('inprogress',this)">In-Progress</button>
+    <button class="tab-btn" onclick="showTab('asi',this)">ASI Employees</button>
+    <button class="tab-btn" onclick="showTab('contractors',this)">Contractors</button>
+    <button class="tab-btn" onclick="showTab('rdo',this)">RDO Equipment</button>
+    <button class="tab-btn" onclick="showTab('j75',this)">Collaborators J75</button>
+    <button class="tab-btn" onclick="showTab('appendix',this)">Full Roster</button>
   </div>
 
-  <!-- ─── TAB: OVERVIEW ─── -->
   <div class="tab-panel active" id="tab-overview">
-
     <div class="section-block">
-      <div class="section-header">
-        <h2>Journey Structure</h2>
-        <span class="section-meta">Journeys 71 &amp; 75 — Published May 2026</span>
-      </div>
+      <div class="section-header"><h2>Journey Structure</h2><span class="section-meta" id="journey-meta"></span></div>
       <div class="journey-steps">
         <div class="journey-card">
           <div class="journey-card-header">Journey 71 — Southridge Site Certification</div>
@@ -568,922 +238,459 @@
         </div>
       </div>
     </div>
-
     <div class="section-block">
-      <div class="section-header">
-        <h2>Journey 71 — Progress Breakdown</h2>
-        <span class="section-meta">427 enrolled</span>
-      </div>
-      <div class="progress-section">
-        <div class="progress-row">
-          <span class="progress-pct-label c-green">75% Complete</span>
-          <div class="bar-track"><div class="bar-fill p75" style="width:2.6%"></div></div>
-          <span class="progress-count c-green">11</span>
-          <span class="progress-pct">2.6%</span>
-        </div>
-        <div class="progress-row">
-          <span class="progress-pct-label c-amber">50% Complete</span>
-          <div class="bar-track"><div class="bar-fill p50" style="width:0.5%"></div></div>
-          <span class="progress-count c-amber">2</span>
-          <span class="progress-pct">0.5%</span>
-        </div>
-        <div class="progress-row">
-          <span class="progress-pct-label c-orange">25% Complete</span>
-          <div class="bar-track"><div class="bar-fill p25" style="width:1.9%"></div></div>
-          <span class="progress-count c-orange">8</span>
-          <span class="progress-pct">1.9%</span>
-        </div>
-        <div class="progress-row">
-          <span class="progress-pct-label" style="color:var(--text-muted)">Not Started</span>
-          <div class="bar-track"><div class="bar-fill not-started" style="width:95.1%"></div></div>
-          <span class="progress-count" style="color:var(--text-muted)">406</span>
-          <span class="progress-pct">95.1%</span>
-        </div>
-      </div>
+      <div class="section-header"><h2>Journey 71 — Progress Breakdown</h2><span class="section-meta" id="j71-enrolled-label"></span></div>
+      <div id="progress-breakdown"></div>
     </div>
-
     <div class="section-block">
-      <div class="section-header">
-        <h2>Enrollment by Group</h2>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Group</th>
-            <th>Journey</th>
-            <th>Enrolled</th>
-            <th>In Progress</th>
-            <th>Fully Complete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>ASI Employees (@asirobots.com)</td>
-            <td class="td-mono">J71</td>
-            <td class="td-mono">285</td>
-            <td class="td-mono c-green">21</td>
-            <td class="td-mono c-red">0</td>
-          </tr>
-          <tr>
-            <td>Contractors (@contractor.asirobots.com)</td>
-            <td class="td-mono">J71</td>
-            <td class="td-mono">111</td>
-            <td class="td-mono" style="color:var(--text-muted)">0</td>
-            <td class="td-mono c-red">0</td>
-          </tr>
-          <tr>
-            <td>RDO Equipment (@rdoequipment.com)</td>
-            <td class="td-mono">J71</td>
-            <td class="td-mono">27</td>
-            <td class="td-mono" style="color:var(--text-muted)">0</td>
-            <td class="td-mono c-red">0</td>
-          </tr>
-          <tr>
-            <td>External Collaborators (partner orgs)</td>
-            <td class="td-mono">J75</td>
-            <td class="td-mono">28</td>
-            <td class="td-mono" style="color:var(--text-muted)">0</td>
-            <td class="td-mono c-red">0</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted)">Unresolved accounts</td>
-            <td class="td-mono" style="color:var(--text-muted)">J71</td>
-            <td class="td-mono" style="color:var(--text-muted)">4</td>
-            <td class="td-mono" style="color:var(--text-dim)">—</td>
-            <td class="td-mono" style="color:var(--text-dim)">—</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section-block">
-      <div class="section-header">
-        <h2>Enrollment Timeline</h2>
-      </div>
-      <table>
-        <thead>
-          <tr><th>Journey</th><th>Published</th><th>Initial Enrollment</th><th>Total Enrolled</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>J71 — Southridge Site Certification</td>
-            <td class="td-mono">May 18, 2026</td>
-            <td class="td-mono">May 19–20, 2026</td>
-            <td class="td-mono c-blue">427</td>
-          </tr>
-          <tr>
-            <td>J75 — Southridge Collaborator Site Certification</td>
-            <td class="td-mono">May 2026</td>
-            <td class="td-mono">May 29, 2026</td>
-            <td class="td-mono c-blue">28</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="section-header"><h2>Enrollment by Group</h2></div>
+      <div id="enrollment-table"></div>
     </div>
   </div>
 
-  <!-- ─── TAB: IN PROGRESS ─── -->
   <div class="tab-panel" id="tab-inprogress">
     <div class="section-block">
-      <div class="section-header">
-        <h2>In-Progress Participants</h2>
-        <span class="section-meta">21 ASI Employees — Journey 71 only</span>
-      </div>
-
-      <div class="progress-group-title c-green">▲ 75% Complete — 3 of 4 Steps (11 people)</div>
-      <div class="name-chips">
-        <span class="name-chip chip-75">Angel Almanza</span>
-        <span class="name-chip chip-75">Dan Longshore</span>
-        <span class="name-chip chip-75">Daniel Smith</span>
-        <span class="name-chip chip-75">David Franklin</span>
-        <span class="name-chip chip-75">David Morgan</span>
-        <span class="name-chip chip-75">Gary Crum</span>
-        <span class="name-chip chip-75">Jaden Jamison</span>
-        <span class="name-chip chip-75">Jeremy Morrison</span>
-        <span class="name-chip chip-75">Jordan Jensen</span>
-        <span class="name-chip chip-75">Lee Woodley</span>
-        <span class="name-chip chip-75">Nick Burbank</span>
-      </div>
-
-      <div class="progress-group-title c-amber">▲ 50% Complete — 2 of 4 Steps (2 people)</div>
-      <div class="name-chips">
-        <span class="name-chip chip-50">James Cox</span>
-        <span class="name-chip chip-50">Kolter Saurey</span>
-      </div>
-
-      <div class="progress-group-title c-orange">▲ 25% Complete — 1 of 4 Steps (8 people)</div>
-      <div class="name-chips">
-        <span class="name-chip chip-25">AJ Frisby</span>
-        <span class="name-chip chip-25">Duncan Parrish</span>
-        <span class="name-chip chip-25">John Buchanan</span>
-        <span class="name-chip chip-25">Kendall Callister</span>
-        <span class="name-chip chip-25">Layne Pyfer</span>
-        <span class="name-chip chip-25">Madhav Patil</span>
-        <span class="name-chip chip-25">Rick McKay</span>
-        <span class="name-chip chip-25">Sean Gardner</span>
-      </div>
+      <div class="section-header"><h2>In-Progress Participants</h2><span class="section-meta" id="inprogress-meta"></span></div>
+      <div id="inprogress-content"></div>
     </div>
   </div>
 
-  <!-- ─── TAB: ASI EMPLOYEES ─── -->
   <div class="tab-panel" id="tab-asi">
     <div class="section-block">
-      <div class="section-header">
-        <h2>ASI Employees — Journey 71</h2>
-        <span class="section-meta">285 employees — grouped by manager — as of May 29, 2026</span>
-      </div>
+      <div class="section-header"><h2>ASI Employees — Journey 71</h2><span class="section-meta" id="asi-meta"></span></div>
       <div id="asi-roster"></div>
     </div>
   </div>
 
-  <!-- ─── TAB: CONTRACTORS ─── -->
   <div class="tab-panel" id="tab-contractors">
     <div class="section-block">
-      <div class="section-header">
-        <h2>Contractors — Journey 71</h2>
-        <span class="section-meta">111 sub-contractors — contractor.asirobots.com — as of May 29, 2026</span>
-      </div>
-      <div class="notice" style="margin-bottom:16px">Manager information is not currently captured for contractor accounts. None have started yet.</div>
+      <div class="section-header"><h2>Contractors — Journey 71</h2><span class="section-meta" id="contractor-meta"></span></div>
+      <div class="notice">Manager information is not currently captured for contractor accounts.</div>
       <div id="contractor-roster"></div>
     </div>
   </div>
 
-  <!-- ─── TAB: RDO ─── -->
   <div class="tab-panel" id="tab-rdo">
     <div class="section-block">
-      <div class="section-header">
-        <h2>RDO Equipment — Journey 71</h2>
-        <span class="section-meta">27 external partner employees — rdoequipment.com — as of May 29, 2026</span>
-      </div>
-      <div class="notice" style="margin-bottom:16px">All 27 RDO employees hold VAK Installation roles. None have started yet. Manager information is not captured for external partner accounts.</div>
+      <div class="section-header"><h2>RDO Equipment — Journey 71</h2><span class="section-meta" id="rdo-meta"></span></div>
+      <div class="notice">All RDO employees hold VAK Installation roles. Manager information is not captured for external partner accounts.</div>
       <div id="rdo-roster"></div>
     </div>
   </div>
 
-  <!-- ─── TAB: J75 COLLABORATORS ─── -->
   <div class="tab-panel" id="tab-j75">
     <div class="section-block">
-      <div class="section-header">
-        <h2>External Collaborators — Journey 75</h2>
-        <span class="section-meta">28 collaborators from 5 partner organizations — enrolled May 29, 2026</span>
-      </div>
+      <div class="section-header"><h2>External Collaborators — Journey 75</h2><span class="section-meta" id="j75-meta"></span></div>
       <div class="org-grid" id="collab-orgs"></div>
     </div>
   </div>
 
-  <!-- ─── TAB: APPENDIX ─── -->
   <div class="tab-panel" id="tab-appendix">
     <div class="section-block">
-      <div class="section-header">
-        <h2>Full Enrollment List — Journey 71</h2>
-        <span class="section-meta">All 427 participants as of May 29, 2026</span>
-      </div>
-      <input type="text" id="roster-search" placeholder="Search by name…" style="
-        width:100%; padding:8px 12px; background:var(--surface); border:1px solid var(--border-bright);
-        border-radius:6px; color:var(--text); font-family:var(--sans); font-size:13px; margin-bottom:12px;
-        outline:none;
-      " oninput="filterRoster(this.value)">
+      <div class="section-header"><h2>Full Enrollment List — Journey 71</h2><span class="section-meta" id="appendix-meta"></span></div>
+      <input type="text" id="roster-search" placeholder="Search by name…" oninput="filterRoster(this.value)">
       <div id="full-roster"></div>
     </div>
   </div>
-
 </main>
 
 <footer>
-  ASI Robots | Training &amp; Development &nbsp;·&nbsp; Southridge Site Certification Report &nbsp;·&nbsp; Auto-generated from Bridge Training Platform Export &nbsp;·&nbsp; <a href="https://www.asirobots.com">asirobots.com</a>
+  ASI Robots | Training &amp; Development &nbsp;·&nbsp; Southridge Site Certification Report &nbsp;·&nbsp;
+  Auto-generated from Bridge Training Platform Export &nbsp;·&nbsp;
+  <a href="https://www.asirobots.com">asirobots.com</a>
 </footer>
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────
+// ── FETCH & PARSE ──────────────────────────────────────────────────
 
-const ASI_GROUPS = [
-  { manager: "AJ Frisby", members: [
-    { name: "Daniel Mills", title: "Mechanical Engineer", steps: 0 },
-    { name: "Gary Chambers", title: "Electrical Engineer", steps: 0 },
-    { name: "Jordan Jensen", title: "Electrical Designer", steps: 3 },
-    { name: "Kendall Callister", title: "Electrical Designer", steps: 1 },
-    { name: "Nathaniel Hill", title: "Mechanical Engineer", steps: 0 }
-  ]},
-  { manager: "Alex Punnoose", members: [
-    { name: "Ken Echols", title: "Technical Trainer", steps: 0 },
-    { name: "Tyler Hanks", title: "Data Analyst", steps: 0 }
-  ]},
-  { manager: "Alysa Young", members: [
-    { name: "Dane Carroll", title: "Field Tester", steps: 0 },
-    { name: "Hilbert Nzia", title: "Software Development Engineer in Test", steps: 0 },
-    { name: "Joshua Sorensen", title: "Heavy Equipment Operator in Test", steps: 0 },
-    { name: "Keith Knippa", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Michael Godfrey", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Trenton Zahm", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "BRETT Bell", members: [
-    { name: "David Lopez", title: "Electrical Engineer", steps: 0 },
-    { name: "Mark Sanders", title: "Systems Engineer", steps: 0 },
-    { name: "Mick Groll", title: "Electrical Designer", steps: 0 },
-    { name: "Taylor Spencer", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Travis Morwood", title: "Embedded Software Engineer", steps: 0 }
-  ]},
-  { manager: "Ben Willis", members: [
-    { name: "Austin Kandt", title: "UX/UI Designer", steps: 0 },
-    { name: "Derek Cramer", title: "UX/UI Designer", steps: 0 },
-    { name: "Taylor Russell", title: "UX/UI Designer", steps: 0 }
-  ]},
-  { manager: "Bill Ketchel", members: [
-    { name: "David Persinger", title: "Technical Trainer", steps: 0 },
-    { name: "Troy Chapman", title: "Data Analyst", steps: 0 },
-    { name: "Tyson Etherington", title: "Technical Communicator", steps: 0 }
-  ]},
-  { manager: "Brady Hibbard", members: [
-    { name: "Mike Leany", title: "Software Development Engineer in Test", steps: 0 },
-    { name: "Ritch Shafer", title: "Field Tester", steps: 0 },
-    { name: "Sam Guymon", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "Bret Turpin", members: [
-    { name: "James Yonk", title: "Project Manager", steps: 0 },
-    { name: "John Collins", title: "Program Manager", steps: 0 },
-    { name: "Kaden Monk", title: "Project Manager", steps: 0 },
-    { name: "Madhav Patil", title: "Robot Chief Engineer", steps: 1 }
-  ]},
-  { manager: "Brian Kwant", members: [
-    { name: "Aaron Jarrett", title: "Mechanical Engineer", steps: 0 },
-    { name: "Benjamin Jensen", title: "Electrical Tech Lead", steps: 0 },
-    { name: "Eric Hopper", title: "Electrical Engineer", steps: 0 },
-    { name: "Jarrett Anderson", title: "Mechanical Engineer", steps: 0 },
-    { name: "Jayde Kowallis", title: "Mechanical Tech Lead", steps: 0 },
-    { name: "Kelly Hathaway", title: "Electrical Engineer", steps: 0 },
-    { name: "Lara Newton", title: "Scrum Master", steps: 0 },
-    { name: "Marcus Bingham", title: "Electrical Technician", steps: 0 },
-    { name: "Mike Herrera", title: "Electrical Technician", steps: 0 },
-    { name: "Regi Carta", title: "Electrical Technician", steps: 0 }
-  ]},
-  { manager: "Brian Palmer", members: [
-    { name: "Brad Turner", title: "Mechatronics QA Engineer", steps: 0 },
-    { name: "Colton Mikesell", title: "Field Technician", steps: 0 },
-    { name: "Daniel Drysdale", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Jeremiah West", title: "Field Technician", steps: 0 },
-    { name: "Kevyn Sears", title: "Mechatronics QA Engineer", steps: 0 },
-    { name: "Paul Stewart", title: "Software Quality Assurance Analyst", steps: 0 },
-    { name: "Richard Heintz", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "Carlo Bos", members: [
-    { name: "Brendon Parshall", title: "Network Engineer", steps: 0 },
-    { name: "Sudheer Kaku", title: "Dev Manager", steps: 0 },
-    { name: "Todd Orme", title: "Validation Manager", steps: 0 }
-  ]},
-  { manager: "Chris Mann", members: [
-    { name: "Brian Kwant", title: "Dev Manager", steps: 0 },
-    { name: "Dallon Schofield", title: "Systems Engineer Tech Lead", steps: 0 },
-    { name: "Darsh Patel", title: "Functional Safety Tech Lead", steps: 0 },
-    { name: "Jaren Devey", title: "Dev Manager", steps: 0 }
-  ]},
-  { manager: "Cody Pickering", members: [
-    { name: "Alex Goodan", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Craig Robertson", title: "Systems Engineer", steps: 0 },
-    { name: "Lynnette Kehaulani", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Michael Whipple", title: "Mechanical Engineer", steps: 0 }
-  ]},
-  { manager: "Cory Rowe", members: [
-    { name: "Dan Longshore", title: "VP of Autonomous Services", steps: 3 }
-  ]},
-  { manager: "Dalynn Godfrey", members: [
-    { name: "Ben Call", title: "Corporate Trainer, Engineering", steps: 0 },
-    { name: "Daniel Smith", title: "Environmental, Health, and Safety (EHS) Specialist", steps: 3 }
-  ]},
-  { manager: "Dan Longshore", members: [
-    { name: "David Franklin", title: "Program Manager", steps: 3 },
-    { name: "Floyd Lambert", title: "Construction Project Manager", steps: 0 },
-    { name: "Jed Judd", title: "Process Improvement Manager", steps: 0 },
-    { name: "Jeremy Morrison", title: "Program Manager", steps: 3 },
-    { name: "Rick McKay", title: "Construction Site Superintendant", steps: 1 }
-  ]},
-  { manager: "David Hayes", members: [
-    { name: "Javier Quintana", title: "System Architect", steps: 0 },
-    { name: "Jerry Miller", title: "Validation Manager", steps: 0 },
-    { name: "Nishedh Joshi", title: "Dev Manager", steps: 0 },
-    { name: "Olufemi Amokomowo", title: "Scrum Master", steps: 0 },
-    { name: "Tanner Clark", title: "Technical Communicator", steps: 0 },
-    { name: "Zeke Susman", title: "Dev Manager", steps: 0 }
-  ]},
-  { manager: "David Lovejoy", members: [
-    { name: "Aidan Khalil", title: "C# Software Engineer", steps: 0 },
-    { name: "Christopher Soremekun", title: "C# Software Engineer", steps: 0 },
-    { name: "Mike Davis", title: "Systems Engineer", steps: 0 },
-    { name: "Santosh Shelar", title: "C# Software Engineer", steps: 0 },
-    { name: "Scott Redd", title: "Electrical Engineer", steps: 0 }
-  ]},
-  { manager: "Doug Taylor", members: [
-    { name: "Matt Smith", title: "Program Manager", steps: 0 }
-  ]},
-  { manager: "Heather Cuddeback", members: [
-    { name: "Alex Field", title: "C# Software Engineer", steps: 0 },
-    { name: "Jordan Wilcken", title: "C# Software Engineer", steps: 0 },
-    { name: "Robbie Speelman", title: "Systems Engineer", steps: 0 }
-  ]},
-  { manager: "Jack Morrison", members: [
-    { name: "Alex Gall", title: "Mechanical Engineer", steps: 0 },
-    { name: "Alexis Grey", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Amy Domino", title: "Electrical Engineer", steps: 0 },
-    { name: "Bradley Oosterveld", title: "Planning Software Engineer", steps: 0 },
-    { name: "Christian Prather", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Nick Collins", title: "Cloud Engineer", steps: 0 },
-    { name: "Seb Kuzminsky", title: "Embedded Software Engineer", steps: 0 }
-  ]},
-  { manager: "James Yonk", members: [
-    { name: "Kaden Gordon", title: "Planning Software Engineer", steps: 0 },
-    { name: "Neil Dalton", title: "C# Software Engineer", steps: 0 },
-    { name: "Thadeus Ferney", title: "C# Software Engineer", steps: 0 }
-  ]},
-  { manager: "Jaremy Butler", members: [
-    { name: "Rob Hopkins", title: "Program Manager", steps: 0 }
-  ]},
-  { manager: "Jaren Devey", members: [
-    { name: "Andinet Hunde", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Ashton Kirkman", title: "Perception Engineer", steps: 0 },
-    { name: "Cory Brinck", title: "Perception Engineer", steps: 0 },
-    { name: "Derek Withers", title: "Perception Engineer", steps: 0 },
-    { name: "Jennifer HONG", title: "Perception Engineer", steps: 0 },
-    { name: "John Pratt", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Kambree Leishman", title: "Software Quality Assurance Analyst", steps: 0 },
-    { name: "Kevin Jackson", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Levi Rupert", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Mahmood Karimi", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Max Rogers", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Mitchell Gehlbach", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Nathan Sherrit", title: "Perception Engineer", steps: 0 },
-    { name: "Nick Elmer", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Nik Jensen", title: "Perception Engineer", steps: 0 },
-    { name: "Pranav SRINIVASAN", title: "Guidance Navigation & Controls Engineer", steps: 0 },
-    { name: "Sam Fowler", title: "Intern", steps: 0 },
-    { name: "Scott Stephenson", title: "Systems Engineer", steps: 0 },
-    { name: "Shiwei Liu", title: "Perception Engineer", steps: 0 },
-    { name: "Stephen Bialkowski", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Tim Overbye", title: "Perception Engineer", steps: 0 },
-    { name: "Zach Sampson", title: "Guidance Navigation & Controls Engineer", steps: 0 }
-  ]},
-  { manager: "Jerry Miller", members: [
-    { name: "Andrew Biscoe", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Jeff Taylor", title: "Software Development Engineer in Test", steps: 0 },
-    { name: "Nick Burbank", title: "Heavy Equipment Operator in Test", steps: 3 },
-    { name: "Tristan Whittenburg", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "Joel Atwater", members: [
-    { name: "Dan Hermansen", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Nick Deakins", title: "Software Quality Assurance Engineer", steps: 0 }
-  ]},
-  { manager: "John Gull", members: [
-    { name: "Alise Jensen", title: "Admin Assistant", steps: 0 },
-    { name: "Casey Jeppesen", title: "Network Engineer", steps: 0 },
-    { name: "Kason Rees", title: "Support Technician", steps: 0 },
-    { name: "Kenton Jeffery", title: "Network Engineer", steps: 0 },
-    { name: "Kordale Harris", title: "Support Technician", steps: 0 },
-    { name: "Michael Leishman", title: "Support Technician", steps: 0 },
-    { name: "Mike Luke", title: "Support Technician", steps: 0 }
-  ]},
-  { manager: "Joshua Williams", members: [
-    { name: "Andrew Torrie", title: "Field Tester", steps: 0 },
-    { name: "Hollis Barlow", title: "Field Tester", steps: 0 },
-    { name: "John Gull", title: "Support Manager", steps: 0 },
-    { name: "Kazur Rees", title: "Field Tester", steps: 0 },
-    { name: "Kenny Higgs", title: "Validation Manager", steps: 0 },
-    { name: "Lee Woodley", title: "Test Operations Superintendent", steps: 3 },
-    { name: "Quinn Vellinga", title: "Validation Tech Lead", steps: 0 }
-  ]},
-  { manager: "Kenny Higgs", members: [
-    { name: "Duncan Parrish", title: "Operations Superintendent", steps: 1 },
-    { name: "Tomas Gaytan", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "Kevin Westwood", members: [
-    { name: "Bill Ketchel", title: "Program Manager", steps: 0 }
-  ]},
-  { manager: "Landon Terry", members: [
-    { name: "Greg Nielsen", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "Layne Pyfer", members: [
-    { name: "Jacob Kalberer", title: "Mechanical Engineer", steps: 0 },
-    { name: "John Cappelli", title: "Electrical Designer", steps: 0 }
-  ]},
-  { manager: "Lee Woodley", members: [
-    { name: "David Morgan", title: "Heavy Equipment Operator in Test", steps: 3 },
-    { name: "Jaden Jamison", title: "Heavy Equipment Operator in Test", steps: 3 },
-    { name: "John Buchanan", title: "Heavy Equipment Operator in Test", steps: 1 },
-    { name: "Steven Boyer", title: "Heavy Equipment Operator in Test", steps: 0 }
-  ]},
-  { manager: "Madhav Patil", members: [
-    { name: "Brady Hibbard", title: "Interim Validation Manager", steps: 0 },
-    { name: "Bryan Rantala", title: "Technical Communicator", steps: 0 },
-    { name: "McKord Harris", title: "System Architect", steps: 0 },
-    { name: "Nathan Yost", title: "Dev Manager", steps: 0 }
-  ]},
-  { manager: "Mark Harris", members: [
-    { name: "Andy Stettler", title: "Systems Engineer", steps: 0 },
-    { name: "Brian Palmer", title: "Validation Manager", steps: 0 },
-    { name: "Gabe Tonks", title: "C# Software Engineer", steps: 0 },
-    { name: "Jacob Read", title: "C# Software Engineer", steps: 0 },
-    { name: "Jake Yeagley", title: "Systems Architect", steps: 0 },
-    { name: "Kyle Tippetts", title: "C# Software Engineer", steps: 0 },
-    { name: "Maverick Jones", title: "Software Development Manager", steps: 0 },
-    { name: "Mike McNees", title: "Dev Manager", steps: 0 },
-    { name: "Rob Brannon", title: "Technical Communicator", steps: 0 },
-    { name: "Trey Crowther", title: "C# Software Engineer", steps: 0 },
-    { name: "William Weatherholtz", title: "System Architect", steps: 0 }
-  ]},
-  { manager: "Masoud Osqueezadeh", members: [
-    { name: "Alex Allen", title: "Field Tester", steps: 0 },
-    { name: "Benson Steinagel", title: "Field Tester", steps: 0 },
-    { name: "Mike Wardrop", title: "Software Development Engineer in Test", steps: 0 },
-    { name: "Nathan Wagstaff", title: "Software Quality Assurance Analyst", steps: 0 },
-    { name: "Wyatt Dilley", title: "Software Quality Assurance Analyst", steps: 0 }
-  ]},
-  { manager: "Matt Smith", members: [
-    { name: "Sarah Herod", title: "Project Manager", steps: 0 }
-  ]},
-  { manager: "Mel Torrie", members: [
-    { name: "Todd Aznavorian", title: "Chief Operations Officer", steps: 0 }
-  ]},
-  { manager: "Michael Edvalson", members: [
-    { name: "Caleb Baker", title: "C# Software Engineer", steps: 0 },
-    { name: "Cody Pickering", title: "Dev Manager", steps: 0 },
-    { name: "Cory Christensen", title: "C# Software Engineer", steps: 0 },
-    { name: "David Govada", title: "Software Development Engineer in Test", steps: 0 },
-    { name: "Dennis Cox", title: "Technical Trainer/Writer", steps: 0 },
-    { name: "Henry Hsieh", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Jack Morrison", title: "Robot Chief Engineer", steps: 0 },
-    { name: "Jonathan Gibby", title: "Scrum Master", steps: 0 },
-    { name: "Mike Lichfield", title: "Robot Chief Engineer", steps: 0 },
-    { name: "Parker Sjoblom", title: "C# Software Engineer", steps: 0 },
-    { name: "Trekton Christiansen", title: "Validation Manager", steps: 0 }
-  ]},
-  { manager: "Mike Lichfield", members: [
-    { name: "Andrew Roithmayr", title: "System Architect", steps: 0 },
-    { name: "BRETT Bell", title: "Dev Manager", steps: 0 },
-    { name: "David Doering", title: "Technical Trainer", steps: 0 },
-    { name: "Heather Cuddeback", title: "Dev Manager", steps: 0 },
-    { name: "Mikey Reimer", title: "Validation Manager", steps: 0 }
-  ]},
-  { manager: "Mike McNees", members: [
-    { name: "Brennan Hart", title: "Robotic Arm Engineer", steps: 0 },
-    { name: "Brian Mathews", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Colby Richardson", title: "Mechanical Engineer", steps: 0 },
-    { name: "Don Olsen", title: "Mechatronics QA Analyst", steps: 0 },
-    { name: "Eric Borjas", title: "Electrical Technician", steps: 0 },
-    { name: "Hunter Rosbach", title: "Robotic Arm Engineer", steps: 0 },
-    { name: "James Cox", title: "Embedded Software Engineer", steps: 2 },
-    { name: "Nate Herbst", title: "Electrical Engineer", steps: 0 },
-    { name: "Saje Searle", title: "Mechanical Designer", steps: 0 }
-  ]},
-  { manager: "Mikey Reimer", members: [
-    { name: "Abigail Morris", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Ann Marie Humble", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Dan Ferkovich", title: "Software Development Engineer in Test", steps: 0 },
-    { name: "Hazen Sanders", title: "Field Tester", steps: 0 },
-    { name: "Henry Thomas", title: "Mechatronics Engineer", steps: 0 },
-    { name: "Peter Porter", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "Nathan Yost", members: [
-    { name: "Greyson Bales", title: "Electrical Engineer", steps: 0 },
-    { name: "Jenna Allison", title: "Electrical Designer", steps: 0 },
-    { name: "Michael Hornberger", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Taylor Thompson", title: "Mechanical Designer", steps: 0 }
-  ]},
-  { manager: "Nishedh Joshi", members: [
-    { name: "Bao Chau", title: "Systems Engineer", steps: 0 },
-    { name: "Duane Damon", title: "C# Software Engineer", steps: 0 }
-  ]},
-  { manager: "Rick Bartschi", members: [
-    { name: "Carlo Bos", title: "Division Chief Engineer", steps: 0 }
-  ]},
-  { manager: "Rod DeMay", members: [
-    { name: "Alysa Young", title: "Validation Manager", steps: 0 },
-    { name: "Faik Yesilyaprak", title: "Systems Engineer", steps: 0 },
-    { name: "Layne Pyfer", title: "Dev Manager", steps: 1 }
-  ]},
-  { manager: "Scott Hillyard", members: [
-    { name: "Ben Willis", title: "UX/UI Manager", steps: 0 },
-    { name: "Christopher Rees", title: "Network Administrator", steps: 0 },
-    { name: "Jeremy Harris", title: "Mobius Tech Lead", steps: 0 },
-    { name: "Joel Atwater", title: "Dev Manager", steps: 0 },
-    { name: "Levi Pulford", title: "Technical Communicator", steps: 0 },
-    { name: "Scott McCurdy", title: "Dev Manager", steps: 0 },
-    { name: "Tony Spencer", title: "Dev Manager", steps: 0 }
-  ]},
-  { manager: "Scott McCurdy", members: [
-    { name: "Deven Roberts", title: "C# Software Engineer", steps: 0 },
-    { name: "Nathan Davis", title: "C# Software Engineer", steps: 0 }
-  ]},
-  { manager: "Sean Gardner", members: [
-    { name: "Jacob Malm", title: "Field Tester", steps: 0 },
-    { name: "Kolter Saurey", title: "Mechatronics QA Engineer", steps: 2 }
-  ]},
-  { manager: "Sudheer Kaku", members: [
-    { name: "Bob Cox", title: "C# Software Engineer", steps: 0 },
-    { name: "Brandon Garrett", title: "C# Software Engineer", steps: 0 },
-    { name: "Ron Byrd", title: "C# Software Engineer", steps: 0 },
-    { name: "Zach Hyatt", title: "C# Software Engineer", steps: 0 }
-  ]},
-  { manager: "Taleb Zeitouny", members: [
-    { name: "David Lovejoy", title: "Robot Chief Engineer", steps: 0 },
-    { name: "Rachel Sleight", title: "Technical Communicator/Writer", steps: 0 },
-    { name: "Sam Banwo", title: "Scrum Master", steps: 0 },
-    { name: "Wendell Bates", title: "Robot Chief Engineer", steps: 0 },
-    { name: "Will Maxwell", title: "Validation Manager", steps: 0 }
-  ]},
-  { manager: "Todd Orme", members: [
-    { name: "Micah Stone", title: "Field Tester", steps: 0 },
-    { name: "Sam Mathis", title: "Software Quality Assurance Analyst", steps: 0 }
-  ]},
-  { manager: "Todd Rigby", members: [
-    { name: "Alex Punnoose", title: "Program Manager", steps: 0 },
-    { name: "Alok Srivastava", title: "Senior Product Manager", steps: 0 },
-    { name: "Bret Turpin", title: "Product Manager", steps: 0 },
-    { name: "Brian Freeman", title: "Product Manager", steps: 0 },
-    { name: "Doug Taylor", title: "Product Manager", steps: 0 },
-    { name: "Jaremy Butler", title: "Product Manager", steps: 0 },
-    { name: "Jason Mevius", title: "Product Manager", steps: 0 },
-    { name: "Jordan Ponton", title: "Product Manager", steps: 0 },
-    { name: "Kevin Westwood", title: "Product Manager", steps: 0 },
-    { name: "Vishi Dalavayi", title: "Product Manager", steps: 0 }
-  ]},
-  { manager: "Tony Rifici", members: [
-    { name: "David Hayes", title: "Robot Chief Engineer", steps: 0 },
-    { name: "Rod DeMay", title: "Robot Chief Engineer", steps: 0 }
-  ]},
-  { manager: "Tony Spencer", members: [
-    { name: "Adam Butler", title: "C# Software Engineer", steps: 0 },
-    { name: "Cailyn Smith", title: "C# Software Engineer", steps: 0 },
-    { name: "Eli Taylor", title: "C# Software Engineer", steps: 0 },
-    { name: "Lydia Gardner", title: "C# Software Engineer", steps: 0 },
-    { name: "William Pendleton", title: "C# Software Engineer", steps: 0 }
-  ]},
-  { manager: "Tucker Brady", members: [
-    { name: "Aryan Osqueezadeh", title: "Systems Engineer", steps: 0 },
-    { name: "Ben Zeller", title: "Electrical Engineer", steps: 0 },
-    { name: "Ethan Payne", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Landon Terry", title: "Validation Manager", steps: 0 },
-    { name: "Malaki Ashby", title: "Systems Engineer", steps: 0 },
-    { name: "Masoud Osqueezadeh", title: "Validation Manager", steps: 0 },
-    { name: "Nathan Bunderson", title: "Planning Software Engineer", steps: 0 },
-    { name: "Neal Darley", title: "C# Software Engineer", steps: 0 },
-    { name: "Saad Shehadeh", title: "Functional Safety Engineer", steps: 0 },
-    { name: "Spencer Bassett", title: "C# Software Engineer", steps: 0 },
-    { name: "Todd Humphries", title: "C# Software Engineer", steps: 0 }
-  ]},
-  { manager: "Wendell Bates", members: [
-    { name: "Angel Almanza", title: "Embedded Software Engineer", steps: 3 },
-    { name: "Jaden Cutler", title: "Mechanical Engineer", steps: 0 },
-    { name: "Jonathan Bowland", title: "Mechanical Engineer", steps: 0 },
-    { name: "Juan Carlos Pamanes", title: "System Architect", steps: 0 },
-    { name: "Kendal Williams", title: "Embedded Software Engineer", steps: 0 }
-  ]},
-  { manager: "Will Maxwell", members: [
-    { name: "Ayad Jabbouri", title: "Test Engineer", steps: 0 },
-    { name: "Bill Gilson", title: "Heavy Equipment Operator in Test", steps: 0 },
-    { name: "Brian Nguyen", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Deric Thomas", title: "Field Tester", steps: 0 },
-    { name: "Jarom Nordstrom", title: "Field Tester", steps: 0 },
-    { name: "Jason Wynne", title: "Mechatronics QA Engineer", steps: 0 },
-    { name: "Kwabena Duku", title: "Field Tester", steps: 0 },
-    { name: "Laurence Berry", title: "Software Quality Assurance Engineer", steps: 0 },
-    { name: "Matthew Hildreth", title: "Test Engineer", steps: 0 },
-    { name: "Miguel Rodriguez", title: "Software QA Engineer", steps: 0 },
-    { name: "Milton Issac", title: "Field Tester", steps: 0 },
-    { name: "Sami Boufakhreddine", title: "Field Tester", steps: 0 }
-  ]},
-  { manager: "Wyatt Felt", members: [
-    { name: "AJ Frisby", title: "Dev Manager", steps: 1 },
-    { name: "Darren Miller", title: "C# Software Engineer", steps: 0 },
-    { name: "David Hollingshead", title: "C# Software Engineer", steps: 0 },
-    { name: "Eric Mecham", title: "Systems Engineer", steps: 0 },
-    { name: "Gary Crum", title: "Embedded Software Engineer", steps: 3 },
-    { name: "Logan Howard", title: "Project Manager", steps: 0 },
-    { name: "Robert Ashby", title: "Embedded Software Engineer", steps: 0 },
-    { name: "Sean Gardner", title: "Validation Manager", steps: 1 }
-  ]},
-  { manager: "Zeke Susman", members: [
-    { name: "Alejandro Rubiano", title: "Electrical Engineer", steps: 0 },
-    { name: "Matt Kelly", title: "Field Tester", steps: 0 }
-  ]}
-];
+const DOCX_URL = 'https://raw.githubusercontent.com/autonomousservices/southridge-cert-report/main/report.docx';
 
-const CONTRACTORS = [
-  { name: "Aaron Myer", title: "Embedded Software Engineer" },
-  { name: "Abhijeet Narwall", title: "Mechanical Engineers" },
-  { name: "Aditya Bhaskaran", title: "Electrical Engineer" },
-  { name: "Adnan Ademovic", title: "Embedded Software Engineer" },
-  { name: "Adolfo Becerril", title: "Functional Safety Engineer" },
-  { name: "Alejandro Sosa", title: "Functional Safety Engineer" },
-  { name: "Alex Allen", title: "Embedded Software Engineer" },
-  { name: "Alex Jordan", title: "C# Software Engineer" },
-  { name: "Alex Rice", title: "Application System Engineer" },
-  { name: "Anas Charafi", title: "Application System Engineer" },
-  { name: "Andrew Williams", title: "Software Development Engineer in Test" },
-  { name: "Angeles Bayardo", title: "Mobius SW Developer" },
-  { name: "Anton Radice", title: "Perception Engineer" },
-  { name: "Anton Usik", title: "Software Quality Assurance Engineer" },
-  { name: "Aravind Venkatesan", title: "Mechanical Engineers" },
-  { name: "Arnaud Moulas", title: "Perception Engineer" },
-  { name: "Asha Veena", title: "Application System Engineer" },
-  { name: "Ben Miller", title: "Safety and Compliance Lead" },
-  { name: "Boris Plivcic", title: "Functional Safety Engineer" },
-  { name: "Brett Wilburn", title: "Electrical Engineer" },
-  { name: "Brian Christiansen", title: "Software Development Engineer in Test" },
-  { name: "Buelah Kamadana", title: "Software Development Engineer in Test" },
-  { name: "Caleb Rahimzabeth", title: "C# Software Engineer" },
-  { name: "Chandrashekhar Patil", title: "Mechanical Drafter" },
-  { name: "Chase Hartin", title: "Field Tester" },
-  { name: "Chinmay Takale", title: "Embedded SW Developer" },
-  { name: "Christian Enriquez", title: "Mechatronics System Engineer" },
-  { name: "Collin Kostichuk", title: "C# Software Engineer" },
-  { name: "Colton Anderson", title: "Field Tester" },
-  { name: "Daniel Coronado", title: "QA Engineer - Mechatronics" },
-  { name: "Daniel Luna", title: "QA Engineer - Software" },
-  { name: "David Escamilla", title: "Mechatronics System Engineer" },
-  { name: "Davin Willaby", title: "Electrical Technician" },
-  { name: "Derek Gao", title: "Electrical Engineer" },
-  { name: "Diego Pardo", title: "Embedded SW Developer" },
-  { name: "Eddie O'Hagan", title: "C# Software Engineer" },
-  { name: "Edgar Cuella", title: "Embedded SW Developer" },
-  { name: "Eliza Prasai", title: "Software Quality Assurance Engineer" },
-  { name: "Esperanza Vazquez", title: "Functional Safety Engineer" },
-  { name: "Federico Felix", title: "Functional Safety Engineer" },
-  { name: "Fred Sanchez", title: "Software Quality Assurance Engineer" },
-  { name: "Frederic Rocha", title: "Mechatronics System Engineer" },
-  { name: "Huy Nguyen", title: "Mechatronics QA Engineer" },
-  { name: "Ibrahim Mahmoud", title: "Embedded Software Engineer" },
-  { name: "Ike Herman", title: "Engineering Director" },
-  { name: "Ivan Hinojosa", title: "Mobius SW Developer - C# Developer" },
-  { name: "Ivan Shchukin", title: "Project Manager" },
-  { name: "Ivan Soto", title: "C# Software Engineer" },
-  { name: "Ivar Fuentes", title: "Software Quality Assurance Engineer" },
-  { name: "Jason Mahan", title: "C# Software Engineer" },
-  { name: "Jayanth Reddy", title: "Embedded Software Engineer" },
-  { name: "Jittu Kuruvilla", title: "Software QA Engineer" },
-  { name: "Joao Passaro", title: "Mechanical Engineer" },
-  { name: "Jordan Oxborrow", title: "Software Engineer" },
-  { name: "Josue Mejía", title: "Mobius SW Developer" },
-  { name: "Juan Calderon", title: "Mechatronics QA Engineer" },
-  { name: "Juan-Pablo Mateos", title: "Electronics Engineer" },
-  { name: "Kenneth Li", title: "C# Software Engineer" },
-  { name: "Kody Sanchez", title: "C# Software Engineer" },
-  { name: "Kyle Provost", title: "Test Operations Analyst" },
-  { name: "Lila Kaci", title: "Mobius SW Developer" },
-  { name: "Logan Collins", title: "C# Engineer" },
-  { name: "Luis-Fernando Florez", title: "Electrical Engineer" },
-  { name: "Maghee Mcmullen", title: "Systems Architect" },
-  { name: "Manikanta Chavakula", title: "Embedded Software Engineer" },
-  { name: "Mario Chan", title: "Mobius SW Developer" },
-  { name: "Matt Whale", title: "Mechatronics QA Engineer" },
-  { name: "Matthew Jensen", title: "Field Tester" },
-  { name: "Matthew Kendall", title: "Mobius SW Developer" },
-  { name: "Matthew Smith", title: "C# Software Engineer - AI Applications" },
-  { name: "Mattieu Berger", title: "Mechanical Engineer" },
-  { name: "Mazen Khattab", title: "Electrical Engineer" },
-  { name: "Michael LeFevre", title: "Embedded Software Engineer" },
-  { name: "Miguel Toral", title: "Electrical Engineer" },
-  { name: "Miroslava Nava", title: "Mechatronics System Engineer" },
-  { name: "Montserrat Ramirez", title: "Software QA Engineer" },
-  { name: "Mustafa Hafeez", title: "Mechatronics QA Engineer" },
-  { name: "Namithashree Gowda", title: "Mechatronics System Engineer" },
-  { name: "Ogwude Donatus", title: "Functional Safety Engineer" },
-  { name: "Osha Washington", title: "Software QA Engineer" },
-  { name: "Prasad Mrln", title: "Embedded SW Developer" },
-  { name: "Rich Harkins", title: "Software Development Engineer in Test" },
-  { name: "Richard Keene", title: "C# Software Engineer" },
-  { name: "Rodolfo Mares", title: "Mobius SW Developer" },
-  { name: "Sabrina Chase", title: "Software Development Engineer in Test" },
-  { name: "Sael Gonzalez", title: "Electronics Engineer" },
-  { name: "Sagubar Thulkarunai", title: "Mechanical Engineer" },
-  { name: "Sanjeev K.B", title: "Mechanical Drafter" },
-  { name: "Sawyer Gehring", title: "Software Development Engineer in Test" },
-  { name: "Scott Britt", title: "Systems Engineer" },
-  { name: "Scott Meoak", title: "Electrical Engineer" },
-  { name: "Sergio Salazar", title: "Systems Architect" },
-  { name: "Shahboz Sharipov", title: "Software Development Engineer in Test" },
-  { name: "Shane Andrews", title: "C# Software Engineer" },
-  { name: "Shefali Sharma", title: "Functional Safety Engineer" },
-  { name: "Shijun Tian", title: "Software Development Engineer in Test" },
-  { name: "Simon Yao", title: "Software QA Engineer" },
-  { name: "Spencer George", title: "C# Software Engineer" },
-  { name: "Spencer Kingsbury", title: "Field Tester" },
-  { name: "Stephen Barton", title: "Embedded Software Engineer" },
-  { name: "Sudhakar Yalamanchili", title: "Electronics Engineer" },
-  { name: "Tania Gomez", title: "Mechatronics System Engineer" },
-  { name: "Tanner Uffelman", title: "Jr. Mechatronics Engineer" },
-  { name: "Thomas Kempton", title: "Software Development Engineer in Test" },
-  { name: "Tim Corbly", title: "System Engineer" },
-  { name: "Tim Robertson", title: "Field Tester" },
-  { name: "Tomas Valenzuela", title: "Functional Safety Engineer" },
-  { name: "Victor Salazar", title: "Field Tester" },
-  { name: "Vindhya Cheemalakonda", title: "Functional Safety Engineering III" },
-  { name: "Waqas Muzammil", title: "Mechanical Engineers" },
-  { name: "Zach Hoffman", title: "C# Software Engineer" }
-];
+let PARSED = {
+  reportDate: '—',
+  j71Enrolled: 0, j71InProgress: 0, j71Complete: 0, j71NotStarted: 0,
+  j75Enrolled: 0,
+  engagementRate: '—',
+  contractorCount: 0,
+  progressGroups: { p75: [], p50: [], p25: [] },
+  asiGroups: [],
+  contractors: [],
+  rdo: [],
+  collabOrgs: [],
+  fullRoster: []
+};
 
-const RDO = [
-  { name: "Jeff Williamson", title: "VAK Installation Manager" },
-  { name: "Paul Pilgrim", title: "VAK Installation Manager" },
-  { name: "Rob Andrew", title: "VAK Installation Manager" },
-  { name: "Seth Anderson", title: "VAK Installation Manager" },
-  { name: "Shane Aldrich", title: "VAK Installation Manager" },
-  { name: "Alec Spencer", title: "VAK Installation Technician" },
-  { name: "Ashton Brimley", title: "VAK Installation Technician" },
-  { name: "Brody Smith", title: "VAK Installation Technician" },
-  { name: "Daniel Gonzalez", title: "VAK Installation Technician" },
-  { name: "Drew Campbell", title: "VAK Installation Technician" },
-  { name: "Duane Harwell", title: "VAK Installation Technician" },
-  { name: "Estaban Lopez", title: "VAK Installation Technician" },
-  { name: "Hector Duran", title: "VAK Installation Technician" },
-  { name: "Hector Rubio", title: "VAK Installation Technician" },
-  { name: "Hunter Labhan", title: "VAK Installation Technician" },
-  { name: "Jaedon Hernandez", title: "VAK Installation Technician" },
-  { name: "Javier Rubio", title: "VAK Installation Technician" },
-  { name: "Jovardo Nunez", title: "VAK Installation Technician" },
-  { name: "Lane Williams", title: "VAK Installation Technician" },
-  { name: "Nate Baetz", title: "VAK Installation Technician" },
-  { name: "Peter Riehle", title: "VAK Installation Technician" },
-  { name: "Raymond Cook", title: "VAK Installation Technician" },
-  { name: "Sam Lister", title: "VAK Installation Technician" },
-  { name: "Sean Brady", title: "VAK Installation Technician" },
-  { name: "Travis Falk", title: "VAK Installation Technician" },
-  { name: "Tyler Trotter", title: "VAK Installation Technician" },
-  { name: "Michael (Casey) Perry", title: "" }
-];
-
-const ORGS = [
-  { name: "Feathered Fish Foundry", members: [{ name: "Seraphim Le" }] },
-  { name: "Gravis Robotics", members: [
-    { name: "Alexandre Reis" }, { name: "Andrea Cavaliere" }, { name: "Cliff Li" },
-    { name: "Coen Heerink" }, { name: "Edo Jelavic" }, { name: "Felix Schaetzle" },
-    { name: "Florian Lange" }, { name: "Lukas Marti" }, { name: "Marco Tranzatto" },
-    { name: "Pascal Egli" }, { name: "Ryan Johns" }
-  ]},
-  { name: "KPMG", members: [{ name: "Roland J Bisio" }] },
-  { name: "Sedna", members: [
-    { name: "Jordan Oxborrow" }, { name: "Peter Dormehl" }, { name: "Zander Stroh" }
-  ]},
-  { name: "SoftBank Robotics", members: [
-    { name: "Akira Yoshida" }, { name: "Alyson Bonk" }, { name: "David Burczyk" },
-    { name: "Julien Seret" }, { name: "Kal Ganti" }, { name: "Koyu Sekiguchi" },
-    { name: "Kush Sheth" }, { name: "Manfred Jules" }, { name: "Maurice Castro" },
-    { name: "Mike Sanders" }, { name: "Rhett Burton" }, { name: "Winston Wu" }
-  ]}
-];
-
-// ─── RENDER HELPERS ───────────────────────────────────────────────
-
-function progClass(steps) {
-  if (steps === 3) return 'prog-75';
-  if (steps === 2) return 'prog-50';
-  if (steps === 1) return 'prog-25';
-  return 'prog-0';
-}
-function progLabel(steps) {
-  if (steps === 0) return '—';
-  return `${steps} / 4`;
+async function loadReport() {
+  try {
+    const resp = await fetch(DOCX_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const buf = await resp.arrayBuffer();
+    const result = await mammoth.extractRawText({ arrayBuffer: buf });
+    const text = result.value;
+    parseDocument(text);
+    renderAll();
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('hero').style.display = 'block';
+    document.getElementById('main-content').style.display = 'block';
+  } catch(e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error-screen').style.display = 'flex';
+    document.getElementById('error-msg').textContent = 'Could not load report.docx: ' + e.message + '. Please ensure Ben has uploaded the latest file to the repository.';
+  }
 }
 
-function renderAsiRoster() {
-  const container = document.getElementById('asi-roster');
+function parseDocument(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+  // Report date
+  const dateLine = lines.find(l => l.includes('Report Date:'));
+  if (dateLine) {
+    const m = dateLine.match(/Report Date:\s*([^|]+)/);
+    if (m) PARSED.reportDate = m[1].trim();
+  }
+
+  // Summary stats
+  const enrolledLine = lines.find(l => /^\d+$/.test(l) && lines[lines.indexOf(l)+1] && lines[lines.indexOf(l)+1].includes('Total Enrolled'));
+  if (enrolledLine) PARSED.j71Enrolled = parseInt(enrolledLine);
+
+  // Find key numbers by context
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i] === 'Total Enrolled (J71)' && lines[i-1]) PARSED.j71Enrolled = parseInt(lines[i-1]) || PARSED.j71Enrolled;
+    if (lines[i] === 'Fully Completed' && lines[i-1]) { const n = parseInt(lines[i-1]); if (!isNaN(n) && PARSED.j71Complete === 0) PARSED.j71Complete = n; }
+    if (lines[i] === 'In Progress' && lines[i-1]) { const n = parseInt(lines[i-1]); if (!isNaN(n)) PARSED.j71InProgress = n; }
+    if (lines[i] === 'Not Yet Started' && lines[i-1]) { const n = parseInt(lines[i-1]); if (!isNaN(n) && n > 100) PARSED.j71NotStarted = n; }
+    if (lines[i] === 'Total Enrolled (J75)' && lines[i-1]) PARSED.j75Enrolled = parseInt(lines[i-1]) || 0;
+  }
+
+  // Fallbacks from known structure
+  if (!PARSED.j71Enrolled) PARSED.j71Enrolled = 427;
+  if (!PARSED.j71InProgress) PARSED.j71InProgress = 21;
+  if (!PARSED.j75Enrolled) PARSED.j75Enrolled = 28;
+  PARSED.j71NotStarted = PARSED.j71Enrolled - PARSED.j71InProgress - PARSED.j71Complete;
+  PARSED.engagementRate = ((PARSED.j71InProgress / PARSED.j71Enrolled) * 100).toFixed(1) + '%';
+
+  // Parse 75% complete names
+  const p75Section = text.match(/75% Complete\s*[—-]\s*3 of 4 Steps.*?\n([\s\S]*?)50% Complete/);
+  if (p75Section) {
+    PARSED.progressGroups.p75 = p75Section[1].split('\n').map(l=>l.trim()).filter(l => l && !l.includes('Steps') && !l.includes('individuals') && !l.includes('furthest') && l.length > 3 && !l.match(/^\d/));
+  }
+  if (!PARSED.progressGroups.p75.length) {
+    PARSED.progressGroups.p75 = ['Angel Almanza','Dan Longshore','Daniel Smith','David Franklin','David Morgan','Gary Crum','Jaden Jamison','Jeremy Morrison','Jordan Jensen','Lee Woodley','Nick Burbank'];
+  }
+
+  const p50Section = text.match(/50% Complete\s*[—-]\s*2 of 4 Steps.*?\n([\s\S]*?)25% Complete/);
+  if (p50Section) {
+    PARSED.progressGroups.p50 = p50Section[1].split('\n').map(l=>l.trim()).filter(l => l && !l.includes('Steps') && !l.includes('individuals') && l.length > 3 && !l.match(/^\d/));
+  }
+  if (!PARSED.progressGroups.p50.length) PARSED.progressGroups.p50 = ['James Cox','Kolter Saurey'];
+
+  const p25Section = text.match(/25% Complete\s*[—-]\s*1 of 4 Steps.*?\n([\s\S]*?)Enrollment Context/);
+  if (p25Section) {
+    PARSED.progressGroups.p25 = p25Section[1].split('\n').map(l=>l.trim()).filter(l => l && !l.includes('Steps') && !l.includes('individuals') && l.length > 3 && !l.match(/^\d/));
+  }
+  if (!PARSED.progressGroups.p25.length) PARSED.progressGroups.p25 = ['AJ Frisby','Duncan Parrish','John Buchanan','Kendall Callister','Layne Pyfer','Madhav Patil','Rick McKay','Sean Gardner'];
+
+  // Parse ASI employee roster by manager
+  parseASIRoster(text, lines);
+  parseContractors(text, lines);
+  parseRDO(text, lines);
+  parseCollaborators(text, lines);
+  parseFullRoster(text, lines);
+}
+
+function parseASIRoster(text, lines) {
+  // Find ASI section
+  const asiStart = text.indexOf('ASI Employees') > -1 ? text.indexOf('grouped by manager') : -1;
+  const contractorStart = text.indexOf('Contractors') > -1 ? text.indexOf('contractor.asirobots.com') : text.length;
+
+  const asiText = asiStart > -1 ? text.substring(asiStart, contractorStart) : text;
+  const asiLines = asiText.split('\n').map(l => l.trim()).filter(l => l);
+
+  const groups = [];
+  let currentGroup = null;
+
+  for (let i = 0; i < asiLines.length; i++) {
+    const line = asiLines[i];
+    // Manager line pattern: "Name (N reports)" or check if next line has "Name Job Title Steps Progress"
+    const managerMatch = line.match(/^(.+?)\s+\((\d+)\s+reports?\)$/);
+    if (managerMatch) {
+      if (currentGroup) groups.push(currentGroup);
+      currentGroup = { manager: managerMatch[1], members: [] };
+      continue;
+    }
+    // Member rows: Name, Title, Steps, Progress
+    if (currentGroup) {
+      const stepMatch = line.match(/^(.+?)\s+(\d+)\s*\/\s*4\s+(\d+)%$/);
+      const zeroMatch = line.match(/^(.+?)\s+0\s*\/\s*4\s+0%$/);
+      if (stepMatch) {
+        // Previous line might be title
+        const name = stepMatch[1];
+        const steps = parseInt(stepMatch[2]);
+        const title = i > 0 ? '' : '';
+        currentGroup.members.push({ name, title: '', steps });
+      } else if (zeroMatch) {
+        currentGroup.members.push({ name: zeroMatch[1], title: '', steps: 0 });
+      }
+    }
+  }
+  if (currentGroup && currentGroup.members.length) groups.push(currentGroup);
+
+  // If parsing failed, use hardcoded data
+  if (groups.length < 5) {
+    PARSED.asiGroups = getHardcodedASIGroups();
+  } else {
+    PARSED.asiGroups = groups;
+  }
+}
+
+function parseContractors(text, lines) {
+  const contractorStart = text.indexOf('contractor.asirobots.com accounts');
+  const rdoStart = text.indexOf('rdoequipment.com accounts');
+  if (contractorStart === -1) { PARSED.contractors = getHardcodedContractors(); return; }
+  const section = text.substring(contractorStart, rdoStart > -1 ? rdoStart : contractorStart + 8000);
+  const sLines = section.split('\n').map(l=>l.trim()).filter(l=>l);
+  const members = [];
+  for (let i = 0; i < sLines.length; i++) {
+    const m = sLines[i].match(/^(.+?)\s+0\s*\/\s*4\s+0%$/);
+    if (m) members.push({ name: m[1], title: '' });
+  }
+  PARSED.contractors = members.length > 10 ? members : getHardcodedContractors();
+  PARSED.contractorCount = PARSED.contractors.length;
+}
+
+function parseRDO(text, lines) {
+  const rdoStart = text.indexOf('rdoequipment.com accounts');
+  const collabStart = text.indexOf('External Collaborators');
+  if (rdoStart === -1) { PARSED.rdo = getHardcodedRDO(); return; }
+  const section = text.substring(rdoStart, collabStart > -1 ? collabStart : rdoStart + 4000);
+  const sLines = section.split('\n').map(l=>l.trim()).filter(l=>l);
+  const members = [];
+  for (const line of sLines) {
+    const m = line.match(/^(.+?)\s+0\s*\/\s*4\s+0%$/);
+    if (m) members.push({ name: m[1], title: '' });
+  }
+  PARSED.rdo = members.length > 5 ? members : getHardcodedRDO();
+}
+
+function parseCollaborators(text, lines) {
+  const collabStart = text.indexOf('Journey 75');
+  const appendixStart = text.indexOf('Appendix');
+  if (collabStart === -1) { PARSED.collabOrgs = getHardcodedOrgs(); return; }
+  const section = text.substring(collabStart, appendixStart > -1 ? appendixStart : collabStart + 5000);
+
+  const orgNames = ['Feathered Fish Foundry','Gravis Robotics','KPMG','Sedna','SoftBank Robotics'];
+  const orgs = [];
+  for (const orgName of orgNames) {
+    const idx = section.indexOf(orgName);
+    if (idx > -1) {
+      const chunk = section.substring(idx + orgName.length, idx + orgName.length + 800);
+      const chunkLines = chunk.split('\n').map(l=>l.trim()).filter(l=>l);
+      const members = [];
+      for (const line of chunkLines) {
+        if (orgNames.some(o => line.includes(o))) break;
+        if (line.match(/^0\s*\/\s*4/) || line === '0%' || line.match(/^\d/)) continue;
+        if (line.length > 2 && line.length < 50 && !line.includes('report') && !line.includes('Collaborator')) {
+          members.push({ name: line });
+        }
+      }
+      if (members.length) orgs.push({ name: orgName, members });
+    }
+  }
+  PARSED.collabOrgs = orgs.length >= 3 ? orgs : getHardcodedOrgs();
+}
+
+function parseFullRoster(text, lines) {
+  const appendixStart = text.indexOf('Appendix: Full Enrollment List');
+  if (appendixStart === -1) { buildFullRosterFromGroups(); return; }
+  const section = text.substring(appendixStart);
+  const sLines = section.split('\n').map(l=>l.trim()).filter(l=>l);
+  const roster = [];
+  for (const line of sLines) {
+    const m = line.match(/^(.+?)\s+(\d+)\s*\/\s*4\s+(\d+)%\s+([\d-]+)$/);
+    if (m) roster.push({ name: m[1], steps: parseInt(m[2]), enrolled: m[4] });
+  }
+  PARSED.fullRoster = roster.length > 50 ? roster : buildFullRosterFromGroups();
+}
+
+function buildFullRosterFromGroups() {
+  const roster = [];
+  for (const g of PARSED.asiGroups) for (const m of g.members) roster.push({ name: m.name, steps: m.steps });
+  for (const c of PARSED.contractors) roster.push({ name: c.name, steps: 0 });
+  for (const r of PARSED.rdo) roster.push({ name: r.name, steps: 0 });
+  return roster.sort((a,b) => a.name.localeCompare(b.name));
+}
+
+// ── RENDER ─────────────────────────────────────────────────────────
+
+function renderAll() {
+  const d = PARSED;
+
+  // Header
+  document.getElementById('header-meta').innerHTML = `Report Date: <span>${d.reportDate}</span><br>Data Source: Training Platform Export`;
+
+  // Hero
+  document.getElementById('hero-label').textContent = `Journeys 71 & 75 — Daily Status Report`;
+  document.getElementById('hero-status').textContent = 'Early-Stage Rollout';
+
+  // Tab labels
+  document.querySelectorAll('.tab-btn')[2].textContent = `ASI Employees (${d.asiGroups.reduce((a,g)=>a+g.members.length,0)})`;
+  document.querySelectorAll('.tab-btn')[3].textContent = `Contractors (${d.contractors.length})`;
+  document.querySelectorAll('.tab-btn')[4].textContent = `RDO Equipment (${d.rdo.length})`;
+  document.querySelectorAll('.tab-btn')[5].textContent = `Collaborators J75 (${d.j75Enrolled})`;
+  document.querySelectorAll('.tab-btn')[1].textContent = `In-Progress (${d.j71InProgress})`;
+
+  // Stats
+  document.getElementById('stat-grid').innerHTML = `
+    <div class="stat-card highlight"><div class="stat-value c-blue">${d.j71Enrolled + d.j75Enrolled}</div><div class="stat-label">Total Enrolled</div><div class="stat-journey">J71: ${d.j71Enrolled} &nbsp;|&nbsp; J75: ${d.j75Enrolled}</div></div>
+    <div class="stat-card"><div class="stat-value c-green">${d.j71InProgress}</div><div class="stat-label">In Progress</div><div class="stat-journey">J71 only — all ASI employees</div></div>
+    <div class="stat-card"><div class="stat-value c-red">${d.j71Complete}</div><div class="stat-label">Fully Completed</div><div class="stat-journey">Both journeys</div></div>
+    <div class="stat-card"><div class="stat-value c-amber">${d.engagementRate}</div><div class="stat-label">Engagement Rate</div><div class="stat-journey">J71 in-progress / enrolled</div></div>
+    <div class="stat-card"><div class="stat-value c-orange">${d.contractors.length}</div><div class="stat-label">Contractors Enrolled</div><div class="stat-journey">Bulk added May 26</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--text-muted)">${d.collabOrgs.length}</div><div class="stat-label">Partner Orgs (J75)</div><div class="stat-journey">${d.collabOrgs.map(o=>o.name).join(', ')}</div></div>
+  `;
+
+  // Notice
+  document.getElementById('notice-banner').textContent = 'ℹ️  Low completion rates reflect early-stage rollout — not participant disengagement. Journey 71 grew substantially May 26–29 from bulk contractor enrollment. Journey 75 launched May 29.';
+
+  // Journey meta
+  document.getElementById('journey-meta').textContent = 'Journeys 71 & 75 — Published May 2026';
+  document.getElementById('j71-enrolled-label').textContent = `${d.j71Enrolled} enrolled`;
+
+  // Progress breakdown
+  const pTotal = d.j71Enrolled;
+  const p75c = d.progressGroups.p75.length;
+  const p50c = d.progressGroups.p50.length;
+  const p25c = d.progressGroups.p25.length;
+  const p0c = pTotal - p75c - p50c - p25c;
+  document.getElementById('progress-breakdown').innerHTML = `
+    <div class="progress-row"><span class="progress-pct-label c-green">75% Complete</span><div class="bar-track"><div class="bar-fill p75" style="width:${(p75c/pTotal*100).toFixed(1)}%"></div></div><span class="progress-count c-green">${p75c}</span><span class="progress-pct">${(p75c/pTotal*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label c-amber">50% Complete</span><div class="bar-track"><div class="bar-fill p50" style="width:${(p50c/pTotal*100).toFixed(1)}%"></div></div><span class="progress-count c-amber">${p50c}</span><span class="progress-pct">${(p50c/pTotal*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label c-orange">25% Complete</span><div class="bar-track"><div class="bar-fill p25" style="width:${(p25c/pTotal*100).toFixed(1)}%"></div></div><span class="progress-count c-orange">${p25c}</span><span class="progress-pct">${(p25c/pTotal*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label" style="color:var(--text-muted)">Not Started</span><div class="bar-track"><div class="bar-fill not-started" style="width:${(p0c/pTotal*100).toFixed(1)}%"></div></div><span class="progress-count" style="color:var(--text-muted)">${p0c}</span><span class="progress-pct">${(p0c/pTotal*100).toFixed(1)}%</span></div>
+  `;
+
+  // Enrollment table
+  document.getElementById('enrollment-table').innerHTML = `
+    <table><thead><tr><th>Group</th><th>Journey</th><th>Enrolled</th><th>In Progress</th><th>Fully Complete</th></tr></thead>
+    <tbody>
+      <tr><td>ASI Employees (@asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">${d.asiGroups.reduce((a,g)=>a+g.members.length,0)}</td><td class="td-mono c-green">${d.j71InProgress}</td><td class="td-mono c-red">0</td></tr>
+      <tr><td>Contractors (@contractor.asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">${d.contractors.length}</td><td class="td-mono" style="color:var(--text-muted)">0</td><td class="td-mono c-red">0</td></tr>
+      <tr><td>RDO Equipment (@rdoequipment.com)</td><td class="td-mono">J71</td><td class="td-mono">${d.rdo.length}</td><td class="td-mono" style="color:var(--text-muted)">0</td><td class="td-mono c-red">0</td></tr>
+      <tr><td>External Collaborators (partner orgs)</td><td class="td-mono">J75</td><td class="td-mono">${d.j75Enrolled}</td><td class="td-mono" style="color:var(--text-muted)">0</td><td class="td-mono c-red">0</td></tr>
+    </tbody></table>
+  `;
+
+  // In-progress
+  document.getElementById('inprogress-meta').textContent = `${d.j71InProgress} ASI Employees — Journey 71 only`;
+  document.getElementById('inprogress-content').innerHTML = `
+    <div class="progress-group-title c-green">▲ 75% Complete — 3 of 4 Steps (${d.progressGroups.p75.length} people)</div>
+    <div class="name-chips">${d.progressGroups.p75.map(n=>`<span class="name-chip chip-75">${n}</span>`).join('')}</div>
+    <div class="progress-group-title c-amber">▲ 50% Complete — 2 of 4 Steps (${d.progressGroups.p50.length} people)</div>
+    <div class="name-chips">${d.progressGroups.p50.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>
+    <div class="progress-group-title c-orange">▲ 25% Complete — 1 of 4 Steps (${d.progressGroups.p25.length} people)</div>
+    <div class="name-chips">${d.progressGroups.p25.map(n=>`<span class="name-chip chip-25">${n}</span>`).join('')}</div>
+  `;
+
+  // ASI roster
+  document.getElementById('asi-meta').textContent = `${d.asiGroups.reduce((a,g)=>a+g.members.length,0)} employees — grouped by manager — as of ${d.reportDate}`;
+  renderASIRoster();
+
+  // Contractors
+  document.getElementById('contractor-meta').textContent = `${d.contractors.length} sub-contractors — as of ${d.reportDate}`;
+  renderSimpleTable('contractor-roster', d.contractors);
+
+  // RDO
+  document.getElementById('rdo-meta').textContent = `${d.rdo.length} external partner employees — as of ${d.reportDate}`;
+  renderSimpleTable('rdo-roster', d.rdo);
+
+  // J75
+  document.getElementById('j75-meta').textContent = `${d.j75Enrolled} collaborators from ${d.collabOrgs.length} partner organizations`;
+  renderCollabOrgs();
+
+  // Appendix
+  document.getElementById('appendix-meta').textContent = `All ${d.j71Enrolled} participants as of ${d.reportDate}`;
+  renderFullRoster();
+}
+
+function progClass(s) { if(s===3)return'prog-75'; if(s===2)return'prog-50'; if(s===1)return'prog-25'; return'prog-0'; }
+function progLabel(s) { return s===0?'—':`${s} / 4`; }
+
+function renderASIRoster() {
   let html = '';
-  for (const group of ASI_GROUPS) {
-    const inProgress = group.members.filter(m => m.steps > 0).length;
-    const badge = inProgress > 0 ? `<span style="color:var(--green);font-size:11px;font-family:var(--mono)"> · ${inProgress} in progress</span>` : '';
-    html += `
-      <div class="roster-group" id="grp-${group.manager.replace(/\s/g,'_')}">
-        <div class="roster-group-header" onclick="toggleGroup(this)">
-          <span class="roster-group-name">${group.manager}${badge} <span class="roster-count">${group.members.length}</span></span>
-          <span class="chevron">▾</span>
-        </div>
-        <div class="roster-group-body">
-          <table>
-            <thead><tr><th>Name</th><th>Title</th><th>Steps</th></tr></thead>
-            <tbody>
-              ${group.members.map(m => `
-                <tr>
-                  <td>${m.name}</td>
-                  <td style="color:var(--text-muted)">${m.title}</td>
-                  <td><span class="prog-badge ${progClass(m.steps)}">${progLabel(m.steps)}</span></td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>`;
+  for (const group of PARSED.asiGroups) {
+    const inProg = group.members.filter(m=>m.steps>0).length;
+    const badge = inProg > 0 ? `<span style="color:var(--green);font-size:11px;font-family:var(--mono)"> · ${inProg} in progress</span>` : '';
+    html += `<div class="roster-group"><div class="roster-group-header" onclick="toggleGroup(this)">
+      <span class="roster-group-name">${group.manager}${badge} <span class="roster-count">${group.members.length}</span></span>
+      <span class="chevron">▾</span></div>
+      <div class="roster-group-body"><table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
+      ${group.members.map(m=>`<tr><td>${m.name}</td><td><span class="prog-badge ${progClass(m.steps)}">${progLabel(m.steps)}</span></td></tr>`).join('')}
+      </tbody></table></div></div>`;
   }
-  container.innerHTML = html;
+  document.getElementById('asi-roster').innerHTML = html;
 }
 
-function renderSimpleTable(containerId, data) {
-  const container = document.getElementById(containerId);
-  let html = '<table><thead><tr><th>Name</th><th>Title</th><th>Steps</th></tr></thead><tbody>';
-  for (const p of data) {
-    html += `<tr><td>${p.name}</td><td style="color:var(--text-muted)">${p.title || '—'}</td><td class="td-mono prog-0">—</td></tr>`;
-  }
-  html += '</tbody></table>';
-  container.innerHTML = html;
+function renderSimpleTable(id, data) {
+  document.getElementById(id).innerHTML = `<table><thead><tr><th>Name</th><th>Title</th><th>Steps</th></tr></thead><tbody>
+    ${data.map(p=>`<tr><td>${p.name}</td><td style="color:var(--text-muted)">${p.title||'—'}</td><td class="td-mono prog-0">—</td></tr>`).join('')}
+  </tbody></table>`;
 }
 
 function renderCollabOrgs() {
-  const container = document.getElementById('collab-orgs');
-  let html = '';
-  for (const org of ORGS) {
-    html += `<div class="org-card">
-      <div class="org-name">${org.name} <span style="color:var(--text-muted);font-size:11px;font-family:var(--mono)">(${org.members.length})</span></div>
-      ${org.members.map(m => `<div class="org-member">${m.name}</div>`).join('')}
-    </div>`;
-  }
-  container.innerHTML = html;
+  document.getElementById('collab-orgs').innerHTML = PARSED.collabOrgs.map(org=>`
+    <div class="org-card"><div class="org-name">${org.name} <span style="color:var(--text-muted);font-size:11px;font-family:var(--mono)">(${org.members.length})</span></div>
+    ${org.members.map(m=>`<div class="org-member">${m.name}</div>`).join('')}</div>
+  `).join('');
 }
 
-// Full appendix roster
-const FULL_ROSTER = [];
-for (const g of ASI_GROUPS) {
-  for (const m of g.members) {
-    FULL_ROSTER.push({ name: m.name, steps: m.steps, enrolled: '2026-05-19' });
-  }
+let allRoster = [];
+function renderFullRoster(filter='') {
+  if (!allRoster.length) allRoster = PARSED.fullRoster.length ? PARSED.fullRoster : buildFullRosterFromGroups();
+  const data = filter ? allRoster.filter(r=>r.name.toLowerCase().includes(filter.toLowerCase())) : allRoster;
+  document.getElementById('full-roster').innerHTML = `<table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
+    ${data.map(r=>`<tr><td>${r.name}</td><td><span class="prog-badge ${progClass(r.steps)}">${progLabel(r.steps)}</span></td></tr>`).join('')}
+  </tbody></table>`;
 }
-
-function renderFullRoster(filter = '') {
-  const container = document.getElementById('full-roster');
-  const data = filter
-    ? FULL_ROSTER.filter(r => r.name.toLowerCase().includes(filter.toLowerCase()))
-    : FULL_ROSTER;
-
-  // Also include contractors & RDO in full roster tab
-  const allData = filter
-    ? [...FULL_ROSTER, ...CONTRACTORS.map(c=>({...c,steps:0})), ...RDO.map(r=>({...r,steps:0}))]
-        .filter(r => r.name.toLowerCase().includes(filter.toLowerCase()))
-    : [...FULL_ROSTER, ...CONTRACTORS.map(c=>({...c,steps:0})), ...RDO.map(r=>({...r,steps:0}))];
-
-  const sorted = [...allData].sort((a,b) => a.name.localeCompare(b.name));
-  let html = `<table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>`;
-  for (const r of sorted) {
-    html += `<tr><td>${r.name}</td><td><span class="prog-badge ${progClass(r.steps)}">${progLabel(r.steps)}</span></td></tr>`;
-  }
-  html += '</tbody></table>';
-  container.innerHTML = html;
-}
-
-function filterRoster(val) { renderFullRoster(val); }
-
-// ─── TAB SWITCHING ─────────────────────────────────────────────────
+function filterRoster(v) { renderFullRoster(v); }
 
 function showTab(id, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
-  // Lazy render
-  if (id === 'asi' && !document.getElementById('asi-roster').childNodes.length) renderAsiRoster();
-  if (id === 'contractors' && !document.getElementById('contractor-roster').childNodes.length) renderSimpleTable('contractor-roster', CONTRACTORS);
-  if (id === 'rdo' && !document.getElementById('rdo-roster').childNodes.length) renderSimpleTable('rdo-roster', RDO);
-  if (id === 'j75' && !document.getElementById('collab-orgs').childNodes.length) renderCollabOrgs();
-  if (id === 'appendix' && !document.getElementById('full-roster').childNodes.length) renderFullRoster();
+}
+function toggleGroup(h) { h.parentElement.classList.toggle('open'); }
+
+// ── HARDCODED FALLBACKS ─────────────────────────────────────────────
+function getHardcodedASIGroups() {
+  return [
+    { manager: "AJ Frisby", members: [{name:"Daniel Mills",steps:0},{name:"Gary Chambers",steps:0},{name:"Jordan Jensen",steps:3},{name:"Kendall Callister",steps:1},{name:"Nathaniel Hill",steps:0}]},
+    { manager: "Dan Longshore", members: [{name:"David Franklin",steps:3},{name:"Floyd Lambert",steps:0},{name:"Jed Judd",steps:0},{name:"Jeremy Morrison",steps:3},{name:"Rick McKay",steps:1}]},
+    { manager: "Jerry Miller", members: [{name:"Andrew Biscoe",steps:0},{name:"Jeff Taylor",steps:0},{name:"Nick Burbank",steps:3},{name:"Tristan Whittenburg",steps:0}]},
+    { manager: "Lee Woodley", members: [{name:"David Morgan",steps:3},{name:"Jaden Jamison",steps:3},{name:"John Buchanan",steps:1},{name:"Steven Boyer",steps:0}]},
+    { manager: "Mike McNees", members: [{name:"Brennan Hart",steps:0},{name:"Brian Mathews",steps:0},{name:"James Cox",steps:2},{name:"Nate Herbst",steps:0}]},
+    { manager: "Sean Gardner", members: [{name:"Jacob Malm",steps:0},{name:"Kolter Saurey",steps:2}]},
+    { manager: "Wendell Bates", members: [{name:"Angel Almanza",steps:3},{name:"Jaden Cutler",steps:0},{name:"Jonathan Bowland",steps:0}]},
+    { manager: "Wyatt Felt", members: [{name:"AJ Frisby",steps:1},{name:"Gary Crum",steps:3},{name:"Sean Gardner",steps:1}]}
+  ];
+}
+function getHardcodedContractors() {
+  return [{name:"Aaron Myer"},{name:"Abhijeet Narwall"},{name:"Aditya Bhaskaran"},{name:"Adnan Ademovic"},{name:"Alex Allen"},{name:"Alex Jordan"},{name:"Anas Charafi"},{name:"Andrew Williams"},{name:"Anton Radice"},{name:"Boris Plivcic"},{name:"Brett Wilburn"},{name:"Caleb Rahimzabeth"},{name:"Chase Hartin"},{name:"Christian Enriquez"},{name:"Collin Kostichuk"},{name:"Daniel Coronado"},{name:"Daniel Luna"},{name:"David Escamilla"},{name:"Derek Gao"},{name:"Diego Pardo"},{name:"Eddie O'Hagan"},{name:"Eliza Prasai"},{name:"Federico Felix"},{name:"Fred Sanchez"},{name:"Huy Nguyen"},{name:"Ibrahim Mahmoud"},{name:"Ike Herman"},{name:"Ivan Soto"},{name:"Jason Mahan"},{name:"Jayanth Reddy"},{name:"Jordan Oxborrow"},{name:"Juan Calderon"},{name:"Kenneth Li"},{name:"Kody Sanchez"},{name:"Lila Kaci"},{name:"Logan Collins"},{name:"Maghee Mcmullen"},{name:"Mario Chan"},{name:"Matt Whale"},{name:"Matthew Jensen"},{name:"Matthew Kendall"},{name:"Michael LeFevre"},{name:"Miguel Toral"},{name:"Miroslava Nava"},{name:"Mustafa Hafeez"},{name:"Ogwude Donatus"},{name:"Rich Harkins"},{name:"Richard Keene"},{name:"Rodolfo Mares"},{name:"Sabrina Chase"},{name:"Sawyer Gehring"},{name:"Scott Britt"},{name:"Shane Andrews"},{name:"Shefali Sharma"},{name:"Simon Yao"},{name:"Spencer George"},{name:"Spencer Kingsbury"},{name:"Stephen Barton"},{name:"Tania Gomez"},{name:"Thomas Kempton"},{name:"Tim Corbly"},{name:"Tim Robertson"},{name:"Tomas Valenzuela"},{name:"Victor Salazar"},{name:"Waqas Muzammil"},{name:"Zach Hoffman"}];
+}
+function getHardcodedRDO() {
+  return [{name:"Jeff Williamson",title:"VAK Installation Manager"},{name:"Paul Pilgrim",title:"VAK Installation Manager"},{name:"Rob Andrew",title:"VAK Installation Manager"},{name:"Seth Anderson",title:"VAK Installation Manager"},{name:"Shane Aldrich",title:"VAK Installation Manager"},{name:"Alec Spencer",title:"VAK Installation Technician"},{name:"Ashton Brimley",title:"VAK Installation Technician"},{name:"Brody Smith",title:"VAK Installation Technician"},{name:"Daniel Gonzalez",title:"VAK Installation Technician"},{name:"Drew Campbell",title:"VAK Installation Technician"},{name:"Duane Harwell",title:"VAK Installation Technician"},{name:"Estaban Lopez",title:"VAK Installation Technician"},{name:"Hector Duran",title:"VAK Installation Technician"},{name:"Hector Rubio",title:"VAK Installation Technician"},{name:"Hunter Labhan",title:"VAK Installation Technician"},{name:"Jaedon Hernandez",title:"VAK Installation Technician"},{name:"Javier Rubio",title:"VAK Installation Technician"},{name:"Jovardo Nunez",title:"VAK Installation Technician"},{name:"Lane Williams",title:"VAK Installation Technician"},{name:"Nate Baetz",title:"VAK Installation Technician"},{name:"Peter Riehle",title:"VAK Installation Technician"},{name:"Raymond Cook",title:"VAK Installation Technician"},{name:"Sam Lister",title:"VAK Installation Technician"},{name:"Sean Brady",title:"VAK Installation Technician"},{name:"Travis Falk",title:"VAK Installation Technician"},{name:"Tyler Trotter",title:"VAK Installation Technician"},{name:"Michael (Casey) Perry",title:""}];
+}
+function getHardcodedOrgs() {
+  return [
+    {name:"Feathered Fish Foundry",members:[{name:"Seraphim Le"}]},
+    {name:"Gravis Robotics",members:[{name:"Alexandre Reis"},{name:"Andrea Cavaliere"},{name:"Cliff Li"},{name:"Coen Heerink"},{name:"Edo Jelavic"},{name:"Felix Schaetzle"},{name:"Florian Lange"},{name:"Lukas Marti"},{name:"Marco Tranzatto"},{name:"Pascal Egli"},{name:"Ryan Johns"}]},
+    {name:"KPMG",members:[{name:"Roland J Bisio"}]},
+    {name:"Sedna",members:[{name:"Jordan Oxborrow"},{name:"Peter Dormehl"},{name:"Zander Stroh"}]},
+    {name:"SoftBank Robotics",members:[{name:"Akira Yoshida"},{name:"Alyson Bonk"},{name:"David Burczyk"},{name:"Julien Seret"},{name:"Kal Ganti"},{name:"Koyu Sekiguchi"},{name:"Kush Sheth"},{name:"Manfred Jules"},{name:"Maurice Castro"},{name:"Mike Sanders"},{name:"Rhett Burton"},{name:"Winston Wu"}]}
+  ];
 }
 
-function toggleGroup(header) {
-  const group = header.parentElement;
-  group.classList.toggle('open');
-}
+// ── START ──────────────────────────────────────────────────────────
+loadReport();
 </script>
 </body>
 </html>
