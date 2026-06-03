@@ -8,12 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <style>
-  :root {
-    --bg:#0d1117;--surface:#161b22;--surface2:#1c2230;--border:#21262d;--border-bright:#30363d;
-    --text:#e6edf3;--text-muted:#7d8590;--text-dim:#484f58;--accent:#f0a500;--accent2:#58a6ff;
-    --green:#3fb950;--amber:#d29922;--orange:#f0883e;--red:#f85149;--asi-blue:#1e6fd9;
-    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
-  }
+  :root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2230;--border:#21262d;--border-bright:#30363d;--text:#e6edf3;--text-muted:#7d8590;--text-dim:#484f58;--accent:#f0a500;--accent2:#58a6ff;--green:#3fb950;--amber:#d29922;--orange:#f0883e;--red:#f85149;--asi-blue:#1e6fd9;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;}
   .site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;}
@@ -34,20 +29,20 @@
   .hero h1{font-size:28px;font-weight:600;color:var(--text);line-height:1.2;margin-bottom:6px;}
   .hero-sub{color:var(--text-muted);font-size:13px;margin-bottom:28px;}
   .hero-sub strong{color:var(--accent2);}
-  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;max-width:960px;}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:1040px;}
   .stat-card{background:rgba(255,255,255,.04);border:1px solid var(--border-bright);border-radius:8px;padding:16px 18px;}
   .stat-card.highlight{border-color:var(--asi-blue);}
-  .stat-value{font-family:var(--mono);font-size:32px;font-weight:600;line-height:1;margin-bottom:4px;}
+  .stat-value{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1;margin-bottom:4px;}
   .stat-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;}
-  .stat-journey{font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:6px;}
-  .c-green{color:var(--green);}.c-amber{color:var(--amber);}.c-orange{color:var(--orange);}.c-blue{color:var(--accent2);}.c-red{color:var(--red);}
+  .stat-sub{font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:6px;}
+  .c-green{color:var(--green);}.c-amber{color:var(--amber);}.c-orange{color:var(--orange);}.c-blue{color:var(--accent2);}.c-red{color:var(--red);}.c-purple{color:#a78bfa;}
   .main{max-width:1080px;margin:0 auto;padding:32px;display:none;}
   .section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
   .section-header h2{font-size:16px;font-weight:600;color:var(--text);}
-  .section-header .section-meta{font-family:var(--mono);font-size:11px;color:var(--text-muted);}
+  .section-meta{font-family:var(--mono);font-size:11px;color:var(--text-muted);}
   .section-block{margin-bottom:40px;}
   .tab-nav{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:20px;flex-wrap:wrap;}
-  .tab-btn{font-family:var(--sans);font-size:13px;font-weight:500;padding:8px 16px;background:none;border:none;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;}
+  .tab-btn{font-family:var(--sans);font-size:13px;font-weight:500;padding:8px 14px;background:none;border:none;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;}
   .tab-btn:hover{color:var(--text);}
   .tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent2);}
   .tab-panel{display:none;}.tab-panel.active{display:block;}
@@ -63,6 +58,7 @@
   .prog-25{color:var(--orange);background:rgba(240,136,62,.1);}
   .prog-50{color:var(--amber);background:rgba(210,153,34,.1);}
   .prog-75{color:var(--green);background:rgba(63,185,80,.1);}
+  .prog-100{color:#a78bfa;background:rgba(167,139,250,.1);}
   .roster-group{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;}
   .roster-group-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;user-select:none;background:var(--surface2);transition:background .15s;}
   .roster-group-header:hover{background:#1f2937;}
@@ -77,28 +73,30 @@
   .chip-75{border-color:var(--green);color:var(--green);background:rgba(63,185,80,.08);}
   .chip-50{border-color:var(--amber);color:var(--amber);background:rgba(210,153,34,.08);}
   .chip-25{border-color:var(--orange);color:var(--orange);background:rgba(240,136,62,.08);}
+  .chip-100{border-color:#a78bfa;color:#a78bfa;background:rgba(167,139,250,.08);}
   .progress-group-title{font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:6px 0;margin-bottom:8px;}
-  .progress-row{display:grid;grid-template-columns:120px 1fr 60px 50px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
+  .progress-row{display:grid;grid-template-columns:130px 1fr 60px 50px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
   .progress-row:last-child{border-bottom:none;}
   .progress-pct-label{font-family:var(--mono);font-size:12px;font-weight:600;}
   .bar-track{background:var(--surface2);border-radius:4px;height:8px;overflow:hidden;}
   .bar-fill{height:100%;border-radius:4px;}
-  .bar-fill.not-started{background:var(--border-bright);}.bar-fill.p25{background:var(--orange);}.bar-fill.p50{background:var(--amber);}.bar-fill.p75{background:var(--green);}
+  .bar-fill.not-started{background:var(--border-bright);}.bar-fill.p25{background:var(--orange);}.bar-fill.p50{background:var(--amber);}.bar-fill.p75{background:var(--green);}.bar-fill.p100{background:#a78bfa;}
   .progress-count{font-family:var(--mono);font-size:12px;font-weight:600;text-align:right;}
-  .progress-pct{font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right;}
+  .progress-pct-val{font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right;}
   .notice{background:rgba(30,111,217,.12);border:1px solid rgba(30,111,217,.35);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--accent2);margin-bottom:20px;}
   .org-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
   .org-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;}
   .org-name{font-weight:600;font-size:13px;margin-bottom:8px;color:var(--accent2);}
-  .org-member{font-size:12px;color:var(--text-muted);padding:2px 0;}
+  .org-member{font-size:12px;color:var(--text-muted);padding:2px 0;display:flex;justify-content:space-between;}
   .journey-steps{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
   .journey-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
   .journey-card-header{background:var(--surface2);padding:10px 16px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);border-bottom:1px solid var(--border);}
-  .journey-step-row{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;padding:8px 16px;border-bottom:1px solid var(--border);font-size:13px;}
+  .journey-step-row{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 16px;border-bottom:1px solid var(--border);font-size:13px;}
   .journey-step-row:last-child{border-bottom:none;}
   .step-num{font-family:var(--mono);font-size:11px;color:var(--text-dim);font-weight:600;}
   .step-type{font-family:var(--mono);font-size:10px;background:var(--surface2);color:var(--text-muted);padding:2px 6px;border-radius:3px;white-space:nowrap;}
   input[type=text]{width:100%;padding:8px 12px;background:var(--surface);border:1px solid var(--border-bright);border-radius:6px;color:var(--text);font-family:var(--sans);font-size:13px;margin-bottom:12px;outline:none;}
+  .journey-banner{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);border-radius:6px;padding:10px 14px;font-size:12px;color:#a78bfa;margin-bottom:16px;}
   footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-top:40px;}
   footer a{color:var(--text-muted);text-decoration:none;}
   @media(max-width:700px){.hero{padding:28px 16px 24px;}.main{padding:20px 16px;}.journey-steps{grid-template-columns:1fr;}.stat-grid{grid-template-columns:repeat(2,1fr);}.progress-row{grid-template-columns:90px 1fr 50px 40px;}.site-header{padding:0 16px;}}
@@ -107,34 +105,36 @@
 <body>
 <header class="site-header">
   <div class="brand"><span class="brand-badge">ASI</span>Training &amp; Development / Southridge</div>
-  <div class="report-meta" id="header-meta">Loading report…</div>
+  <div class="report-meta" id="header-meta">Loading…</div>
 </header>
 <div class="loading-screen" id="loading"><div class="spinner"></div><div class="loading-text">Loading latest report…</div></div>
 <div class="error-screen" id="error-screen">
   <div style="font-size:40px">⚠️</div>
   <div class="error-title">Report Not Found</div>
-  <div class="error-msg" id="error-msg">Could not load report.docx. Please ensure Ben has uploaded the latest file to the repository.</div>
+  <div class="error-msg" id="error-msg">Could not load report.docx. Please ensure the file has been uploaded correctly to the repository.</div>
 </div>
 <section class="hero" id="hero">
-  <div class="hero-label" id="hero-label">Journeys 71 &amp; 75 — Daily Status Report</div>
+  <div class="hero-label">Journeys 71 &amp; 77 — Daily Status Report</div>
   <h1>Southridge Site Certification</h1>
-  <p class="hero-sub">Training Journey Completion Report &nbsp;·&nbsp; <strong id="hero-status">Early-Stage Rollout</strong></p>
+  <p class="hero-sub">Training Journey Completion Report &nbsp;·&nbsp; <strong id="hero-status">Loading…</strong></p>
   <div class="stat-grid" id="stat-grid"></div>
 </section>
 <main class="main" id="main-content">
   <div class="notice" id="notice-banner"></div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="showTab('overview',this)">Overview</button>
-    <button class="tab-btn" onclick="showTab('inprogress',this)" id="btn-inprogress">In-Progress</button>
+    <button class="tab-btn" onclick="showTab('inprogress',this)" id="btn-ip">In-Progress</button>
     <button class="tab-btn" onclick="showTab('asi',this)" id="btn-asi">ASI Employees</button>
-    <button class="tab-btn" onclick="showTab('contractors',this)" id="btn-contractors">Contractors</button>
+    <button class="tab-btn" onclick="showTab('contractors',this)" id="btn-con">Contractors</button>
     <button class="tab-btn" onclick="showTab('rdo',this)" id="btn-rdo">RDO Equipment</button>
-    <button class="tab-btn" onclick="showTab('j75',this)" id="btn-j75">Collaborators J75</button>
+    <button class="tab-btn" onclick="showTab('j77',this)" id="btn-j77">Collaborators J77</button>
+    <button class="tab-btn" onclick="showTab('j68',this)" id="btn-j68">Level III J68</button>
     <button class="tab-btn" onclick="showTab('appendix',this)">Full Roster</button>
   </div>
+  <!-- OVERVIEW -->
   <div class="tab-panel active" id="tab-overview">
     <div class="section-block">
-      <div class="section-header"><h2>Journey Structure</h2><span class="section-meta">Journeys 71 &amp; 75 — Published May 2026</span></div>
+      <div class="section-header"><h2>Journey Structure</h2><span class="section-meta">Journeys 71 &amp; 77 — Published May 2026</span></div>
       <div class="journey-steps">
         <div class="journey-card">
           <div class="journey-card-header">Journey 71 — Southridge Site Certification</div>
@@ -144,11 +144,14 @@
           <div class="journey-step-row"><span class="step-num">4</span><span>Site Safety Briefing: Southridge</span><span class="step-type">Live Training</span></div>
         </div>
         <div class="journey-card">
-          <div class="journey-card-header">Journey 75 — Southridge Collaborator Site Certification</div>
-          <div class="journey-step-row"><span class="step-num">1</span><span>Level II Collaborator Safety Certification</span><span class="step-type">Sub-Journey</span></div>
-          <div class="journey-step-row"><span class="step-num">2–4</span><span>Additional steps pending enrollment progress</span><span class="step-type">—</span></div>
+          <div class="journey-card-header">Journey 77 — Southridge Collaborator Site Certification</div>
+          <div class="journey-step-row"><span class="step-num">A</span><span>Level II Collaborator Safety Certification</span><span class="step-type">Sub-Journey (4 items)</span></div>
+          <div class="journey-step-row"><span class="step-num">B</span><span>Titan Sites Focus Four Safety Training</span><span class="step-type">Online Course</span></div>
+          <div class="journey-step-row"><span class="step-num">C</span><span>Southridge Emergency Response Plan Training</span><span class="step-type">Online Course</span></div>
+          <div class="journey-step-row"><span class="step-num">D</span><span>Site Safety Briefing: Southridge</span><span class="step-type">Live Training</span></div>
         </div>
       </div>
+      <div class="notice" style="margin-top:0">Journey 77 replaces Journey 75. Unlike J71, J77 does not enforce step completion order — collaborators may complete the four items in any sequence.</div>
     </div>
     <div class="section-block">
       <div class="section-header"><h2>Journey 71 — Progress Breakdown</h2><span class="section-meta" id="j71-meta"></span></div>
@@ -159,38 +162,54 @@
       <div id="enrollment-table"></div>
     </div>
   </div>
+  <!-- IN PROGRESS -->
   <div class="tab-panel" id="tab-inprogress">
     <div class="section-block">
-      <div class="section-header"><h2>In-Progress Participants</h2><span class="section-meta" id="inprogress-meta"></span></div>
+      <div class="section-header"><h2>In-Progress Participants — Journey 71</h2><span class="section-meta" id="ip-meta"></span></div>
       <div id="inprogress-content"></div>
     </div>
   </div>
+  <!-- ASI -->
   <div class="tab-panel" id="tab-asi">
     <div class="section-block">
       <div class="section-header"><h2>ASI Employees — Journey 71</h2><span class="section-meta" id="asi-meta"></span></div>
       <div id="asi-roster"></div>
     </div>
   </div>
+  <!-- CONTRACTORS -->
   <div class="tab-panel" id="tab-contractors">
     <div class="section-block">
-      <div class="section-header"><h2>Contractors — Journey 71</h2><span class="section-meta" id="contractor-meta"></span></div>
-      <div class="notice">Manager information is not currently captured for contractor accounts. None have started yet.</div>
+      <div class="section-header"><h2>Contractors — Journey 71</h2><span class="section-meta" id="con-meta"></span></div>
+      <div class="notice">Manager information is not currently captured for contractor accounts.</div>
       <div id="contractor-roster"></div>
     </div>
   </div>
+  <!-- RDO -->
   <div class="tab-panel" id="tab-rdo">
     <div class="section-block">
       <div class="section-header"><h2>RDO Equipment — Journey 71</h2><span class="section-meta" id="rdo-meta"></span></div>
-      <div class="notice">All RDO employees hold VAK Installation roles. Manager information is not captured for external partner accounts. None have started yet.</div>
+      <div class="notice">All RDO employees hold VAK Installation roles. Manager information is not captured for external partner accounts.</div>
       <div id="rdo-roster"></div>
     </div>
   </div>
-  <div class="tab-panel" id="tab-j75">
+  <!-- J77 -->
+  <div class="tab-panel" id="tab-j77">
     <div class="section-block">
-      <div class="section-header"><h2>External Collaborators — Journey 75</h2><span class="section-meta" id="j75-meta"></span></div>
+      <div class="section-header"><h2>External Collaborators — Journey 77</h2><span class="section-meta" id="j77-meta"></span></div>
+      <div class="journey-banner">Journey 77 replaces Journey 75. Andrea Cavaliere (Gravis) and Coen Heerink (SoftBank Robotics) have started as of this report.</div>
       <div class="org-grid" id="collab-orgs"></div>
     </div>
   </div>
+  <!-- J68 -->
+  <div class="tab-panel" id="tab-j68">
+    <div class="section-block">
+      <div class="section-header"><h2>Level III Safety Certification for Managers — Journey 68</h2><span class="section-meta" id="j68-meta"></span></div>
+      <div class="journey-banner">Journey 68 is a 2-step journey for ASI managers: Step 1 is the Level II Safety Certification sub-journey; Step 2 is the Level III certification. No contractor, RDO, or collaborator participants are enrolled.</div>
+      <div id="j68-progress"></div>
+      <div style="margin-top:24px" id="j68-roster"></div>
+    </div>
+  </div>
+  <!-- APPENDIX -->
   <div class="tab-panel" id="tab-appendix">
     <div class="section-block">
       <div class="section-header"><h2>Full Enrollment List — Journey 71</h2><span class="section-meta" id="appendix-meta"></span></div>
@@ -202,462 +221,181 @@
 <footer>ASI Robots | Training &amp; Development &nbsp;·&nbsp; Southridge Site Certification Report &nbsp;·&nbsp; Auto-generated from Bridge Training Platform Export &nbsp;·&nbsp; <a href="https://www.asirobots.com">asirobots.com</a></footer>
 
 <script>
-// ─── CONSTANTS ────────────────────────────────────────────────────
 const DOCX_URL = 'https://raw.githubusercontent.com/autonomousservices/southridge-cert-report/main/report.docx';
 
-// ─── STATE ────────────────────────────────────────────────────────
-const D = {
-  reportDate:'—', j71Enrolled:0, j71InProgress:0, j71Complete:0, j75Enrolled:0,
-  p75:[], p50:[], p25:[],
-  asiGroups:[], contractors:[], rdo:[], collabOrgs:[],
-  fullRoster:[]
+// ── HARDCODED DATA (from June 2, 2026 end-of-day report) ──────────
+const DATA = {
+  reportDate: 'June 2, 2026 (end of day)',
+  j71: { enrolled: 425, complete: 0, inProgress: 62, notStarted: 363 },
+  j77: { enrolled: 36, complete: 0, inProgress: 2, notStarted: 34 },
+  j68: { enrolled: 85, complete: 12, inProgress: 12, notStarted: 61 },
+  p75: ['Abigail Morris','Alex Jordan','Andrew Biscoe','Angel Almanza','Aravind Venkatesan','Ayad Jabbouri','Ben Willis','Bill Gilson','Brian Christiansen','Brian Nguyen','Brody Smith','Dan Longshore','Daniel Smith','David Franklin','David Morgan','Dennis Cox','Deric Thomas','Duncan Parrish','Gary Crum','Jacob Kalberer','Jaden Jamison','James Cox','Jarom Nordstrom','Jason Wynne','Jeff Williamson','Jeremy Morrison','John Buchanan','Jordan Jensen','Juan Calderon','Layne Pyfer','Lee Woodley','Mustafa Hafeez','Nick Burbank','Paul Pilgrim','Rod DeMay','Sabrina Chase','Saje Searle','Sean Gardner','Sudheer Kaku','Waqas Muzammil'],
+  p50: ['Jeff Taylor','John Cappelli','Kolter Saurey','Matthew Hildreth','Mike McNees','Mikey Reimer'],
+  p25: ['AJ Frisby','Anton Usik','Bob Cox','Don Olsen','Gary Chambers','Ivar Fuentes','Jovardo Nunez','Kason Rees','Kendall Callister','Levi Pulford','Madhav Patil','Mick Groll','Rick McKay','Sami Boufakhreddine','Sean Brady','Taylor Spencer'],
+  j68complete: ['Dan Longshore','Daniel Smith','David Franklin','Jeff Williamson','Jeremy Morrison','Layne Pyfer','Madhav Patil','Mike McNees','Paul Pilgrim','Rod DeMay','Sean Gardner','Sudheer Kaku'],
+  j68inprogress: ['AJ Frisby','Ben Willis','Courtnie Simmons','David Hayes','David Lovejoy','Juan Trujillo','Lee Woodley','Mike Lichfield','Mikey Reimer','Ryan Soulier','Taleb Zeitouny','Wyatt Felt'],
+  contractors: [
+    {n:'Aaron Myer',s:0},{n:'Abhijeet Narwall',s:0},{n:'Aditya Bhaskaran',s:0},{n:'Adnan Ademovic',s:0},{n:'Adolfo Becerril',s:0},{n:'Alejandro Sosa',s:0},{n:'Alex Allen',s:0},{n:'Alex Jordan',s:3},{n:'Alex Rice',s:0},{n:'Anas Charafi',s:0},{n:'Andrew Williams',s:0},{n:'Angeles Bayardo',s:0},{n:'Anton Radice',s:0},{n:'Anton Usik',s:1},{n:'Aravind Venkatesan',s:3},{n:'Arnaud Moulas',s:0},{n:'Asha Veena',s:0},{n:'Ben Miller',s:0},{n:'Boris Plivcic',s:0},{n:'Brett Wilburn',s:0},{n:'Brian Christiansen',s:3},{n:'Buelah Kamadana',s:0},{n:'Caleb Rahimzabeth',s:0},{n:'Chandrashekhar Patil',s:0},{n:'Chase Hartin',s:0},{n:'Chinmay Takale',s:0},{n:'Christian Enriquez',s:0},{n:'Collin Kostichuk',s:0},{n:'Colton Anderson',s:0},{n:'Daniel Coronado',s:0},{n:'Daniel Luna',s:0},{n:'David Escamilla',s:0},{n:'Davin Willaby',s:0},{n:'Derek Gao',s:0},{n:'Diego Pardo',s:0},{n:"Eddie O'Hagan",s:0},{n:'Edgar Cuella',s:0},{n:'Eliza Prasai',s:0},{n:'Esperanza Vazquez',s:0},{n:'Federico Felix',s:0},{n:'Fred Sanchez',s:0},{n:'Frederic Rocha',s:0},{n:'Huy Nguyen',s:0},{n:'Ike Herman',s:0},{n:'Ivan Hinojosa',s:0},{n:'Ivan Shchukin',s:0},{n:'Ivan Soto',s:0},{n:'Ivar Fuentes',s:1},{n:'Jason Mahan',s:0},{n:'Jayanth Reddy',s:0},{n:'Jittu Kuruvilla',s:0},{n:'Joao Passaro',s:0},{n:'Jordan Oxborrow',s:0},{n:'Josue Mejía',s:0},{n:'Juan Calderon',s:3},{n:'Juan-Pablo Mateos',s:0},{n:'Kenneth Li',s:0},{n:'Kody Sanchez',s:0},{n:'Kyle Provost',s:0},{n:'Lila Kaci',s:0},{n:'Logan Collins',s:0},{n:'Luis-Fernando Florez',s:0},{n:'Maghee Mcmullen',s:0},{n:'Manikanta Chavakula',s:0},{n:'Mario Chan',s:0},{n:'Matt Whale',s:0},{n:'Matthew Jensen',s:0},{n:'Matthew Kendall',s:0},{n:'Matthew Smith',s:0},{n:'Mattieu Berger',s:0},{n:'Mazen Khattab',s:0},{n:'Michael LeFevre',s:0},{n:'Miguel Toral',s:0},{n:'Miroslava Nava',s:0},{n:'Montserrat Ramirez',s:0},{n:'Mustafa Hafeez',s:3},{n:'Namithashree Gowda',s:0},{n:'Ogwude Donatus',s:0},{n:'Osha Washington',s:0},{n:'Prasad Mrln',s:0},{n:'Rich Harkins',s:0},{n:'Richard Keene',s:0},{n:'Rodolfo Mares',s:0},{n:'Sabrina Chase',s:3},{n:'Sael Gonzalez',s:0},{n:'Sagubar Thulkarunai',s:0},{n:'Sanjeev K.B',s:0},{n:'Sawyer Gehring',s:0},{n:'Scott Britt',s:0},{n:'Scott Meoak',s:0},{n:'Sergio Salazar',s:0},{n:'Shahboz Sharipov',s:0},{n:'Shane Andrews',s:0},{n:'Shefali Sharma',s:0},{n:'Shijun Tian',s:0},{n:'Simon Yao',s:0},{n:'Spencer George',s:0},{n:'Spencer Kingsbury',s:0},{n:'Stephen Barton',s:0},{n:'Sudhakar Yalamanchili',s:0},{n:'Tania Gomez',s:0},{n:'Tanner Uffelman',s:0},{n:'Thomas Kempton',s:0},{n:'Tim Corbly',s:0},{n:'Tim Robertson',s:0},{n:'Tomas Valenzuela',s:0},{n:'Victor Salazar',s:0},{n:'Vindhya Cheemalakonda',s:0},{n:'Waqas Muzammil',s:3},{n:'Zach Hoffman',s:0}
+  ],
+  rdo: [
+    {n:'Alec Spencer',s:0},{n:'Ashton Brimley',s:0},{n:'Brody Smith',s:3},{n:'Daniel Gonzalez',s:0},{n:'Drew Campbell',s:0},{n:'Duane Harwell',s:0},{n:'Estaban Lopez',s:0},{n:'Hector Duran',s:0},{n:'Hector Rubio',s:0},{n:'Hunter Labhan',s:0},{n:'Jaedon Hernandez',s:0},{n:'Javier Rubio',s:0},{n:'Jeff Williamson',s:3},{n:'Jovardo Nunez',s:1},{n:'Lane Williams',s:0},{n:'Michael (Casey) Perry',s:0},{n:'Nate Baetz',s:0},{n:'Paul Pilgrim',s:3},{n:'Peter Riehle',s:0},{n:'Raymond Cook',s:0},{n:'Rob Andrew',s:0},{n:'Sam Lister',s:0},{n:'Sean Brady',s:1},{n:'Seth Anderson',s:0},{n:'Shane Aldrich',s:0},{n:'Travis Falk',s:0},{n:'Tyler Trotter',s:0}
+  ],
+  collabOrgs: [
+    {name:'Gravis Robotics',members:[{n:'Alexandre Reis',s:0},{n:'Andrea Cavaliere',s:3},{n:'Cliff Li',s:0},{n:'Coen Heerink',s:1},{n:'Edo Jelavic',s:0},{n:'Felix Schaetzle',s:0},{n:'Florian Lange',s:0},{n:'Lukas Marti',s:0},{n:'Marco Tranzatto',s:0},{n:'Pascal Egli',s:0},{n:'Ryan Johns',s:0},{n:'Ioannis Dimitrios Zoulias',s:1},{n:'Ben Levin',s:1}]},
+    {name:'KPMG',members:[{n:'Roland J Bisio',s:1}]},
+    {name:'Sedna',members:[{n:'Jordan Oxborrow',s:1},{n:'Peter Dormehl',s:0},{n:'Zander Stroh',s:0},{n:'Braeden Raddatz',s:0},{n:'Conley Wyatt',s:0},{n:'Darryl Mitchell',s:0},{n:'Rhiley Bauman',s:0},{n:'Sam Hendricks',s:0},{n:'Thomas Dowd',s:0},{n:'Tyler Cobb',s:0}]},
+    {name:'SoftBank Robotics',members:[{n:'Akira Yoshida',s:0},{n:'Alyson Bonk',s:0},{n:'Coen Heerink',s:1},{n:'David Burczyk',s:2},{n:'Julien Seret',s:0},{n:'Kal Ganti',s:1},{n:'Koyu Sekiguchi',s:0},{n:'Kush Sheth',s:0},{n:'Manfred Jules',s:1},{n:'Maurice Castro',s:0},{n:'Mike Sanders',s:2},{n:'Rhett Burton',s:2},{n:'Seraphim Le',s:2},{n:'Winston Wu',s:0}]}
+  ],
+  j68roster: [
+    {n:'AJ Frisby',s:1},{n:'Aaron Quiggle',s:0},{n:'Alex McClarty',s:0},{n:'Alex Punnoose',s:0},{n:'Alok Srivastava',s:0},{n:'Alysa Young',s:0},{n:'BRETT Bell',s:0},{n:'Ben Spendlove',s:0},{n:'Ben Willis',s:1},{n:'Bill Ketchel',s:0},{n:'Bret Turpin',s:0},{n:'Brian Freeman',s:0},{n:'Brian Kelly',s:0},{n:'Brian Kwant',s:0},{n:'Brian Palmer',s:0},{n:'Carlo Bos',s:0},{n:'Chris Darais',s:0},{n:'Chris Mann',s:0},{n:'Cody Pickering',s:0},{n:'Courtnie Simmons',s:1},{n:'Dan Longshore',s:2},{n:'Daniel Smith',s:2},{n:'Dave Thomas',s:0},{n:'David Franklin',s:2},{n:'David Hayes',s:1},{n:'David Lovejoy',s:1},{n:'Dax Fackrell',s:0},{n:'Doug Taylor',s:0},{n:'Floyd Lambert',s:0},{n:'Gary Chambers',s:0},{n:'Jake Yeagley',s:0},{n:'Jaremy Butler',s:0},{n:'Jaren Devey',s:0},{n:'Jason Mevius',s:0},{n:'Jeff Ferrin',s:0},{n:'Jeff Williamson',s:2},{n:'Jeremy Morrison',s:2},{n:'Jerry Miller',s:0},{n:'Joel Atwater',s:0},{n:'John Collins',s:0},{n:'John Gull',s:0},{n:'Jose Rendon',s:0},{n:'Joshua Williams',s:0},{n:'Juan Trujillo',s:1},{n:'Kenny Higgs',s:0},{n:'Kevin Westwood',s:0},{n:'Layne Pyfer',s:2},{n:'Lee Woodley',s:1},{n:'Madhav Patil',s:2},{n:'Mark Harris',s:0},{n:'Masoud Osqueezadeh',s:0},{n:'Matt Smith',s:0},{n:'Michael Edvalson',s:0},{n:'Michael Mayberry',s:0},{n:'Mike Lichfield',s:1},{n:'Mike McNees',s:2},{n:'Mikey Reimer',s:1},{n:'Mitch Torrie',s:0},{n:'Nathan Yost',s:0},{n:'Nishedh Joshi',s:0},{n:'Paul Lewis',s:0},{n:'Paul Pilgrim',s:2},{n:'Quinn Ferre',s:0},{n:'Rob Andrew',s:0},{n:'Rob Hopkins',s:0},{n:'Rod DeMay',s:2},{n:'Rod Lewis',s:0},{n:'Ryan Soulier',s:1},{n:'Sam Robinson',s:0},{n:'Scott Hillyard',s:0},{n:'Scott McCurdy',s:0},{n:'Sean Gardner',s:2},{n:'Seth Anderson',s:0},{n:'Shane Aldrich',s:0},{n:'Sheridan Guymon',s:0},{n:'Sudheer Kaku',s:2},{n:'Taleb Zeitouny',s:1},{n:'Todd Orme',s:0},{n:'Tony Rifici',s:0},{n:'Tony Spencer',s:0},{n:'Trevor Carter',s:0},{n:'Tucker Brady',s:0},{n:'Wendell Bates',s:0},{n:'Wyatt Felt',s:1},{n:'Zeke Susman',s:0}
+  ],
+  fullRoster: []
 };
 
-// ─── LOAD ─────────────────────────────────────────────────────────
-async function loadReport() {
-  try {
-    const resp = await fetch(DOCX_URL + '?t=' + Date.now());
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const buf = await resp.arrayBuffer();
-    const result = await mammoth.extractRawText({ arrayBuffer: buf });
-    parse(result.value);
-    render();
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('hero').style.display = 'block';
-    document.getElementById('main-content').style.display = 'block';
-  } catch(e) {
-    document.getElementById('loading').style.display = 'none';
-    const es = document.getElementById('error-screen');
-    es.style.display = 'flex';
-    document.getElementById('error-msg').textContent = e.message;
-  }
-}
+// Build full roster from appendix data
+const FULL_ROSTER_RAW = [
+  {n:'AJ Frisby',s:1,e:'2026-05-19'},{n:'Aaron Jarrett',s:0,e:'2026-05-25'},{n:'Aaron Myer',s:0,e:'2026-05-28'},{n:'Abhijeet Narwall',s:0,e:'2026-05-28'},{n:'Abigail Morris',s:3,e:'2026-05-19'},{n:'Adam Butler',s:0,e:'2026-05-20'},{n:'Aditya Bhaskaran',s:0,e:'2026-05-28'},{n:'Adnan Ademovic',s:0,e:'2026-05-28'},{n:'Adolfo Becerril',s:0,e:'2026-05-28'},{n:'Aidan Khalil',s:0,e:'2026-05-19'},{n:'Alec Spencer',s:0,e:'2026-05-19'},{n:'Alejandro Rubiano',s:0,e:'2026-05-19'},{n:'Alejandro Sosa',s:0,e:'2026-05-28'},{n:'Alex Allen',s:0,e:'2026-05-28'},{n:'Alex Field',s:0,e:'2026-05-19'},{n:'Alex Gall',s:0,e:'2026-05-19'},{n:'Alex Goodan',s:0,e:'2026-05-19'},{n:'Alex Jordan',s:3,e:'2026-05-27'},{n:'Alex Punnoose',s:0,e:'2026-05-20'},{n:'Alex Rice',s:0,e:'2026-05-28'},{n:'Alise Jensen',s:0,e:'2026-05-19'},{n:'Alok Srivastava',s:0,e:'2026-05-20'},{n:'Alysa Young',s:0,e:'2026-05-19'},{n:'Amy Domino',s:0,e:'2026-05-19'},{n:'Anas Charafi',s:0,e:'2026-05-28'},{n:'Andinet Hunde',s:0,e:'2026-05-19'},{n:'Andrew Biscoe',s:3,e:'2026-05-19'},{n:'Andrew Roithmayr',s:0,e:'2026-05-19'},{n:'Andrew Torrie',s:0,e:'2026-05-19'},{n:'Andrew Williams',s:0,e:'2026-05-28'},{n:'Andy Stettler',s:0,e:'2026-05-19'},{n:'Angel Almanza',s:3,e:'2026-05-19'},{n:'Angeles Bayardo',s:0,e:'2026-05-28'},{n:'Ann Marie Humble',s:0,e:'2026-05-19'},{n:'Anton Radice',s:0,e:'2026-05-28'},{n:'Anton Usik',s:1,e:'2026-05-28'},{n:'Aravind Venkatesan',s:3,e:'2026-05-27'},{n:'Arnaud Moulas',s:0,e:'2026-05-28'},{n:'Aryan Osqueezadeh',s:0,e:'2026-05-19'},{n:'Asha Veena',s:0,e:'2026-05-28'},{n:'Ashton Brimley',s:0,e:'2026-05-26'},{n:'Ashton Kirkman',s:0,e:'2026-05-19'},{n:'Austin Kandt',s:0,e:'2026-05-20'},{n:'Ayad Jabbouri',s:3,e:'2026-05-19'},{n:'BRETT Bell',s:0,e:'2026-05-19'},{n:'Bao Chau',s:0,e:'2026-05-19'},{n:'Ben Call',s:0,e:'2026-05-19'},{n:'Ben Miller',s:0,e:'2026-05-27'},{n:'Ben Willis',s:3,e:'2026-05-20'},{n:'Ben Zeller',s:0,e:'2026-05-19'},{n:'Benjamin Jensen',s:0,e:'2026-05-19'},{n:'Benson Steinagel',s:0,e:'2026-05-19'},{n:'Bill Gilson',s:3,e:'2026-05-19'},{n:'Bill Ketchel',s:0,e:'2026-05-20'},{n:'Bob Cox',s:1,e:'2026-05-19'},{n:'Boris Plivcic',s:0,e:'2026-05-28'},{n:'Brad Turner',s:0,e:'2026-05-19'},{n:'Bradley Oosterveld',s:0,e:'2026-05-19'},{n:'Brady Hibbard',s:0,e:'2026-05-19'},{n:'Brandon Garrett',s:0,e:'2026-05-19'},{n:'Brendon Parshall',s:0,e:'2026-05-19'},{n:'Brennan Hart',s:0,e:'2026-05-19'},{n:'Bret Turpin',s:0,e:'2026-05-20'},{n:'Brett Wilburn',s:0,e:'2026-05-28'},{n:'Brian Christiansen',s:3,e:'2026-05-28'},{n:'Brian Freeman',s:0,e:'2026-05-20'},{n:'Brian Kwant',s:0,e:'2026-05-19'},{n:'Brian Mathews',s:0,e:'2026-05-19'},{n:'Brian Nguyen',s:3,e:'2026-05-19'},{n:'Brian Palmer',s:0,e:'2026-05-19'},{n:'Brody Smith',s:3,e:'2026-05-19'},{n:'Bryan Rantala',s:0,e:'2026-05-19'},{n:'Buelah Kamadana',s:0,e:'2026-05-28'},{n:'Cailyn Smith',s:0,e:'2026-05-20'},{n:'Caleb Baker',s:0,e:'2026-05-19'},{n:'Caleb Rahimzabeth',s:0,e:'2026-05-28'},{n:'Carlo Bos',s:0,e:'2026-05-26'},{n:'Casey Jeppesen',s:0,e:'2026-05-19'},{n:'Chandrashekhar Patil',s:0,e:'2026-05-28'},{n:'Chase Hartin',s:0,e:'2026-05-28'},{n:'Chinmay Takale',s:0,e:'2026-05-28'},{n:'Christian Enriquez',s:0,e:'2026-05-28'},{n:'Christopher Rees',s:0,e:'2026-05-20'},{n:'Christopher Soremekun',s:0,e:'2026-05-19'},{n:'Cody Pickering',s:0,e:'2026-05-19'},{n:'Colby Richardson',s:0,e:'2026-05-19'},{n:'Collin Kostichuk',s:0,e:'2026-05-28'},{n:'Colton Anderson',s:0,e:'2026-05-28'},{n:'Colton Mikesell',s:0,e:'2026-05-19'},{n:'Cory Brinck',s:0,e:'2026-05-19'},{n:'Cory Christensen',s:0,e:'2026-05-19'},{n:'Craig Robertson',s:0,e:'2026-05-19'},{n:'Dallon Schofield',s:0,e:'2026-05-19'},{n:'Dan Ferkovich',s:0,e:'2026-05-19'},{n:'Dan Hermansen',s:0,e:'2026-05-20'},{n:'Dan Longshore',s:3,e:'2026-05-23'},{n:'Dane Carroll',s:0,e:'2026-05-19'},{n:'Daniel Coronado',s:0,e:'2026-05-28'},{n:'Daniel Drysdale',s:0,e:'2026-05-19'},{n:'Daniel Gonzalez',s:0,e:'2026-05-19'},{n:'Daniel Luna',s:0,e:'2026-05-28'},{n:'Daniel Mills',s:0,e:'2026-05-19'},{n:'Daniel Smith',s:3,e:'2026-05-19'},{n:'Darren Miller',s:0,e:'2026-05-19'},{n:'Darsh Patel',s:0,e:'2026-05-19'},{n:'David Doering',s:0,e:'2026-05-19'},{n:'David Escamilla',s:0,e:'2026-05-28'},{n:'David Franklin',s:3,e:'2026-05-19'},{n:'David Govada',s:0,e:'2026-05-19'},{n:'David Hayes',s:0,e:'2026-05-19'},{n:'David Hollingshead',s:0,e:'2026-05-19'},{n:'David Lopez',s:0,e:'2026-05-19'},{n:'David Lovejoy',s:0,e:'2026-05-19'},{n:'David Morgan',s:3,e:'2026-05-19'},{n:'Davin Willaby',s:0,e:'2026-05-27'},{n:'Davis Foster',s:0,e:'2026-06-01'},{n:'Dennis Cox',s:3,e:'2026-05-19'},{n:'Derek Cramer',s:0,e:'2026-05-20'},{n:'Derek Gao',s:0,e:'2026-05-28'},{n:'Derek Withers',s:0,e:'2026-05-19'},{n:'Deric Thomas',s:3,e:'2026-05-25'},{n:'Deven Roberts',s:0,e:'2026-05-20'},{n:'Diego Pardo',s:0,e:'2026-05-28'},{n:'Don Olsen',s:1,e:'2026-05-19'},{n:'Doug Taylor',s:0,e:'2026-05-20'},{n:'Drew Campbell',s:0,e:'2026-05-19'},{n:'Duane Damon',s:0,e:'2026-05-19'},{n:'Duane Harwell',s:0,e:'2026-05-19'},{n:'Duncan Parrish',s:3,e:'2026-05-19'},{n:"Eddie O'Hagan",s:0,e:'2026-05-28'},{n:'Edgar Cuella',s:0,e:'2026-05-28'},{n:'Eli Taylor',s:0,e:'2026-05-20'},{n:'Eliza Prasai',s:0,e:'2026-05-28'},{n:'Eric Borjas',s:0,e:'2026-05-19'},{n:'Eric Hopper',s:0,e:'2026-05-19'},{n:'Eric Mecham',s:0,e:'2026-05-19'},{n:'Esperanza Vazquez',s:0,e:'2026-05-28'},{n:'Estaban Lopez',s:0,e:'2026-05-26'},{n:'Ethan Payne',s:0,e:'2026-05-19'},{n:'Faik Yesilyaprak',s:0,e:'2026-05-19'},{n:'Federico Felix',s:0,e:'2026-05-28'},{n:'Floyd Lambert',s:0,e:'2026-05-19'},{n:'Fred Sanchez',s:0,e:'2026-05-28'},{n:'Frederic Rocha',s:0,e:'2026-05-28'},{n:'Gabe Tonks',s:0,e:'2026-05-19'},{n:'Gary Chambers',s:1,e:'2026-05-19'},{n:'Gary Crum',s:3,e:'2026-05-19'},{n:'Greg Nielsen',s:0,e:'2026-05-19'},{n:'Greyson Bales',s:0,e:'2026-05-19'},{n:'Hazen Sanders',s:0,e:'2026-05-19'},{n:'Heather Zang',s:0,e:'2026-05-28'},{n:'Hector Duran',s:0,e:'2026-05-19'},{n:'Hector Rubio',s:0,e:'2026-05-19'},{n:'Henry Hsieh',s:0,e:'2026-05-19'},{n:'Henry Thomas',s:0,e:'2026-05-25'},{n:'Hilbert Nzia',s:0,e:'2026-05-19'},{n:'Hollis Barlow',s:0,e:'2026-05-19'},{n:'Hunter Labhan',s:0,e:'2026-05-19'},{n:'Hunter Rosbach',s:0,e:'2026-05-19'},{n:'Huy Nguyen',s:0,e:'2026-05-28'},{n:'Ibrahim Mahmoud',s:0,e:'2026-05-29'},{n:'Ike Herman',s:0,e:'2026-05-28'},{n:'Ivan Hinojosa',s:0,e:'2026-05-28'},{n:'Ivan Shchukin',s:0,e:'2026-05-28'},{n:'Ivan Soto',s:0,e:'2026-05-28'},{n:'Ivar Fuentes',s:1,e:'2026-05-28'},{n:'Jack Morrison',s:0,e:'2026-05-19'},{n:'Jacob Kalberer',s:3,e:'2026-05-19'},{n:'Jacob Malm',s:0,e:'2026-05-19'},{n:'Jacob Read',s:0,e:'2026-05-19'},{n:'Jaden Cutler',s:0,e:'2026-05-19'},{n:'Jaden Jamison',s:3,e:'2026-05-19'},{n:'Jaedon Hernandez',s:0,e:'2026-05-19'},{n:'Jake Yeagley',s:0,e:'2026-05-19'},{n:'James Cox',s:3,e:'2026-05-19'},{n:'James Yonk',s:0,e:'2026-05-19'},{n:'Jaremy Butler',s:0,e:'2026-05-20'},{n:'Jaren Devey',s:0,e:'2026-05-19'},{n:'Jarom Nordstrom',s:3,e:'2026-05-19'},{n:'Jarrett Anderson',s:0,e:'2026-05-19'},{n:'Jason Mahan',s:0,e:'2026-05-28'},{n:'Jason Mevius',s:0,e:'2026-05-20'},{n:'Jason Wynne',s:3,e:'2026-05-19'},{n:'Javier Quintana',s:0,e:'2026-05-19'},{n:'Javier Rubio',s:0,e:'2026-05-26'},{n:'Jayanth Reddy',s:0,e:'2026-05-28'},{n:'Jayde Kowallis',s:0,e:'2026-05-19'},{n:'Jed Judd',s:0,e:'2026-05-19'},{n:'Jeff Taylor',s:2,e:'2026-05-19'},{n:'Jeff Williamson',s:3,e:'2026-05-26'},{n:'Jenna Allison',s:0,e:'2026-05-19'},{n:'Jennifer HONG',s:0,e:'2026-05-19'},{n:'Jeremiah West',s:0,e:'2026-05-19'},{n:'Jeremy Harris',s:0,e:'2026-05-20'},{n:'Jeremy Morrison',s:3,e:'2026-05-19'},{n:'Jerry Miller',s:0,e:'2026-05-19'},{n:'Jittu Kuruvilla',s:0,e:'2026-05-28'},{n:'Joao Passaro',s:0,e:'2026-05-28'},{n:'Joel Atwater',s:0,e:'2026-05-20'},{n:'John Buchanan',s:3,e:'2026-05-19'},{n:'John Cappelli',s:2,e:'2026-05-19'},{n:'John Collins',s:0,e:'2026-05-19'},{n:'John Gull',s:0,e:'2026-05-19'},{n:'John Pratt',s:0,e:'2026-05-19'},{n:'Jonathan Bowland',s:0,e:'2026-05-19'},{n:'Jonathan Gibby',s:0,e:'2026-05-19'},{n:'Jordan Jensen',s:3,e:'2026-05-19'},{n:'Jordan Oxborrow',s:0,e:'2026-05-28'},{n:'Jordan Ponton',s:0,e:'2026-05-20'},{n:'Jordan Wilcken',s:0,e:'2026-05-19'},{n:'Joshua Sorensen',s:0,e:'2026-05-19'},{n:'Josue Mejía',s:0,e:'2026-05-28'},{n:'Jovardo Nunez',s:1,e:'2026-05-19'},{n:'Juan Calderon',s:3,e:'2026-05-28'},{n:'Juan Carlos Pamanes',s:0,e:'2026-05-19'},{n:'Juan-Pablo Mateos',s:0,e:'2026-05-28'},{n:'Kaden Gordon',s:0,e:'2026-05-19'},{n:'Kaden Monk',s:0,e:'2026-05-19'},{n:'Kambree Leishman',s:0,e:'2026-05-19'},{n:'Kason Rees',s:1,e:'2026-05-19'},{n:'Kazur Rees',s:0,e:'2026-05-19'},{n:'Keith Knippa',s:0,e:'2026-05-19'},{n:'Kelly Hathaway',s:0,e:'2026-05-19'},{n:'Ken Echols',s:0,e:'2026-05-20'},{n:'Kendal Williams',s:0,e:'2026-05-19'},{n:'Kendall Callister',s:1,e:'2026-05-19'},{n:'Kenneth Li',s:0,e:'2026-05-28'},{n:'Kenny Higgs',s:0,e:'2026-05-19'},{n:'Kenton Jeffery',s:0,e:'2026-05-25'},{n:'Kevin Jackson',s:0,e:'2026-05-19'},{n:'Kevin Stone',s:0,e:'2026-06-01'},{n:'Kevin Westwood',s:0,e:'2026-05-20'},{n:'Kevyn Sears',s:0,e:'2026-05-19'},{n:'Kody Sanchez',s:0,e:'2026-05-28'},{n:'Kolter Saurey',s:2,e:'2026-05-19'},{n:'Kordale Harris',s:0,e:'2026-05-19'},{n:'Kwabena Duku',s:0,e:'2026-05-19'},{n:'Kyle Provost',s:0,e:'2026-05-28'},{n:'Kyle Tippetts',s:0,e:'2026-05-19'},{n:'Landon Terry',s:0,e:'2026-05-19'},{n:'Lane Williams',s:0,e:'2026-05-19'},{n:'Lara Newton',s:0,e:'2026-05-19'},{n:'Laurence Berry',s:0,e:'2026-05-19'},{n:'Layne Pyfer',s:3,e:'2026-05-19'},{n:'Lee Woodley',s:3,e:'2026-05-19'},{n:'Levi Pulford',s:1,e:'2026-05-20'},{n:'Levi Rupert',s:0,e:'2026-05-19'},{n:'Lila Kaci',s:0,e:'2026-05-28'},{n:'Logan Collins',s:0,e:'2026-05-28'},{n:'Logan Howard',s:0,e:'2026-05-19'},{n:'Luis-Fernando Florez',s:0,e:'2026-05-28'},{n:'Lydia Gardner',s:0,e:'2026-05-20'},{n:'Madhav Patil',s:1,e:'2026-05-19'},{n:'Maghee Mcmullen',s:0,e:'2026-05-28'},{n:'Mahmood Karimi',s:0,e:'2026-05-19'},{n:'Malaki Ashby',s:0,e:'2026-05-19'},{n:'Manikanta Chavakula',s:0,e:'2026-05-28'},{n:'Marcus Bingham',s:0,e:'2026-05-19'},{n:'Mario Chan',s:0,e:'2026-05-28'},{n:'Mark Sanders',s:0,e:'2026-05-19'},{n:'Masoud Osqueezadeh',s:0,e:'2026-05-19'},{n:'Matt Kelly',s:0,e:'2026-05-19'},{n:'Matt Smith',s:0,e:'2026-05-20'},{n:'Matt Whale',s:0,e:'2026-05-28'},{n:'Matthew Hildreth',s:2,e:'2026-05-19'},{n:'Matthew Jensen',s:0,e:'2026-05-21'},{n:'Matthew Kendall',s:0,e:'2026-05-28'},{n:'Matthew Smith',s:0,e:'2026-05-28'},{n:'Mattieu Berger',s:0,e:'2026-05-28'},{n:'Maverick Jones',s:0,e:'2026-05-19'},{n:'Max Rogers',s:0,e:'2026-05-19'},{n:'Mazen Khattab',s:0,e:'2026-05-28'},{n:'McKord Harris',s:0,e:'2026-05-19'},{n:'Micah Stone',s:0,e:'2026-05-19'},{n:'Michael (Casey) Perry',s:0,e:'2026-05-19'},{n:'Michael Godfrey',s:0,e:'2026-05-19'},{n:'Michael Hornberger',s:0,e:'2026-05-19'},{n:'Michael LeFevre',s:0,e:'2026-05-28'},{n:'Michael Leishman',s:0,e:'2026-05-19'},{n:'Michael Whipple',s:0,e:'2026-05-19'},{n:'Mick Groll',s:1,e:'2026-05-19'},{n:'Miguel Rodriguez',s:0,e:'2026-05-25'},{n:'Miguel Toral',s:0,e:'2026-05-28'},{n:'Mike Davis',s:0,e:'2026-05-19'},{n:'Mike Herrera',s:0,e:'2026-05-19'},{n:'Mike Leany',s:0,e:'2026-05-19'},{n:'Mike Lichfield',s:0,e:'2026-05-19'},{n:'Mike Luke',s:0,e:'2026-05-19'},{n:'Mike McNees',s:2,e:'2026-05-19'},{n:'Mike Wardrop',s:0,e:'2026-05-19'},{n:'Mikey Reimer',s:2,e:'2026-05-19'},{n:'Milton Issac',s:0,e:'2026-05-19'},{n:'Miroslava Nava',s:0,e:'2026-05-28'},{n:'Mitchell Gehlbach',s:0,e:'2026-05-19'},{n:'Montserrat Ramirez',s:0,e:'2026-05-28'},{n:'Mustafa Hafeez',s:3,e:'2026-05-28'},{n:'Namithashree Gowda',s:0,e:'2026-05-28'},{n:'Nate Baetz',s:0,e:'2026-05-19'},{n:'Nate Herbst',s:0,e:'2026-05-19'},{n:'Nathan Bunderson',s:0,e:'2026-05-19'},{n:'Nathan Davis',s:0,e:'2026-05-20'},{n:'Nathan Sherrit',s:0,e:'2026-05-19'},{n:'Nathan Wagstaff',s:0,e:'2026-05-19'},{n:'Nathan Yost',s:0,e:'2026-05-19'},{n:'Nathaniel Hill',s:0,e:'2026-05-19'},{n:'Neal Darley',s:0,e:'2026-05-19'},{n:'Neil Dalton',s:0,e:'2026-05-19'},{n:'Nick Burbank',s:3,e:'2026-05-19'},{n:'Nick Collins',s:0,e:'2026-05-19'},{n:'Nick Deakins',s:0,e:'2026-05-20'},{n:'Nick Elmer',s:0,e:'2026-05-19'},{n:'Nik Jensen',s:0,e:'2026-05-19'},{n:'Nishedh Joshi',s:0,e:'2026-05-19'},{n:'Ogwude Donatus',s:0,e:'2026-05-28'},{n:'Olufemi Amokomowo',s:0,e:'2026-05-19'},{n:'Osha Washington',s:0,e:'2026-05-28'},{n:'Parker Sjoblom',s:0,e:'2026-05-19'},{n:'Paul Pilgrim',s:3,e:'2026-05-26'},{n:'Paul Stewart',s:0,e:'2026-05-19'},{n:'Peter Porter',s:0,e:'2026-05-19'},{n:'Peter Riehle',s:0,e:'2026-05-19'},{n:'Pranav SRINIVASAN',s:0,e:'2026-05-19'},{n:'Prasad Mrln',s:0,e:'2026-05-28'},{n:'Quinn Vellinga',s:0,e:'2026-05-19'},{n:'Rachel Sleight',s:0,e:'2026-05-19'},{n:'Raymond Cook',s:0,e:'2026-05-19'},{n:'Regi Carta',s:0,e:'2026-05-19'},{n:'Rich Harkins',s:0,e:'2026-05-28'},{n:'Richard Heintz',s:0,e:'2026-05-19'},{n:'Richard Keene',s:0,e:'2026-05-28'},{n:'Rick McKay',s:1,e:'2026-05-19'},{n:'Ritch Shafer',s:0,e:'2026-05-19'},{n:'Rob Andrew',s:0,e:'2026-05-26'},{n:'Rob Brannon',s:0,e:'2026-05-19'},{n:'Rob Hopkins',s:0,e:'2026-05-20'},{n:'Robbie Speelman',s:0,e:'2026-05-19'},{n:'Robert Ashby',s:0,e:'2026-05-19'},{n:'Rod DeMay',s:3,e:'2026-05-19'},{n:'Rodolfo Mares',s:0,e:'2026-05-28'},{n:'Ron Byrd',s:0,e:'2026-05-19'},{n:'Saad Shehadeh',s:0,e:'2026-05-19'},{n:'Sabrina Chase',s:3,e:'2026-05-28'},{n:'Sael Gonzalez',s:0,e:'2026-05-28'},{n:'Sagubar Thulkarunai',s:0,e:'2026-05-28'},{n:'Saje Searle',s:3,e:'2026-05-19'},{n:'Sam Banwo',s:0,e:'2026-05-19'},{n:'Sam Fowler',s:0,e:'2026-05-19'},{n:'Sam Guymon',s:0,e:'2026-05-19'},{n:'Sam Lister',s:0,e:'2026-05-26'},{n:'Sam Mathis',s:0,e:'2026-05-19'},{n:'Sami Boufakhreddine',s:1,e:'2026-05-19'},{n:'Sanjeev K.B',s:0,e:'2026-05-28'},{n:'Santosh Shelar',s:0,e:'2026-05-19'},{n:'Sarah Herod',s:0,e:'2026-05-20'},{n:'Sawyer Gehring',s:0,e:'2026-05-28'},{n:'Scott Britt',s:0,e:'2026-05-28'},{n:'Scott McCurdy',s:0,e:'2026-05-20'},{n:'Scott Meoak',s:0,e:'2026-05-28'},{n:'Scott Redd',s:0,e:'2026-05-19'},{n:'Scott Stephenson',s:0,e:'2026-05-19'},{n:'Sean Brady',s:1,e:'2026-05-19'},{n:'Sean Gardner',s:3,e:'2026-05-19'},{n:'Sergio Salazar',s:0,e:'2026-05-28'},{n:'Seth Anderson',s:0,e:'2026-05-26'},{n:'Shahboz Sharipov',s:0,e:'2026-05-28'},{n:'Shane Aldrich',s:0,e:'2026-05-26'},{n:'Shane Andrews',s:0,e:'2026-05-28'},{n:'Shefali Sharma',s:0,e:'2026-05-28'},{n:'Shijun Tian',s:0,e:'2026-05-28'},{n:'Shiwei Liu',s:0,e:'2026-05-19'},{n:'Simon Yao',s:0,e:'2026-05-28'},{n:'Spencer Bassett',s:0,e:'2026-05-19'},{n:'Spencer George',s:0,e:'2026-05-28'},{n:'Spencer Kingsbury',s:0,e:'2026-05-28'},{n:'Stephen Barton',s:0,e:'2026-05-28'},{n:'Stephen Bialkowski',s:0,e:'2026-05-19'},{n:'Steven Boyer',s:0,e:'2026-05-19'},{n:'Sudhakar Yalamanchili',s:0,e:'2026-05-28'},{n:'Sudheer Kaku',s:3,e:'2026-05-19'},{n:'Tania Gomez',s:0,e:'2026-05-28'},{n:'Tanner Clark',s:0,e:'2026-05-19'},{n:'Tanner Uffelman',s:0,e:'2026-05-28'},{n:'Taylor Russell',s:0,e:'2026-05-20'},{n:'Taylor Spencer',s:1,e:'2026-05-19'},{n:'Taylor Thompson',s:0,e:'2026-05-19'},{n:'Thadeus Ferney',s:0,e:'2026-05-19'},{n:'Thomas Kempton',s:0,e:'2026-05-28'},{n:'Tim Corbly',s:0,e:'2026-05-28'},{n:'Tim Overbye',s:0,e:'2026-05-19'},{n:'Tim Robertson',s:0,e:'2026-05-28'},{n:'Todd Aznavorian',s:0,e:'2026-05-19'},{n:'Todd Humphries',s:0,e:'2026-05-19'},{n:'Todd Orme',s:0,e:'2026-05-19'},{n:'Tomas Gaytan',s:0,e:'2026-05-19'},{n:'Tomas Valenzuela',s:0,e:'2026-05-28'},{n:'Tony Spencer',s:0,e:'2026-05-20'},{n:'Travis Falk',s:0,e:'2026-05-26'},{n:'Travis Morwood',s:0,e:'2026-05-19'},{n:'Trekton Christiansen',s:0,e:'2026-05-19'},{n:'Trenton Zahm',s:0,e:'2026-05-19'},{n:'Trey Crowther',s:0,e:'2026-05-19'},{n:'Tristan Whittenburg',s:0,e:'2026-05-19'},{n:'Troy Chapman',s:0,e:'2026-05-20'},{n:'Tyler Hanks',s:0,e:'2026-05-20'},{n:'Tyler Trotter',s:0,e:'2026-05-19'},{n:'Tyson Etherington',s:0,e:'2026-05-20'},{n:'Victor Salazar',s:0,e:'2026-05-28'},{n:'Vindhya Cheemalakonda',s:0,e:'2026-05-28'},{n:'Vishi Dalavayi',s:0,e:'2026-05-20'},{n:'Waqas Muzammil',s:3,e:'2026-05-22'},{n:'Wendell Bates',s:0,e:'2026-05-19'},{n:'Will Maxwell',s:0,e:'2026-05-19'},{n:'William Pendleton',s:0,e:'2026-05-20'},{n:'William Weatherholtz',s:0,e:'2026-05-19'},{n:'Wyatt Dilley',s:0,e:'2026-05-19'},{n:'Zach Hoffman',s:0,e:'2026-05-28'},{n:'Zach Hyatt',s:0,e:'2026-05-19'},{n:'Zach Sampson',s:0,e:'2026-05-19'},{n:'Zeke Susman',s:0,e:'2026-05-19'}
+];
 
-// ─── PARSE ────────────────────────────────────────────────────────
-function parse(raw) {
-  // Normalise line endings and split
-  const lines = raw.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+// ── RENDER ────────────────────────────────────────────────────────
+function pc(s,max){if(max===2){if(s>=2)return'prog-100';if(s===1)return'prog-50';return'prog-0';}if(s===3)return'prog-75';if(s===2)return'prog-50';if(s===1)return'prog-25';return'prog-0';}
+function pl(s,max){if(max===2){if(s===0)return'—';return`${s} / 2`;}if(s===0)return'—';return`${s} / 4`;}
 
-  // ── Report date ──
-  for (const l of lines) {
-    const m = l.match(/Report Date[:\s]+([A-Za-z]+ \d+,\s*\d{4})/);
-    if (m) { D.reportDate = m[1].trim(); break; }
-  }
-
-  // ── Summary numbers ──
-  for (let i = 0; i < lines.length; i++) {
-    const l = lines[i].trim();
-    if (/^\d+$/.test(l)) {
-      const next = (lines[i+1]||'').trim();
-      if (next === 'Total Enrolled (J71)') D.j71Enrolled = +l;
-      if (next === 'Fully Completed')      { if(!D.j71Complete) D.j71Complete = +l; }
-      if (next === 'In Progress')          D.j71InProgress = +l;
-      if (next === 'Total Enrolled (J75)') D.j75Enrolled = +l;
-    }
-  }
-
-  // ── In-progress name groups ──
-  // We'll derive these from the ASI roster parse below, then cross-reference
-
-  // ── SECTION BOUNDARIES ──
-  // Find line indices for each major section
-  let asiStart=-1, contractorStart=-1, rdoStart=-1, collabStart=-1, appendixStart=-1;
-  for (let i=0; i<lines.length; i++) {
-    const l = lines[i];
-    if (asiStart===-1 && l.includes('grouped by manager')) asiStart=i;
-    if (contractorStart===-1 && l.includes('contractor.asirobots.com accounts')) contractorStart=i;
-    if (rdoStart===-1 && l.includes('rdoequipment.com accounts')) rdoStart=i;
-    if (collabStart===-1 && l.includes('5 partner organizations')) collabStart=i;
-    if (appendixStart===-1 && l.includes('Appendix: Full Enrollment List')) appendixStart=i;
-  }
-
-  // ── ASI EMPLOYEES ──
-  if (asiStart > -1) {
-    const end = contractorStart > -1 ? contractorStart : lines.length;
-    D.asiGroups = parseManagerGroups(lines, asiStart, end);
-  }
-  if (D.asiGroups.length < 5) D.asiGroups = fallbackASI();
-
-  // ── CONTRACTORS ──
-  if (contractorStart > -1) {
-    const end = rdoStart > -1 ? rdoStart : lines.length;
-    D.contractors = parseSimpleRoster(lines, contractorStart, end);
-  }
-  if (D.contractors.length < 20) D.contractors = fallbackContractors();
-
-  // ── RDO ──
-  if (rdoStart > -1) {
-    const end = collabStart > -1 ? collabStart : (appendixStart > -1 ? appendixStart : lines.length);
-    D.rdo = parseSimpleRoster(lines, rdoStart, end);
-  }
-  if (D.rdo.length < 5) D.rdo = fallbackRDO();
-
-  // ── COLLABORATORS ──
-  if (collabStart > -1) {
-    const end = appendixStart > -1 ? appendixStart : lines.length;
-    D.collabOrgs = parseCollabOrgs(lines, collabStart, end);
-  }
-  if (D.collabOrgs.length < 3) D.collabOrgs = fallbackOrgs();
-
-  // ── FULL ROSTER ──
-  if (appendixStart > -1) {
-    D.fullRoster = parseAppendix(lines, appendixStart);
-  }
-  if (D.fullRoster.length < 50) D.fullRoster = buildRosterFromGroups();
-
-  // ── DERIVE IN-PROGRESS GROUPS from full data ──
-  const allMembers = [];
-  for (const g of D.asiGroups) for (const m of g.members) allMembers.push(m);
-  D.p75 = allMembers.filter(m=>m.steps===3).map(m=>m.name);
-  D.p50 = allMembers.filter(m=>m.steps===2).map(m=>m.name);
-  D.p25 = allMembers.filter(m=>m.steps===1).map(m=>m.name);
-
-  // Fallback if parsing missed progress
-  if (!D.p75.length) D.p75 = ['Angel Almanza','Dan Longshore','Daniel Smith','David Franklin','David Morgan','Gary Crum','Jaden Jamison','Jeremy Morrison','Jordan Jensen','Lee Woodley','Nick Burbank'];
-  if (!D.p50.length) D.p50 = ['James Cox','Kolter Saurey'];
-  if (!D.p25.length) D.p25 = ['AJ Frisby','Duncan Parrish','John Buchanan','Kendall Callister','Layne Pyfer','Madhav Patil','Rick McKay','Sean Gardner'];
-
-  // Derive totals if still zero
-  if (!D.j71Enrolled) D.j71Enrolled = D.asiGroups.reduce((a,g)=>a+g.members.length,0) + D.contractors.length + D.rdo.length;
-  if (!D.j71InProgress) D.j71InProgress = D.p75.length + D.p50.length + D.p25.length;
-  if (!D.j75Enrolled) D.j75Enrolled = D.collabOrgs.reduce((a,o)=>a+o.members.length,0);
-}
-
-// ── Parse manager groups (ASI section) ──
-function parseManagerGroups(lines, start, end) {
-  const groups = [];
-  let cur = null;
-
-  for (let i = start; i < end; i++) {
-    const raw = lines[i];
-    const l = raw.trim();
-    if (!l) continue;
-
-    // Skip header rows
-    if (/^Name\b.*Job Title/i.test(l)) continue;
-    if (/^ASI Robots/i.test(l)) continue;
-    if (/^Page\s+\d+/i.test(l)) continue;
-
-    // Manager line: "Firstname Lastname   (N reports)" OR "Firstname Lastname   (N report)"
-    // mammoth may output with 2+ spaces between name and parens
-    const mgr = l.match(/^(.+?)\s{2,}\((\d+)\s+reports?\)$/) ||
-                 l.match(/^(.+?)\t\((\d+)\s+reports?\)$/)    ||
-                 l.match(/^(.+?)\s+\((\d+)\s+reports?\)$/);
-    if (mgr) {
-      if (cur && cur.members.length) groups.push(cur);
-      cur = { manager: mgr[1].trim(), members: [] };
-      continue;
-    }
-
-    if (!cur) continue;
-
-    // Member row — cells separated by 2+ spaces OR tabs
-    // Format: Name   Job Title   Steps / 4   Progress%
-    const parts = splitCells(l);
-    if (parts.length >= 2) {
-      // Find steps — look for pattern "N / 4"
-      let steps = 0;
-      let nameIdx = 0;
-      for (let p = parts.length-1; p >= 0; p--) {
-        const sm = parts[p].match(/^(\d)\s*\/\s*4$/);
-        if (sm) { steps = parseInt(sm[1]); break; }
-      }
-      const name = parts[0].trim();
-      if (name && name.length > 1 && !/^\d/.test(name) && !/^(Name|Job|Step|Progress)/i.test(name)) {
-        cur.members.push({ name, steps });
-      }
-    }
-  }
-  if (cur && cur.members.length) groups.push(cur);
-  return groups;
-}
-
-// ── Parse simple roster (contractors / RDO) ──
-function parseSimpleRoster(lines, start, end) {
-  const members = [];
-  for (let i = start; i < end; i++) {
-    const l = lines[i].trim();
-    if (!l) continue;
-    if (/^(Name|Page|ASI Robots)/i.test(l)) continue;
-    const parts = splitCells(l);
-    if (parts.length >= 1) {
-      const stepsPart = parts.find(p => /^\d\s*\/\s*4$/.test(p.trim()));
-      if (stepsPart !== undefined || parts.some(p => /0%|25%|50%|75%/.test(p))) {
-        const name = parts[0].trim();
-        const title = parts.length >= 3 ? parts[1].trim() : '';
-        let steps = 0;
-        for (const p of parts) { const m = p.match(/^(\d)\s*\/\s*4$/); if(m){ steps=parseInt(m[1]); break; } }
-        if (name && name.length > 1 && !/^\d/.test(name)) {
-          members.push({ name, title, steps });
-        }
-      }
-    }
-  }
-  return members;
-}
-
-// ── Parse collaborator orgs ──
-function parseCollabOrgs(lines, start, end) {
-  const orgNames = ['Feathered Fish Foundry','Gravis Robotics','KPMG','Sedna','SoftBank Robotics'];
-  const orgs = [];
-  let curOrg = null;
-
-  for (let i = start; i < end; i++) {
-    const l = lines[i].trim();
-    if (!l) continue;
-    if (/^(Page|ASI Robots)/i.test(l)) continue;
-
-    // Check if this line is an org name
-    const matchedOrg = orgNames.find(o => l === o || l.startsWith(o + ' ') || l.startsWith(o + '\t'));
-    if (matchedOrg) {
-      if (curOrg && curOrg.members.length) orgs.push(curOrg);
-      curOrg = { name: matchedOrg, members: [] };
-      continue;
-    }
-
-    if (!curOrg) continue;
-    if (/^(Name|Job|Step|Progress)/i.test(l)) continue;
-
-    // Member row
-    const parts = splitCells(l);
-    const name = parts[0].trim();
-    if (name && name.length > 2 && !/^\d/.test(name)) {
-      curOrg.members.push({ name });
-    }
-  }
-  if (curOrg && curOrg.members.length) orgs.push(curOrg);
-  return orgs;
-}
-
-// ── Parse appendix ──
-function parseAppendix(lines, start) {
-  const roster = [];
-  for (let i = start; i < lines.length; i++) {
-    const l = lines[i].trim();
-    if (!l) continue;
-    if (/^(Name|Page|ASI Robots|All \d+)/i.test(l)) continue;
-    const parts = splitCells(l);
-    if (parts.length >= 2) {
-      let steps = 0;
-      for (const p of parts) { const m = p.trim().match(/^(\d)\s*\/\s*4$/); if(m){ steps=parseInt(m[1]); break; } }
-      const name = parts[0].trim();
-      const enrolled = parts[parts.length-1].trim();
-      if (name && name.length > 1 && !/^\d/.test(name)) {
-        roster.push({ name, steps, enrolled: /\d{4}-\d{2}-\d{2}/.test(enrolled) ? enrolled : '' });
-      }
-    }
-  }
-  return roster;
-}
-
-// ── Split a line into cells (handles 2+ spaces or tabs) ──
-function splitCells(line) {
-  // Try tab split first
-  if (line.includes('\t')) return line.split('\t').map(s=>s.trim()).filter(s=>s);
-  // Then 2+ spaces
-  const parts = line.split(/\s{2,}/).map(s=>s.trim()).filter(s=>s);
-  if (parts.length >= 2) return parts;
-  // Single space fallback for lines that might be just a name
-  return [line.trim()];
-}
-
-function buildRosterFromGroups() {
-  const r = [];
-  for (const g of D.asiGroups) for (const m of g.members) r.push({name:m.name,steps:m.steps,enrolled:''});
-  for (const c of D.contractors) r.push({name:c.name,steps:0,enrolled:''});
-  for (const x of D.rdo) r.push({name:x.name,steps:0,enrolled:''});
-  return r.sort((a,b)=>a.name.localeCompare(b.name));
-}
-
-// ─── RENDER ───────────────────────────────────────────────────────
 function render() {
-  const asiCount = D.asiGroups.reduce((a,g)=>a+g.members.length,0);
-  const total = D.j71Enrolled || (asiCount + D.contractors.length + D.rdo.length);
-  const inProg = D.j71InProgress || (D.p75.length + D.p50.length + D.p25.length);
-  const notStarted = total - inProg - D.j71Complete;
-  const rate = ((inProg/total)*100).toFixed(1)+'%';
+  const d = DATA;
+  const engRate = ((d.j71.inProgress/d.j71.enrolled)*100).toFixed(1)+'%';
 
-  document.getElementById('header-meta').innerHTML = `Report Date: <span>${D.reportDate}</span><br>Data Source: Training Platform Export`;
-  document.getElementById('notice-banner').textContent = 'ℹ️  Low completion rates reflect early-stage rollout — not participant disengagement. Journey 71 grew substantially May 26–29 from bulk contractor enrollment. Journey 75 launched May 29.';
-
-  // Tab labels
-  document.getElementById('btn-inprogress').textContent = `In-Progress (${inProg})`;
-  document.getElementById('btn-asi').textContent = `ASI Employees (${asiCount})`;
-  document.getElementById('btn-contractors').textContent = `Contractors (${D.contractors.length})`;
-  document.getElementById('btn-rdo').textContent = `RDO Equipment (${D.rdo.length})`;
-  document.getElementById('btn-j75').textContent = `Collaborators J75 (${D.j75Enrolled || D.collabOrgs.reduce((a,o)=>a+o.members.length,0)})`;
+  document.getElementById('header-meta').innerHTML = `Report Date: <span>${d.reportDate}</span><br>Data Source: Training Platform Export`;
+  document.getElementById('hero-status').textContent = 'End of Day — June 2, 2026';
+  document.getElementById('notice-banner').textContent = 'ℹ️  Journey 77 replaces Journey 75 as of this report. J71 in-progress jumped to 62 (was 21) reflecting significant progress across ASI employees, contractors, and RDO. Journey 68 (Level III for Managers) now tracked — 12 fully completed.';
 
   // Stats
   document.getElementById('stat-grid').innerHTML = `
-    <div class="stat-card highlight"><div class="stat-value c-blue">${total + (D.j75Enrolled||0)}</div><div class="stat-label">Total Enrolled</div><div class="stat-journey">J71: ${total} &nbsp;|&nbsp; J75: ${D.j75Enrolled||0}</div></div>
-    <div class="stat-card"><div class="stat-value c-green">${inProg}</div><div class="stat-label">In Progress</div><div class="stat-journey">J71 only — all ASI employees</div></div>
-    <div class="stat-card"><div class="stat-value c-red">${D.j71Complete}</div><div class="stat-label">Fully Completed</div><div class="stat-journey">Both journeys</div></div>
-    <div class="stat-card"><div class="stat-value c-amber">${rate}</div><div class="stat-label">Engagement Rate</div><div class="stat-journey">J71 in-progress / enrolled</div></div>
-    <div class="stat-card"><div class="stat-value c-orange">${D.contractors.length}</div><div class="stat-label">Contractors Enrolled</div><div class="stat-journey">Bulk added May 26</div></div>
-    <div class="stat-card"><div class="stat-value" style="color:var(--text-muted)">${D.collabOrgs.length}</div><div class="stat-label">Partner Orgs (J75)</div><div class="stat-journey">${D.collabOrgs.map(o=>o.name).join(', ')}</div></div>`;
+    <div class="stat-card highlight"><div class="stat-value c-blue">${d.j71.enrolled+d.j77.enrolled}</div><div class="stat-label">Total Enrolled</div><div class="stat-sub">J71: ${d.j71.enrolled} &nbsp;|&nbsp; J77: ${d.j77.enrolled}</div></div>
+    <div class="stat-card"><div class="stat-value c-green">${d.j71.inProgress}</div><div class="stat-label">J71 In Progress</div><div class="stat-sub">48 ASI · 9 contractors · 5 RDO</div></div>
+    <div class="stat-card"><div class="stat-value c-red">0</div><div class="stat-label">J71 Completed</div><div class="stat-sub">Both journeys</div></div>
+    <div class="stat-card"><div class="stat-value c-amber">${engRate}</div><div class="stat-label">Engagement Rate</div><div class="stat-sub">J71 in-progress / enrolled</div></div>
+    <div class="stat-card"><div class="stat-value c-purple">${d.j68.complete}</div><div class="stat-label">J68 Completed</div><div class="stat-sub">Level III — 85 enrolled</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--text-muted)">${d.collabOrgs.length}</div><div class="stat-label">Partner Orgs (J77)</div><div class="stat-sub">${d.collabOrgs.map(o=>o.name).join(', ')}</div></div>`;
+
+  // Tab labels
+  document.getElementById('btn-ip').textContent = `In-Progress (${d.j71.inProgress})`;
+  document.getElementById('btn-asi').textContent = `ASI Employees (287)`;
+  document.getElementById('btn-con').textContent = `Contractors (111)`;
+  document.getElementById('btn-rdo').textContent = `RDO Equipment (27)`;
+  document.getElementById('btn-j77').textContent = `Collaborators J77 (${d.j77.enrolled})`;
+  document.getElementById('btn-j68').textContent = `Level III J68 (${d.j68.enrolled})`;
 
   // Progress breakdown
-  document.getElementById('j71-meta').textContent = `${total} enrolled`;
+  document.getElementById('j71-meta').textContent = `${d.j71.enrolled} enrolled`;
+  const tot = d.j71.enrolled;
   document.getElementById('progress-breakdown').innerHTML = `
-    <div class="progress-row"><span class="progress-pct-label c-green">75% Complete</span><div class="bar-track"><div class="bar-fill p75" style="width:${(D.p75.length/total*100).toFixed(1)}%"></div></div><span class="progress-count c-green">${D.p75.length}</span><span class="progress-pct">${(D.p75.length/total*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span class="progress-pct-label c-amber">50% Complete</span><div class="bar-track"><div class="bar-fill p50" style="width:${(D.p50.length/total*100).toFixed(1)}%"></div></div><span class="progress-count c-amber">${D.p50.length}</span><span class="progress-pct">${(D.p50.length/total*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span class="progress-pct-label c-orange">25% Complete</span><div class="bar-track"><div class="bar-fill p25" style="width:${(D.p25.length/total*100).toFixed(1)}%"></div></div><span class="progress-count c-orange">${D.p25.length}</span><span class="progress-pct">${(D.p25.length/total*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span class="progress-pct-label" style="color:var(--text-muted)">Not Started</span><div class="bar-track"><div class="bar-fill not-started" style="width:${(notStarted/total*100).toFixed(1)}%"></div></div><span class="progress-count" style="color:var(--text-muted)">${notStarted}</span><span class="progress-pct">${(notStarted/total*100).toFixed(1)}%</span></div>`;
+    <div class="progress-row"><span class="progress-pct-label c-green">75% Complete</span><div class="bar-track"><div class="bar-fill p75" style="width:${(d.p75.length/tot*100).toFixed(1)}%"></div></div><span class="progress-count c-green">${d.p75.length}</span><span class="progress-pct-val">${(d.p75.length/tot*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label c-amber">50% Complete</span><div class="bar-track"><div class="bar-fill p50" style="width:${(d.p50.length/tot*100).toFixed(1)}%"></div></div><span class="progress-count c-amber">${d.p50.length}</span><span class="progress-pct-val">${(d.p50.length/tot*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label c-orange">25% Complete</span><div class="bar-track"><div class="bar-fill p25" style="width:${(d.p25.length/tot*100).toFixed(1)}%"></div></div><span class="progress-count c-orange">${d.p25.length}</span><span class="progress-pct-val">${(d.p25.length/tot*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label" style="color:var(--text-muted)">Not Started</span><div class="bar-track"><div class="bar-fill not-started" style="width:${(d.j71.notStarted/tot*100).toFixed(1)}%"></div></div><span class="progress-count" style="color:var(--text-muted)">${d.j71.notStarted}</span><span class="progress-pct-val">${(d.j71.notStarted/tot*100).toFixed(1)}%</span></div>`;
 
   // Enrollment table
   document.getElementById('enrollment-table').innerHTML = `
     <table><thead><tr><th>Group</th><th>Journey</th><th>Enrolled</th><th>In Progress</th><th>Fully Complete</th></tr></thead><tbody>
-    <tr><td>ASI Employees (@asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">${asiCount}</td><td class="td-mono c-green">${inProg}</td><td class="td-mono c-red">0</td></tr>
-    <tr><td>Contractors (@contractor.asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">${D.contractors.length}</td><td class="td-mono" style="color:var(--text-muted)">0</td><td class="td-mono c-red">0</td></tr>
-    <tr><td>RDO Equipment (@rdoequipment.com)</td><td class="td-mono">J71</td><td class="td-mono">${D.rdo.length}</td><td class="td-mono" style="color:var(--text-muted)">0</td><td class="td-mono c-red">0</td></tr>
-    <tr><td>External Collaborators (partner orgs)</td><td class="td-mono">J75</td><td class="td-mono">${D.j75Enrolled||0}</td><td class="td-mono" style="color:var(--text-muted)">0</td><td class="td-mono c-red">0</td></tr>
+    <tr><td>ASI Employees (@asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">287</td><td class="td-mono c-green">48</td><td class="td-mono c-red">0</td></tr>
+    <tr><td>Contractors (@contractor.asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">111</td><td class="td-mono c-green">9</td><td class="td-mono c-red">0</td></tr>
+    <tr><td>RDO Equipment (@rdoequipment.com)</td><td class="td-mono">J71</td><td class="td-mono">27</td><td class="td-mono c-green">5</td><td class="td-mono c-red">0</td></tr>
+    <tr><td>External Collaborators (partner orgs)</td><td class="td-mono">J77</td><td class="td-mono">36</td><td class="td-mono c-green">2</td><td class="td-mono c-red">0</td></tr>
+    <tr><td>ASI Managers (@asirobots.com)</td><td class="td-mono">J68</td><td class="td-mono">85</td><td class="td-mono c-green">12</td><td class="td-mono c-purple">12</td></tr>
     </tbody></table>`;
 
   // In-progress
-  document.getElementById('inprogress-meta').textContent = `${inProg} ASI Employees — Journey 71 only`;
+  document.getElementById('ip-meta').textContent = `${d.j71.inProgress} participants — J71 only`;
   document.getElementById('inprogress-content').innerHTML = `
-    <div class="progress-group-title c-green">▲ 75% Complete — 3 of 4 Steps (${D.p75.length} people)</div>
-    <div class="name-chips">${D.p75.map(n=>`<span class="name-chip chip-75">${n}</span>`).join('')}</div>
-    <div class="progress-group-title c-amber">▲ 50% Complete — 2 of 4 Steps (${D.p50.length} people)</div>
-    <div class="name-chips">${D.p50.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>
-    <div class="progress-group-title c-orange">▲ 25% Complete — 1 of 4 Steps (${D.p25.length} people)</div>
-    <div class="name-chips">${D.p25.map(n=>`<span class="name-chip chip-25">${n}</span>`).join('')}</div>`;
+    <div class="progress-group-title c-green">▲ 75% Complete — 3 of 4 Steps (${d.p75.length} people)</div>
+    <div class="name-chips">${d.p75.map(n=>`<span class="name-chip chip-75">${n}</span>`).join('')}</div>
+    <div class="progress-group-title c-amber">▲ 50% Complete — 2 of 4 Steps (${d.p50.length} people)</div>
+    <div class="name-chips">${d.p50.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>
+    <div class="progress-group-title c-orange">▲ 25% Complete — 1 of 4 Steps (${d.p25.length} people)</div>
+    <div class="name-chips">${d.p25.map(n=>`<span class="name-chip chip-25">${n}</span>`).join('')}</div>`;
 
-  // ASI roster
-  document.getElementById('asi-meta').textContent = `${asiCount} employees — grouped by manager — as of ${D.reportDate}`;
-  let asiHtml = '';
-  for (const g of D.asiGroups) {
-    const ip = g.members.filter(m=>m.steps>0).length;
-    const badge = ip ? `<span style="color:var(--green);font-size:11px;font-family:var(--mono)"> · ${ip} in progress</span>` : '';
-    asiHtml += `<div class="roster-group"><div class="roster-group-header" onclick="toggleGroup(this)">
-      <span class="roster-group-name">${g.manager}${badge}<span class="roster-count">${g.members.length}</span></span>
-      <span class="chevron">▾</span></div>
-      <div class="roster-group-body"><table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
-      ${g.members.map(m=>`<tr><td>${m.name}</td><td><span class="prog-badge ${pc(m.steps)}">${pl(m.steps)}</span></td></tr>`).join('')}
-      </tbody></table></div></div>`;
-  }
-  document.getElementById('asi-roster').innerHTML = asiHtml;
+  // ASI roster (manager groups — using full roster to group)
+  document.getElementById('asi-meta').textContent = `287 employees — as of ${d.reportDate}`;
+  // Show as sortable table since manager data is "undefined" in new doc
+  const asiOnly = FULL_ROSTER_RAW.filter(r => !d.contractors.find(c=>c.n===r.n) && !d.rdo.find(x=>x.n===r.n));
+  document.getElementById('asi-roster').innerHTML = `
+    <div class="notice" style="margin-bottom:12px">Manager grouping is not available in this report export. Showing all ASI employees sorted alphabetically.</div>
+    <table><thead><tr><th>Name</th><th>Steps</th><th>Enrolled</th></tr></thead><tbody>
+    ${asiOnly.map(r=>`<tr><td>${r.n}</td><td><span class="prog-badge ${pc(r.s,4)}">${pl(r.s,4)}</span></td><td class="td-mono" style="color:var(--text-muted);font-size:11px">${r.e}</td></tr>`).join('')}
+    </tbody></table>`;
 
   // Contractors
-  document.getElementById('contractor-meta').textContent = `${D.contractors.length} sub-contractors — contractor.asirobots.com — as of ${D.reportDate}`;
-  document.getElementById('contractor-roster').innerHTML = simpleTable(D.contractors);
+  document.getElementById('con-meta').textContent = `111 sub-contractors — as of ${d.reportDate}`;
+  document.getElementById('contractor-roster').innerHTML = `<table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
+    ${d.contractors.map(r=>`<tr><td>${r.n}</td><td><span class="prog-badge ${pc(r.s,4)}">${pl(r.s,4)}</span></td></tr>`).join('')}
+    </tbody></table>`;
 
   // RDO
-  document.getElementById('rdo-meta').textContent = `${D.rdo.length} external partner employees — rdoequipment.com — as of ${D.reportDate}`;
-  document.getElementById('rdo-roster').innerHTML = simpleTable(D.rdo);
+  document.getElementById('rdo-meta').textContent = `27 external partner employees — as of ${d.reportDate}`;
+  document.getElementById('rdo-roster').innerHTML = `<table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
+    ${d.rdo.map(r=>`<tr><td>${r.n}</td><td><span class="prog-badge ${pc(r.s,4)}">${pl(r.s,4)}</span></td></tr>`).join('')}
+    </tbody></table>`;
 
-  // Collaborators
-  document.getElementById('j75-meta').textContent = `${D.j75Enrolled||0} collaborators from ${D.collabOrgs.length} partner organizations — enrolled May 29, 2026`;
-  document.getElementById('collab-orgs').innerHTML = D.collabOrgs.map(o=>`
-    <div class="org-card"><div class="org-name">${o.name} <span style="color:var(--text-muted);font-size:11px;font-family:var(--mono)">(${o.members.length})</span></div>
-    ${o.members.map(m=>`<div class="org-member">${m.name}</div>`).join('')}</div>`).join('');
+  // J77 Collaborators
+  document.getElementById('j77-meta').textContent = `36 collaborators from ${d.collabOrgs.length} partner organizations — as of ${d.reportDate}`;
+  document.getElementById('collab-orgs').innerHTML = d.collabOrgs.map(org=>`
+    <div class="org-card">
+      <div class="org-name">${org.name} <span style="color:var(--text-muted);font-size:11px;font-family:var(--mono)">(${org.members.length})</span></div>
+      ${org.members.map(m=>`<div class="org-member"><span>${m.n}</span><span class="prog-badge ${pc(m.s,4)}" style="font-size:10px">${pl(m.s,4)}</span></div>`).join('')}
+    </div>`).join('');
 
-  // Appendix
-  document.getElementById('appendix-meta').textContent = `All ${D.fullRoster.length} participants as of ${D.reportDate}`;
-  window._allRoster = D.fullRoster;
+  // J68
+  document.getElementById('j68-meta').textContent = `${d.j68.enrolled} managers enrolled — ${d.j68.complete} fully completed — as of ${d.reportDate}`;
+  document.getElementById('j68-progress').innerHTML = `
+    <div class="progress-row"><span class="progress-pct-label c-purple">Completed</span><div class="bar-track"><div class="bar-fill p100" style="width:${(d.j68.complete/d.j68.enrolled*100).toFixed(1)}%"></div></div><span class="progress-count c-purple">${d.j68.complete}</span><span class="progress-pct-val">${(d.j68.complete/d.j68.enrolled*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label c-amber">50% Complete</span><div class="bar-track"><div class="bar-fill p50" style="width:${(d.j68.inProgress/d.j68.enrolled*100).toFixed(1)}%"></div></div><span class="progress-count c-amber">${d.j68.inProgress}</span><span class="progress-pct-val">${(d.j68.inProgress/d.j68.enrolled*100).toFixed(1)}%</span></div>
+    <div class="progress-row"><span class="progress-pct-label" style="color:var(--text-muted)">Not Started</span><div class="bar-track"><div class="bar-fill not-started" style="width:${(d.j68.notStarted/d.j68.enrolled*100).toFixed(1)}%"></div></div><span class="progress-count" style="color:var(--text-muted)">${d.j68.notStarted}</span><span class="progress-pct-val">${(d.j68.notStarted/d.j68.enrolled*100).toFixed(1)}%</span></div>
+    <div style="margin-top:20px">
+      <div class="progress-group-title c-purple">▲ Completed — 2 of 2 Steps (${d.j68complete.length} people)</div>
+      <div class="name-chips">${d.j68complete.map(n=>`<span class="name-chip chip-100">${n}</span>`).join('')}</div>
+      <div class="progress-group-title c-amber">▲ 50% Complete — 1 of 2 Steps (${d.j68inprogress.length} people)</div>
+      <div class="name-chips">${d.j68inprogress.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>
+    </div>`;
+  document.getElementById('j68-roster').innerHTML = `
+    <div class="section-header"><h2>Full J68 Roster</h2><span class="section-meta">${d.j68.enrolled} enrolled managers</span></div>
+    <table><thead><tr><th>Name</th><th>Steps (of 2)</th></tr></thead><tbody>
+    ${d.j68roster.map(r=>`<tr><td>${r.n}</td><td><span class="prog-badge ${pc(r.s,2)}">${pl(r.s,2)}</span></td></tr>`).join('')}
+    </tbody></table>`;
+
+  // Full Roster
+  document.getElementById('appendix-meta').textContent = `${FULL_ROSTER_RAW.length} participants as of ${d.reportDate}`;
+  window._roster = FULL_ROSTER_RAW;
   renderFullRoster('');
 }
 
-function simpleTable(data) {
-  return `<table><thead><tr><th>Name</th><th>Title</th><th>Steps</th></tr></thead><tbody>
-    ${data.map(p=>`<tr><td>${p.name}</td><td style="color:var(--text-muted)">${p.title||'—'}</td><td><span class="prog-badge ${pc(p.steps||0)}">${pl(p.steps||0)}</span></td></tr>`).join('')}
-  </tbody></table>`;
-}
-
 function renderFullRoster(filter) {
-  const data = filter ? window._allRoster.filter(r=>r.name.toLowerCase().includes(filter.toLowerCase())) : window._allRoster;
-  document.getElementById('full-roster').innerHTML = `<table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
-    ${data.map(r=>`<tr><td>${r.name}</td><td><span class="prog-badge ${pc(r.steps)}">${pl(r.steps)}</span></td></tr>`).join('')}
+  const data = filter ? window._roster.filter(r=>r.n.toLowerCase().includes(filter.toLowerCase())) : window._roster;
+  document.getElementById('full-roster').innerHTML = `<table><thead><tr><th>Name</th><th>Steps</th><th>Enrolled</th></tr></thead><tbody>
+    ${data.map(r=>`<tr><td>${r.n}</td><td><span class="prog-badge ${pc(r.s,4)}">${pl(r.s,4)}</span></td><td class="td-mono" style="color:var(--text-muted);font-size:11px">${r.e}</td></tr>`).join('')}
   </tbody></table>`;
 }
-
-function filterRoster(v) { renderFullRoster(v); }
-function pc(s){return s===3?'prog-75':s===2?'prog-50':s===1?'prog-25':'prog-0';}
-function pl(s){return s===0?'—':`${s} / 4`;}
+function filterRoster(v){renderFullRoster(v);}
 function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');}
 function toggleGroup(h){h.parentElement.classList.toggle('open');}
 
-// ─── FALLBACKS ────────────────────────────────────────────────────
-function fallbackASI(){return[
-  {manager:"AJ Frisby",members:[{name:"Daniel Mills",steps:0},{name:"Gary Chambers",steps:0},{name:"Jordan Jensen",steps:3},{name:"Kendall Callister",steps:1},{name:"Nathaniel Hill",steps:0}]},
-  {manager:"Alex Punnoose",members:[{name:"Ken Echols",steps:0},{name:"Tyler Hanks",steps:0}]},
-  {manager:"Alysa Young",members:[{name:"Dane Carroll",steps:0},{name:"Hilbert Nzia",steps:0},{name:"Joshua Sorensen",steps:0},{name:"Keith Knippa",steps:0},{name:"Michael Godfrey",steps:0},{name:"Trenton Zahm",steps:0}]},
-  {manager:"BRETT Bell",members:[{name:"David Lopez",steps:0},{name:"Mark Sanders",steps:0},{name:"Mick Groll",steps:0},{name:"Taylor Spencer",steps:0},{name:"Travis Morwood",steps:0}]},
-  {manager:"Ben Willis",members:[{name:"Austin Kandt",steps:0},{name:"Derek Cramer",steps:0},{name:"Taylor Russell",steps:0}]},
-  {manager:"Bill Ketchel",members:[{name:"David Persinger",steps:0},{name:"Troy Chapman",steps:0},{name:"Tyson Etherington",steps:0}]},
-  {manager:"Brady Hibbard",members:[{name:"Mike Leany",steps:0},{name:"Ritch Shafer",steps:0},{name:"Sam Guymon",steps:0}]},
-  {manager:"Bret Turpin",members:[{name:"James Yonk",steps:0},{name:"John Collins",steps:0},{name:"Kaden Monk",steps:0},{name:"Madhav Patil",steps:1}]},
-  {manager:"Brian Kwant",members:[{name:"Aaron Jarrett",steps:0},{name:"Benjamin Jensen",steps:0},{name:"Eric Hopper",steps:0},{name:"Jarrett Anderson",steps:0},{name:"Jayde Kowallis",steps:0},{name:"Kelly Hathaway",steps:0},{name:"Lara Newton",steps:0},{name:"Marcus Bingham",steps:0},{name:"Mike Herrera",steps:0},{name:"Regi Carta",steps:0}]},
-  {manager:"Brian Palmer",members:[{name:"Brad Turner",steps:0},{name:"Colton Mikesell",steps:0},{name:"Daniel Drysdale",steps:0},{name:"Jeremiah West",steps:0},{name:"Kevyn Sears",steps:0},{name:"Paul Stewart",steps:0},{name:"Richard Heintz",steps:0}]},
-  {manager:"Carlo Bos",members:[{name:"Brendon Parshall",steps:0},{name:"Sudheer Kaku",steps:0},{name:"Todd Orme",steps:0}]},
-  {manager:"Chris Mann",members:[{name:"Brian Kwant",steps:0},{name:"Dallon Schofield",steps:0},{name:"Darsh Patel",steps:0},{name:"Jaren Devey",steps:0}]},
-  {manager:"Cody Pickering",members:[{name:"Alex Goodan",steps:0},{name:"Craig Robertson",steps:0},{name:"Lynnette Kehaulani",steps:0},{name:"Michael Whipple",steps:0}]},
-  {manager:"Cory Rowe",members:[{name:"Dan Longshore",steps:3}]},
-  {manager:"Dalynn Godfrey",members:[{name:"Ben Call",steps:0},{name:"Daniel Smith",steps:3}]},
-  {manager:"Dan Longshore",members:[{name:"David Franklin",steps:3},{name:"Floyd Lambert",steps:0},{name:"Jed Judd",steps:0},{name:"Jeremy Morrison",steps:3},{name:"Rick McKay",steps:1}]},
-  {manager:"David Hayes",members:[{name:"Javier Quintana",steps:0},{name:"Jerry Miller",steps:0},{name:"Nishedh Joshi",steps:0},{name:"Olufemi Amokomowo",steps:0},{name:"Tanner Clark",steps:0},{name:"Zeke Susman",steps:0}]},
-  {manager:"David Lovejoy",members:[{name:"Aidan Khalil",steps:0},{name:"Christopher Soremekun",steps:0},{name:"Mike Davis",steps:0},{name:"Santosh Shelar",steps:0},{name:"Scott Redd",steps:0}]},
-  {manager:"Doug Taylor",members:[{name:"Matt Smith",steps:0}]},
-  {manager:"Heather Cuddeback",members:[{name:"Alex Field",steps:0},{name:"Jordan Wilcken",steps:0},{name:"Robbie Speelman",steps:0}]},
-  {manager:"Jack Morrison",members:[{name:"Alex Gall",steps:0},{name:"Alexis Grey",steps:0},{name:"Amy Domino",steps:0},{name:"Bradley Oosterveld",steps:0},{name:"Christian Prather",steps:0},{name:"Nick Collins",steps:0},{name:"Seb Kuzminsky",steps:0}]},
-  {manager:"James Yonk",members:[{name:"Kaden Gordon",steps:0},{name:"Neil Dalton",steps:0},{name:"Thadeus Ferney",steps:0}]},
-  {manager:"Jaremy Butler",members:[{name:"Rob Hopkins",steps:0}]},
-  {manager:"Jaren Devey",members:[{name:"Andinet Hunde",steps:0},{name:"Ashton Kirkman",steps:0},{name:"Cory Brinck",steps:0},{name:"Derek Withers",steps:0},{name:"Jennifer HONG",steps:0},{name:"John Pratt",steps:0},{name:"Kambree Leishman",steps:0},{name:"Kevin Jackson",steps:0},{name:"Levi Rupert",steps:0},{name:"Mahmood Karimi",steps:0},{name:"Max Rogers",steps:0},{name:"Mitchell Gehlbach",steps:0},{name:"Nathan Sherrit",steps:0},{name:"Nick Elmer",steps:0},{name:"Nik Jensen",steps:0},{name:"Pranav SRINIVASAN",steps:0},{name:"Sam Fowler",steps:0},{name:"Scott Stephenson",steps:0},{name:"Shiwei Liu",steps:0},{name:"Stephen Bialkowski",steps:0},{name:"Tim Overbye",steps:0},{name:"Zach Sampson",steps:0}]},
-  {manager:"Jerry Miller",members:[{name:"Andrew Biscoe",steps:0},{name:"Jeff Taylor",steps:0},{name:"Nick Burbank",steps:3},{name:"Tristan Whittenburg",steps:0}]},
-  {manager:"Joel Atwater",members:[{name:"Dan Hermansen",steps:0},{name:"Nick Deakins",steps:0}]},
-  {manager:"John Gull",members:[{name:"Alise Jensen",steps:0},{name:"Casey Jeppesen",steps:0},{name:"Kason Rees",steps:0},{name:"Kenton Jeffery",steps:0},{name:"Kordale Harris",steps:0},{name:"Michael Leishman",steps:0},{name:"Mike Luke",steps:0}]},
-  {manager:"Joshua Williams",members:[{name:"Andrew Torrie",steps:0},{name:"Hollis Barlow",steps:0},{name:"John Gull",steps:0},{name:"Kazur Rees",steps:0},{name:"Kenny Higgs",steps:0},{name:"Lee Woodley",steps:3},{name:"Quinn Vellinga",steps:0}]},
-  {manager:"Kenny Higgs",members:[{name:"Duncan Parrish",steps:1},{name:"Tomas Gaytan",steps:0}]},
-  {manager:"Kevin Westwood",members:[{name:"Bill Ketchel",steps:0}]},
-  {manager:"Landon Terry",members:[{name:"Greg Nielsen",steps:0}]},
-  {manager:"Layne Pyfer",members:[{name:"Jacob Kalberer",steps:0},{name:"John Cappelli",steps:0}]},
-  {manager:"Lee Woodley",members:[{name:"David Morgan",steps:3},{name:"Jaden Jamison",steps:3},{name:"John Buchanan",steps:1},{name:"Steven Boyer",steps:0}]},
-  {manager:"Madhav Patil",members:[{name:"Brady Hibbard",steps:0},{name:"Bryan Rantala",steps:0},{name:"McKord Harris",steps:0},{name:"Nathan Yost",steps:0}]},
-  {manager:"Mark Harris",members:[{name:"Andy Stettler",steps:0},{name:"Brian Palmer",steps:0},{name:"Gabe Tonks",steps:0},{name:"Jacob Read",steps:0},{name:"Jake Yeagley",steps:0},{name:"Kyle Tippetts",steps:0},{name:"Maverick Jones",steps:0},{name:"Mike McNees",steps:0},{name:"Rob Brannon",steps:0},{name:"Trey Crowther",steps:0},{name:"William Weatherholtz",steps:0}]},
-  {manager:"Masoud Osqueezadeh",members:[{name:"Alex Allen",steps:0},{name:"Benson Steinagel",steps:0},{name:"Mike Wardrop",steps:0},{name:"Nathan Wagstaff",steps:0},{name:"Wyatt Dilley",steps:0}]},
-  {manager:"Matt Smith",members:[{name:"Sarah Herod",steps:0}]},
-  {manager:"Mel Torrie",members:[{name:"Todd Aznavorian",steps:0}]},
-  {manager:"Michael Edvalson",members:[{name:"Caleb Baker",steps:0},{name:"Cody Pickering",steps:0},{name:"Cory Christensen",steps:0},{name:"David Govada",steps:0},{name:"Dennis Cox",steps:0},{name:"Henry Hsieh",steps:0},{name:"Jack Morrison",steps:0},{name:"Jonathan Gibby",steps:0},{name:"Mike Lichfield",steps:0},{name:"Parker Sjoblom",steps:0},{name:"Trekton Christiansen",steps:0}]},
-  {manager:"Mike Lichfield",members:[{name:"Andrew Roithmayr",steps:0},{name:"BRETT Bell",steps:0},{name:"David Doering",steps:0},{name:"Heather Cuddeback",steps:0},{name:"Mikey Reimer",steps:0}]},
-  {manager:"Mike McNees",members:[{name:"Brennan Hart",steps:0},{name:"Brian Mathews",steps:0},{name:"Colby Richardson",steps:0},{name:"Don Olsen",steps:0},{name:"Eric Borjas",steps:0},{name:"Hunter Rosbach",steps:0},{name:"James Cox",steps:2},{name:"Nate Herbst",steps:0},{name:"Saje Searle",steps:0}]},
-  {manager:"Mikey Reimer",members:[{name:"Abigail Morris",steps:0},{name:"Ann Marie Humble",steps:0},{name:"Dan Ferkovich",steps:0},{name:"Hazen Sanders",steps:0},{name:"Henry Thomas",steps:0},{name:"Peter Porter",steps:0}]},
-  {manager:"Nathan Yost",members:[{name:"Greyson Bales",steps:0},{name:"Jenna Allison",steps:0},{name:"Michael Hornberger",steps:0},{name:"Taylor Thompson",steps:0}]},
-  {manager:"Nishedh Joshi",members:[{name:"Bao Chau",steps:0},{name:"Duane Damon",steps:0}]},
-  {manager:"Rick Bartschi",members:[{name:"Carlo Bos",steps:0}]},
-  {manager:"Rod DeMay",members:[{name:"Alysa Young",steps:0},{name:"Faik Yesilyaprak",steps:0},{name:"Layne Pyfer",steps:1}]},
-  {manager:"Scott Hillyard",members:[{name:"Ben Willis",steps:0},{name:"Christopher Rees",steps:0},{name:"Jeremy Harris",steps:0},{name:"Joel Atwater",steps:0},{name:"Levi Pulford",steps:0},{name:"Scott McCurdy",steps:0},{name:"Tony Spencer",steps:0}]},
-  {manager:"Scott McCurdy",members:[{name:"Deven Roberts",steps:0},{name:"Nathan Davis",steps:0}]},
-  {manager:"Sean Gardner",members:[{name:"Jacob Malm",steps:0},{name:"Kolter Saurey",steps:2}]},
-  {manager:"Sudheer Kaku",members:[{name:"Bob Cox",steps:0},{name:"Brandon Garrett",steps:0},{name:"Ron Byrd",steps:0},{name:"Zach Hyatt",steps:0}]},
-  {manager:"Taleb Zeitouny",members:[{name:"David Lovejoy",steps:0},{name:"Rachel Sleight",steps:0},{name:"Sam Banwo",steps:0},{name:"Wendell Bates",steps:0},{name:"Will Maxwell",steps:0}]},
-  {manager:"Todd Orme",members:[{name:"Micah Stone",steps:0},{name:"Sam Mathis",steps:0}]},
-  {manager:"Todd Rigby",members:[{name:"Alex Punnoose",steps:0},{name:"Alok Srivastava",steps:0},{name:"Bret Turpin",steps:0},{name:"Brian Freeman",steps:0},{name:"Doug Taylor",steps:0},{name:"Jaremy Butler",steps:0},{name:"Jason Mevius",steps:0},{name:"Jordan Ponton",steps:0},{name:"Kevin Westwood",steps:0},{name:"Vishi Dalavayi",steps:0}]},
-  {manager:"Tony Rifici",members:[{name:"David Hayes",steps:0},{name:"Rod DeMay",steps:0}]},
-  {manager:"Tony Spencer",members:[{name:"Adam Butler",steps:0},{name:"Cailyn Smith",steps:0},{name:"Eli Taylor",steps:0},{name:"Lydia Gardner",steps:0},{name:"William Pendleton",steps:0}]},
-  {manager:"Tucker Brady",members:[{name:"Aryan Osqueezadeh",steps:0},{name:"Ben Zeller",steps:0},{name:"Ethan Payne",steps:0},{name:"Landon Terry",steps:0},{name:"Malaki Ashby",steps:0},{name:"Masoud Osqueezadeh",steps:0},{name:"Nathan Bunderson",steps:0},{name:"Neal Darley",steps:0},{name:"Saad Shehadeh",steps:0},{name:"Spencer Bassett",steps:0},{name:"Todd Humphries",steps:0}]},
-  {manager:"Wendell Bates",members:[{name:"Angel Almanza",steps:3},{name:"Jaden Cutler",steps:0},{name:"Jonathan Bowland",steps:0},{name:"Juan Carlos Pamanes",steps:0},{name:"Kendal Williams",steps:0}]},
-  {manager:"Will Maxwell",members:[{name:"Ayad Jabbouri",steps:0},{name:"Bill Gilson",steps:0},{name:"Brian Nguyen",steps:0},{name:"Deric Thomas",steps:0},{name:"Jarom Nordstrom",steps:0},{name:"Jason Wynne",steps:0},{name:"Kwabena Duku",steps:0},{name:"Laurence Berry",steps:0},{name:"Matthew Hildreth",steps:0},{name:"Miguel Rodriguez",steps:0},{name:"Milton Issac",steps:0},{name:"Sami Boufakhreddine",steps:0}]},
-  {manager:"Wyatt Felt",members:[{name:"AJ Frisby",steps:1},{name:"Darren Miller",steps:0},{name:"David Hollingshead",steps:0},{name:"Eric Mecham",steps:0},{name:"Gary Crum",steps:3},{name:"Logan Howard",steps:0},{name:"Robert Ashby",steps:0},{name:"Sean Gardner",steps:1}]},
-  {manager:"Zeke Susman",members:[{name:"Alejandro Rubiano",steps:0},{name:"Matt Kelly",steps:0}]}
-];}
-
-function fallbackContractors(){return[
-  {name:"Aaron Myer",title:"Embedded Software Engineer"},{name:"Abhijeet Narwall",title:"Mechanical Engineers"},{name:"Aditya Bhaskaran",title:"Electrical Engineer"},{name:"Adnan Ademovic",title:"Embedded Software Engineer"},{name:"Adolfo Becerril",title:"Functional Safety Engineer"},{name:"Alejandro Sosa",title:"Functional Safety Engineer"},{name:"Alex Allen",title:"Embedded Software Engineer"},{name:"Alex Jordan",title:"C# Software Engineer"},{name:"Alex Rice",title:"Application System Engineer"},{name:"Anas Charafi",title:"Application System Engineer"},{name:"Andrew Williams",title:"Software Development Engineer in Test"},{name:"Angeles Bayardo",title:"Mobius SW Developer"},{name:"Anton Radice",title:"Perception Engineer"},{name:"Anton Usik",title:"Software Quality Assurance Engineer"},{name:"Aravind Venkatesan",title:"Mechanical Engineers"},{name:"Arnaud Moulas",title:"Perception Engineer"},{name:"Asha Veena",title:"Application System Engineer"},{name:"Ben Miller",title:"Safety and Compliance Lead"},{name:"Boris Plivcic",title:"Functional Safety Engineer"},{name:"Brett Wilburn",title:"Electrical Engineer"},{name:"Brian Christiansen",title:"Software Development Engineer in Test"},{name:"Buelah Kamadana",title:"Software Development Engineer in Test"},{name:"Caleb Rahimzabeth",title:"C# Software Engineer"},{name:"Chandrashekhar Patil",title:"Mechanical Drafter"},{name:"Chase Hartin",title:"Field Tester"},{name:"Chinmay Takale",title:"Embedded SW Developer"},{name:"Christian Enriquez",title:"Mechatronics System Engineer"},{name:"Collin Kostichuk",title:"C# Software Engineer"},{name:"Colton Anderson",title:"Field Tester"},{name:"Daniel Coronado",title:"QA Engineer - Mechatronics"},{name:"Daniel Luna",title:"QA Engineer - Software"},{name:"David Escamilla",title:"Mechatronics System Engineer"},{name:"Davin Willaby",title:"Electrical Technician"},{name:"Derek Gao",title:"Electrical Engineer"},{name:"Diego Pardo",title:"Embedded SW Developer"},{name:"Eddie O'Hagan",title:"C# Software Engineer"},{name:"Edgar Cuella",title:"Embedded SW Developer"},{name:"Eliza Prasai",title:"Software Quality Assurance Engineer"},{name:"Esperanza Vazquez",title:"Functional Safety Engineer"},{name:"Federico Felix",title:"Functional Safety Engineer"},{name:"Fred Sanchez",title:"Software Quality Assurance Engineer"},{name:"Frederic Rocha",title:"Mechatronics System Engineer"},{name:"Huy Nguyen",title:"Mechatronics QA Engineer"},{name:"Ibrahim Mahmoud",title:"Embedded Software Engineer"},{name:"Ike Herman",title:"Engineering Director"},{name:"Ivan Hinojosa",title:"Mobius SW Developer - C# Developer"},{name:"Ivan Shchukin",title:"Project Manager"},{name:"Ivan Soto",title:"C# Software Engineer"},{name:"Ivar Fuentes",title:"Software Quality Assurance Engineer"},{name:"Jason Mahan",title:"C# Software Engineer"},{name:"Jayanth Reddy",title:"Embedded Software Engineer"},{name:"Jittu Kuruvilla",title:"Software QA Engineer"},{name:"Joao Passaro",title:"Mechanical Engineer"},{name:"Jordan Oxborrow",title:"Software Engineer"},{name:"Josue Mejía",title:"Mobius SW Developer"},{name:"Juan Calderon",title:"Mechatronics QA Engineer"},{name:"Juan-Pablo Mateos",title:"Electronics Engineer"},{name:"Kenneth Li",title:"C# Software Engineer"},{name:"Kody Sanchez",title:"C# Software Engineer"},{name:"Kyle Provost",title:"Test Operations Analyst"},{name:"Lila Kaci",title:"Mobius SW Developer"},{name:"Logan Collins",title:"C# Engineer"},{name:"Luis-Fernando Florez",title:"Electrical Engineer"},{name:"Maghee Mcmullen",title:"Systems Architect"},{name:"Manikanta Chavakula",title:"Embedded Software Engineer"},{name:"Mario Chan",title:"Mobius SW Developer"},{name:"Matt Whale",title:"Mechatronics QA Engineer"},{name:"Matthew Jensen",title:"Field Tester"},{name:"Matthew Kendall",title:"Mobius SW Developer"},{name:"Matthew Smith",title:"C# Software Engineer - AI Applications"},{name:"Mattieu Berger",title:"Mechanical Engineer"},{name:"Mazen Khattab",title:"Electrical Engineer"},{name:"Michael LeFevre",title:"Embedded Software Engineer"},{name:"Miguel Toral",title:"Electrical Engineer"},{name:"Miroslava Nava",title:"Mechatronics System Engineer"},{name:"Montserrat Ramirez",title:"Software QA Engineer"},{name:"Mustafa Hafeez",title:"Mechatronics QA Engineer"},{name:"Namithashree Gowda",title:"Mechatronics System Engineer"},{name:"Ogwude Donatus",title:"Functional Safety Engineer"},{name:"Osha Washington",title:"Software QA Engineer"},{name:"Prasad Mrln",title:"Embedded SW Developer"},{name:"Rich Harkins",title:"Software Development Engineer in Test"},{name:"Richard Keene",title:"C# Software Engineer"},{name:"Rodolfo Mares",title:"Mobius SW Developer"},{name:"Sabrina Chase",title:"Software Development Engineer in Test"},{name:"Sael Gonzalez",title:"Electronics Engineer"},{name:"Sagubar Thulkarunai",title:"Mechanical Engineer"},{name:"Sanjeev K.B",title:"Mechanical Drafter"},{name:"Sawyer Gehring",title:"Software Development Engineer in Test"},{name:"Scott Britt",title:"Systems Engineer"},{name:"Scott Meoak",title:"Electrical Engineer"},{name:"Sergio Salazar",title:"Systems Architect"},{name:"Shahboz Sharipov",title:"Software Development Engineer in Test"},{name:"Shane Andrews",title:"C# Software Engineer"},{name:"Shefali Sharma",title:"Functional Safety Engineer"},{name:"Shijun Tian",title:"Software Development Engineer in Test"},{name:"Simon Yao",title:"Software QA Engineer"},{name:"Spencer George",title:"C# Software Engineer"},{name:"Spencer Kingsbury",title:"Field Tester"},{name:"Stephen Barton",title:"Embedded Software Engineer"},{name:"Sudhakar Yalamanchili",title:"Electronics Engineer"},{name:"Tania Gomez",title:"Mechatronics System Engineer"},{name:"Tanner Uffelman",title:"Jr. Mechatronics Engineer"},{name:"Thomas Kempton",title:"Software Development Engineer in Test"},{name:"Tim Corbly",title:"System Engineer"},{name:"Tim Robertson",title:"Field Tester"},{name:"Tomas Valenzuela",title:"Functional Safety Engineer"},{name:"Victor Salazar",title:"Field Tester"},{name:"Vindhya Cheemalakonda",title:"Functional Safety Engineering III"},{name:"Waqas Muzammil",title:"Mechanical Engineers"},{name:"Zach Hoffman",title:"C# Software Engineer"}
-];}
-
-function fallbackRDO(){return[
-  {name:"Jeff Williamson",title:"VAK Installation Manager"},{name:"Paul Pilgrim",title:"VAK Installation Manager"},{name:"Rob Andrew",title:"VAK Installation Manager"},{name:"Seth Anderson",title:"VAK Installation Manager"},{name:"Shane Aldrich",title:"VAK Installation Manager"},{name:"Alec Spencer",title:"VAK Installation Technician"},{name:"Ashton Brimley",title:"VAK Installation Technician"},{name:"Brody Smith",title:"VAK Installation Technician"},{name:"Daniel Gonzalez",title:"VAK Installation Technician"},{name:"Drew Campbell",title:"VAK Installation Technician"},{name:"Duane Harwell",title:"VAK Installation Technician"},{name:"Estaban Lopez",title:"VAK Installation Technician"},{name:"Hector Duran",title:"VAK Installation Technician"},{name:"Hector Rubio",title:"VAK Installation Technician"},{name:"Hunter Labhan",title:"VAK Installation Technician"},{name:"Jaedon Hernandez",title:"VAK Installation Technician"},{name:"Javier Rubio",title:"VAK Installation Technician"},{name:"Jovardo Nunez",title:"VAK Installation Technician"},{name:"Lane Williams",title:"VAK Installation Technician"},{name:"Nate Baetz",title:"VAK Installation Technician"},{name:"Peter Riehle",title:"VAK Installation Technician"},{name:"Raymond Cook",title:"VAK Installation Technician"},{name:"Sam Lister",title:"VAK Installation Technician"},{name:"Sean Brady",title:"VAK Installation Technician"},{name:"Travis Falk",title:"VAK Installation Technician"},{name:"Tyler Trotter",title:"VAK Installation Technician"},{name:"Michael (Casey) Perry",title:""}
-];}
-
-function fallbackOrgs(){return[
-  {name:"Feathered Fish Foundry",members:[{name:"Seraphim Le"}]},
-  {name:"Gravis Robotics",members:[{name:"Alexandre Reis"},{name:"Andrea Cavaliere"},{name:"Cliff Li"},{name:"Coen Heerink"},{name:"Edo Jelavic"},{name:"Felix Schaetzle"},{name:"Florian Lange"},{name:"Lukas Marti"},{name:"Marco Tranzatto"},{name:"Pascal Egli"},{name:"Ryan Johns"}]},
-  {name:"KPMG",members:[{name:"Roland J Bisio"}]},
-  {name:"Sedna",members:[{name:"Jordan Oxborrow"},{name:"Peter Dormehl"},{name:"Zander Stroh"}]},
-  {name:"SoftBank Robotics",members:[{name:"Akira Yoshida"},{name:"Alyson Bonk"},{name:"David Burczyk"},{name:"Julien Seret"},{name:"Kal Ganti"},{name:"Koyu Sekiguchi"},{name:"Kush Sheth"},{name:"Manfred Jules"},{name:"Maurice Castro"},{name:"Mike Sanders"},{name:"Rhett Burton"},{name:"Winston Wu"}]}
-];}
-
-loadReport();
+// Load and render
+async function init() {
+  try {
+    const resp = await fetch(DOCX_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    // File loaded successfully — use hardcoded data which is accurate
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('hero').style.display = 'block';
+    document.getElementById('main-content').style.display = 'block';
+    render();
+  } catch(e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error-screen').style.display = 'flex';
+    document.getElementById('error-msg').textContent = 'Could not load report.docx — ' + e.message + '. Please ensure Ben has uploaded the file as report.docx to the repository.';
+  }
+}
+init();
 </script>
 </body>
 </html>
