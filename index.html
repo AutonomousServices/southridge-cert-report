@@ -266,17 +266,17 @@ function render() {
   const engRate = ((d.j71.inProgress/d.j71.enrolled)*100).toFixed(1)+'%';
 
   document.getElementById('header-meta').innerHTML = `Report Date: <span>${d.reportDate}</span><br>Data Source: Training Platform Export`;
-  document.getElementById('hero-status').textContent = 'End of Day — June 2, 2026';
+  document.getElementById('hero-status').textContent = 'June 2, 2026 (end of day)';
   document.getElementById('notice-banner').textContent = 'ℹ️  Journey 77 replaces Journey 75 as of this report. J71 in-progress jumped to 62 (was 21) reflecting significant progress across ASI employees, contractors, and RDO. Journey 68 (Level III for Managers) now tracked — 12 fully completed.';
 
   // Stats
   document.getElementById('stat-grid').innerHTML = `
-    <div class="stat-card highlight"><div class="stat-value c-blue">${d.j71.enrolled+d.j77.enrolled}</div><div class="stat-label">Total Enrolled</div><div class="stat-sub">J71: ${d.j71.enrolled} &nbsp;|&nbsp; J77: ${d.j77.enrolled}</div></div>
+    <div class="stat-card highlight"><div class="stat-value c-blue">${d.j71.enrolled}</div><div class="stat-label">J71 Enrolled</div><div class="stat-sub">Southridge Site Certification</div></div>
     <div class="stat-card"><div class="stat-value c-green">${d.j71.inProgress}</div><div class="stat-label">J71 In Progress</div><div class="stat-sub">48 ASI · 9 contractors · 5 RDO</div></div>
-    <div class="stat-card"><div class="stat-value c-red">0</div><div class="stat-label">J71 Completed</div><div class="stat-sub">Both journeys</div></div>
-    <div class="stat-card"><div class="stat-value c-amber">${engRate}</div><div class="stat-label">Engagement Rate</div><div class="stat-sub">J71 in-progress / enrolled</div></div>
-    <div class="stat-card"><div class="stat-value c-purple">${d.j68.complete}</div><div class="stat-label">J68 Completed</div><div class="stat-sub">Level III — 85 enrolled</div></div>
-    <div class="stat-card"><div class="stat-value" style="color:var(--text-muted)">${d.collabOrgs.length}</div><div class="stat-label">Partner Orgs (J77)</div><div class="stat-sub">${d.collabOrgs.map(o=>o.name).join(', ')}</div></div>`;
+    <div class="stat-card"><div class="stat-value c-red">${d.j71.complete}</div><div class="stat-label">J71 Completed</div><div class="stat-sub">${d.j71.notStarted} not yet started</div></div>
+    <div class="stat-card"><div class="stat-value c-blue" style="font-size:24px">${d.j77.enrolled}</div><div class="stat-label">J77 Enrolled</div><div class="stat-sub">${d.j77.inProgress} in progress · ${d.j77.notStarted} not started</div></div>
+    <div class="stat-card"><div class="stat-value c-purple">${d.j68.enrolled}</div><div class="stat-label">J68 Enrolled</div><div class="stat-sub">${d.j68.complete} completed · ${d.j68.inProgress} in progress</div></div>
+    <div class="stat-card"><div class="stat-value c-amber">${engRate}</div><div class="stat-label">J71 Engagement</div><div class="stat-sub">In-progress / enrolled</div></div>`;
 
   // Tab labels
   document.getElementById('btn-ip').textContent = `In-Progress (${d.j71.inProgress})`;
