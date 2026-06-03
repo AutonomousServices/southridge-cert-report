@@ -129,6 +129,7 @@
     <button class="tab-btn" onclick="showTab('rdo',this)" id="btn-rdo">RDO Equipment</button>
     <button class="tab-btn" onclick="showTab('j77',this)" id="btn-j77">Collaborators J77</button>
     <button class="tab-btn" onclick="showTab('j68',this)" id="btn-j68">Level III J68</button>
+    <button class="tab-btn" onclick="showTab('risk',this)" id="btn-risk">⚑ Readiness Risk</button>
     <button class="tab-btn" onclick="showTab('appendix',this)">Full Roster</button>
   </div>
   <!-- OVERVIEW -->
@@ -207,6 +208,20 @@
       <div class="journey-banner">Journey 68 is a 2-step journey for ASI managers: Step 1 is the Level II Safety Certification sub-journey; Step 2 is the Level III certification. No contractor, RDO, or collaborator participants are enrolled.</div>
       <div id="j68-progress"></div>
       <div style="margin-top:24px" id="j68-roster"></div>
+    </div>
+  </div>
+  <!-- RISK TAB -->
+  <div class="tab-panel" id="tab-risk">
+    <div class="section-block">
+      <div class="section-header"><h2>Readiness Risk — Arrival vs Training Status</h2><span class="section-meta" id="risk-meta"></span></div>
+      <div class="notice" id="risk-notice"></div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:var(--mono);"><span style="background:#f85149;width:12px;height:12px;border-radius:2px;display:inline-block;"></span>Onsite Now — Training Incomplete</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:var(--mono);"><span style="background:#f0883e;width:12px;height:12px;border-radius:2px;display:inline-block;"></span>Arriving ≤7 Days — Training Incomplete</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:var(--mono);"><span style="background:#d29922;width:12px;height:12px;border-radius:2px;display:inline-block;"></span>Arriving 8–14 Days — Training Incomplete</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:var(--mono);"><span style="background:#3fb950;width:12px;height:12px;border-radius:2px;display:inline-block;"></span>Arriving >14 Days</div>
+      </div>
+      <div id="risk-table"></div>
     </div>
   </div>
   <!-- APPENDIX -->
@@ -376,8 +391,126 @@ function renderFullRoster(filter) {
   </tbody></table>`;
 }
 function filterRoster(v){renderFullRoster(v);}
-function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');}
+function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');if(id==='risk'&&!window._riskRows)renderRiskTab();}
 function toggleGroup(h){h.parentElement.classList.toggle('open');}
+
+
+// ── ONSITE ROSTER ARRIVAL DATES (from Smartsheet ASI Personnel Roster) ──
+const ARRIVAL_ROSTER = {
+  "Abigail Willomori":"2026-06-29","Aditya Bhaskaran":"2026-06-08","AJ Frisby":"2026-06-08",
+  "Alejandro Rubiano":"2026-06-08","Alok Srivastava":"2026-06-09","Alysa Young":"2026-06-15",
+  "Andrew Roithmayr":"2026-06-22","Andy Williams":"2026-07-06","Angel Almanza":"2026-06-08",
+  "Ann Marie Humble":"2026-06-22","Anton Usik":"2026-07-06","Aravind Venkatesan":"2026-06-15",
+  "Ayad Jabbouri":"2026-06-15","Ben Willis":"2026-06-08","Bill Gilson":"2026-06-15",
+  "Bill Ketchel":"2026-07-08","Bob Cox":"2026-06-08","Brad Turner":"2026-07-06",
+  "Brady Hibbard":"2026-06-01","Brenden Parshall":"2026-06-08","Bret Turpin":"2026-06-21",
+  "Brett Bell":"2026-06-08","Brett Wilburn":"2026-06-29","Brian Freeman":"2026-05-28",
+  "Brian Kelly":"2026-06-08","Brian Mathews":"2026-06-15","Brian Nguyen":"2026-06-15",
+  "Carlo Bos":"2026-07-06","Casey Jeppesen":"2026-06-08","Chris Rees":"2026-06-08",
+  "Cory Rowe":"2026-07-08","Dan Longshore":"2026-05-28","Dane Carroll":"2026-07-06",
+  "Daniel Mills":"2026-06-15","David Franklin":"2026-05-28","David Hayes":"2026-06-22",
+  "David Lane Morgan":"2026-07-06","David Lopez":"2026-06-08","David Lovejoy":"2026-06-15",
+  "David Persinger":"2026-06-15","Davin Willaby":"2026-06-08","Dax Fackrell":"2026-06-08",
+  "Deric Thomas":"2026-06-22","Don Olsen":"2026-06-28","Drew Biscoe":"2026-06-15",
+  "Eric Borjas":"2026-06-08","Floyd Lambert":"2026-05-21","Greyson Bates":"2026-06-14",
+  "Hazen Sanders":"2026-06-15","Huy Nguyen":"2026-06-29","Jacob Kalberer":"2026-06-08",
+  "Jaden Cutler":"2026-07-06","Jaden Jamison":"2026-06-29","Jake Yeagley":"2026-06-29",
+  "Jarom Nordstrom":"2026-06-29","Jason Mevius":"2026-05-28","Jason Wynne":"2026-06-15",
+  "Jeff Taylor":"2026-07-06","Jeremiah West":"2026-07-06","Jeremy Morrison":"2026-06-01",
+  "Jerry Miller":"2026-07-06","Jittu Kuruvilla":"2026-06-15","John Buchanan":"2026-07-06",
+  "John Cappelli":"2026-06-08","Jonathan Bowland":"2026-06-08","Jordan Jensen":"2026-06-22",
+  "Josh Sorensen":"2026-06-15","Juan Calderon":"2026-07-06","Juan Carlos Pamanes":"2026-06-15",
+  "Keith Knippa":"2026-07-06","Kendall Callister":"2026-06-15","Kenneth Li":"2026-06-08",
+  "Kevin Duku":"2026-06-15","Kevin Westwood":"2026-07-08","Kevyn Sears":"2026-06-22"
+};
+
+function renderRiskTab() {
+  const today = new Date('2026-06-03');
+  const rows = [];
+
+  // Cross-reference full roster with arrival dates
+  for (const [name, arrival] of Object.entries(ARRIVAL_ROSTER)) {
+    const steps = getStepsForName(name);
+    const arrDate = new Date(arrival);
+    const daysUntil = Math.round((arrDate - today) / (1000*60*60*24));
+    let risk, riskColor, riskLabel;
+    if (daysUntil <= 0) { risk=0; riskColor='#f85149'; riskLabel='ONSITE'; }
+    else if (daysUntil <= 7) { risk=1; riskColor='#f0883e'; riskLabel=daysUntil+'d'; }
+    else if (daysUntil <= 14) { risk=2; riskColor='#d29922'; riskLabel=daysUntil+'d'; }
+    else { risk=3; riskColor='#3fb950'; riskLabel=daysUntil+'d'; }
+    rows.push({name, steps, arrival, daysUntil, risk, riskColor, riskLabel});
+  }
+
+  // Sort by arrival date ascending
+  rows.sort((a,b) => a.daysUntil - b.daysUntil);
+
+  const critical = rows.filter(r => r.risk <= 1 && r.steps < 4).length;
+  const onsite = rows.filter(r => r.risk === 0 && r.steps < 4).length;
+  document.getElementById('risk-meta').textContent = `${rows.length} personnel cross-referenced with Smartsheet roster · As of June 3, 2026`;
+  document.getElementById('risk-notice').textContent = `⚠  ${onsite} personnel are currently onsite with incomplete training. ${critical} total require immediate attention (arriving within 7 days).`;
+  document.getElementById('risk-notice').style.background = onsite > 0 ? 'rgba(248,81,73,.12)' : 'rgba(30,111,217,.12)';
+  document.getElementById('risk-notice').style.borderColor = onsite > 0 ? 'rgba(248,81,73,.35)' : 'rgba(30,111,217,.35)';
+  document.getElementById('risk-notice').style.color = onsite > 0 ? '#f85149' : '#58a6ff';
+
+  let html = `<table>
+    <thead><tr>
+      <th style="cursor:pointer" onclick="sortRisk('name')">Name ↕</th>
+      <th style="cursor:pointer" onclick="sortRisk('arrival')">First Arrival ↕</th>
+      <th style="cursor:pointer" onclick="sortRisk('days')">Days Until ↕</th>
+      <th>Training Steps</th>
+      <th style="cursor:pointer" onclick="sortRisk('risk')">Risk ↕</th>
+    </tr></thead><tbody>`;
+
+  for (const r of rows) {
+    const stepsBadge = `<span class="prog-badge ${pc(r.steps,4)}">${pl(r.steps,4)}</span>`;
+    const riskBadge = r.steps >= 4
+      ? `<span style="color:var(--green);font-family:var(--mono);font-size:11px;">✓ Complete</span>`
+      : `<span style="background:${r.riskColor}22;color:${r.riskColor};font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid ${r.riskColor}44;">${r.riskLabel}</span>`;
+    const rowBg = r.steps < 4 && r.risk === 0 ? 'background:rgba(248,81,73,.06);' : r.steps < 4 && r.risk === 1 ? 'background:rgba(240,136,62,.04);' : '';
+    html += `<tr style="${rowBg}">
+      <td>${r.name}</td>
+      <td class="td-mono">${r.arrival}</td>
+      <td class="td-mono" style="color:${r.riskColor}">${r.daysUntil <= 0 ? 'Onsite' : r.daysUntil + ' days'}</td>
+      <td>${stepsBadge}</td>
+      <td>${riskBadge}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  document.getElementById('risk-table').innerHTML = html;
+  window._riskRows = rows;
+  window._riskSort = {col:'days',dir:1};
+}
+
+function sortRisk(col) {
+  const s = window._riskSort;
+  const dir = (s.col === col) ? -s.dir : 1;
+  window._riskSort = {col, dir};
+  window._riskRows.sort((a,b) => {
+    if (col==='name') return dir * a.name.localeCompare(b.name);
+    if (col==='arrival') return dir * (new Date(a.arrival) - new Date(b.arrival));
+    if (col==='days') return dir * (a.daysUntil - b.daysUntil);
+    if (col==='risk') return dir * (a.risk - b.risk || a.daysUntil - b.daysUntil);
+    return 0;
+  });
+  let html = '';
+  for (const r of window._riskRows) {
+    const stepsBadge = `<span class="prog-badge ${pc(r.steps,4)}">${pl(r.steps,4)}</span>`;
+    const riskBadge = r.steps >= 4
+      ? `<span style="color:var(--green);font-family:var(--mono);font-size:11px;">✓ Complete</span>`
+      : `<span style="background:${r.riskColor}22;color:${r.riskColor};font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid ${r.riskColor}44;">${r.riskLabel}</span>`;
+    const rowBg = r.steps < 4 && r.risk === 0 ? 'background:rgba(248,81,73,.06);' : r.steps < 4 && r.risk === 1 ? 'background:rgba(240,136,62,.04);' : '';
+    html += `<tr style="${rowBg}"><td>${r.name}</td><td class="td-mono">${r.arrival}</td><td class="td-mono" style="color:${r.riskColor}">${r.daysUntil <= 0 ? 'Onsite' : r.daysUntil + ' days'}</td><td>${stepsBadge}</td><td>${riskBadge}</td></tr>`;
+  }
+  document.querySelector('#risk-table tbody').innerHTML = html;
+}
+
+function getStepsForName(name) {
+  const p75 = DATA.p75, p50 = DATA.p50, p25 = DATA.p25;
+  if (p75.includes(name)) return 3;
+  if (p50.includes(name)) return 2;
+  if (p25.includes(name)) return 1;
+  return 0;
+}
 
 // Load and render
 async function init() {
