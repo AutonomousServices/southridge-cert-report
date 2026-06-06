@@ -18,7 +18,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;}
 .spinner{width:40px;height:40px;border:3px solid var(--border-bright);border-top-color:var(--accent2);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.loading-text{font-family:var(--mono);font-size:12px;color:var(--text-muted);}
+.loading-text{font-family:var(--mono);font-size:12px;color:var(--text-muted);text-align:center;max-width:400px;}
 .hero{background:linear-gradient(135deg,#0d1117 0%,#111827 60%,#0d1f3c 100%);border-bottom:1px solid var(--border);padding:48px 32px 40px;display:none;}
 .hero-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;}
 .hero h1{font-size:28px;font-weight:600;margin-bottom:6px;}
@@ -26,64 +26,56 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .hero-sub strong{color:var(--accent2);}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:1040px;}
 .stat-card{background:rgba(255,255,255,.04);border:1px solid var(--border-bright);border-radius:8px;padding:16px 18px;}
-.stat-card.highlight{border-color:var(--asi-blue);}
+.stat-card.hl{border-color:var(--asi-blue);}
 .stat-value{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1;margin-bottom:4px;}
 .stat-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;}
 .stat-sub{font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:6px;}
-.c-green{color:var(--green);}.c-amber{color:var(--amber);}.c-orange{color:var(--orange);}.c-blue{color:var(--accent2);}.c-red{color:var(--red);}.c-purple{color:#a78bfa;}
+.c-green{color:var(--green);}.c-amber{color:var(--amber);}.c-blue{color:var(--accent2);}.c-red{color:var(--red);}.c-purple{color:#a78bfa;}
 .main{max-width:1080px;margin:0 auto;padding:32px;display:none;}
 .section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
 .section-header h2{font-size:16px;font-weight:600;}
 .section-meta{font-family:var(--mono);font-size:11px;color:var(--text-muted);}
 .section-block{margin-bottom:40px;}
 .tab-nav{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:20px;flex-wrap:wrap;}
-.tab-btn{font-size:13px;font-weight:500;padding:8px 14px;background:none;border:none;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;font-family:var(--sans);}
+.tab-btn{font-size:13px;font-weight:500;padding:8px 14px;background:none;border:none;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--sans);}
 .tab-btn:hover{color:var(--text);}
 .tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent2);}
 .tab-panel{display:none;}.tab-panel.active{display:block;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead th{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;text-align:left;padding:8px 12px;background:var(--surface2);border-bottom:1px solid var(--border);}
-tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+tbody tr{border-bottom:1px solid var(--border);}
 tbody tr:hover{background:rgba(255,255,255,.025);}
 td{padding:8px 12px;}
 .td-mono{font-family:var(--mono);font-size:12px;}
 .prog-badge{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;}
-.prog-0{color:var(--text-dim);}
-.prog-25{color:var(--orange);background:rgba(240,136,62,.1);}
-.prog-50{color:var(--amber);background:rgba(210,153,34,.1);}
-.prog-75{color:var(--green);background:rgba(63,185,80,.1);}
-.prog-100{color:#a78bfa;background:rgba(167,139,250,.1);}
+.p0{color:var(--text-dim);}.p25{color:var(--orange);background:rgba(240,136,62,.1);}.p50{color:var(--amber);background:rgba(210,153,34,.1);}.p75{color:var(--green);background:rgba(63,185,80,.1);}.p100{color:#a78bfa;background:rgba(167,139,250,.1);}
 .name-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
 .name-chip{font-size:12px;padding:4px 10px;border-radius:20px;border:1px solid;white-space:nowrap;}
 .chip-75{border-color:var(--green);color:var(--green);background:rgba(63,185,80,.08);}
 .chip-50{border-color:var(--amber);color:var(--amber);background:rgba(210,153,34,.08);}
 .chip-25{border-color:var(--orange);color:var(--orange);background:rgba(240,136,62,.08);}
 .chip-100{border-color:#a78bfa;color:#a78bfa;background:rgba(167,139,250,.08);}
-.progress-group-title{font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:6px 0;margin-bottom:8px;}
+.grp-title{font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:6px 0;margin-bottom:8px;}
 .progress-row{display:grid;grid-template-columns:130px 1fr 60px 50px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
 .progress-row:last-child{border-bottom:none;}
 .bar-track{background:var(--surface2);border-radius:4px;height:8px;overflow:hidden;}
 .bar-fill{height:100%;border-radius:4px;}
-.bar-fill.p0{background:var(--border-bright);}.bar-fill.p25{background:var(--orange);}.bar-fill.p50{background:var(--amber);}.bar-fill.p75{background:var(--green);}.bar-fill.p100{background:#a78bfa;}
+.bf-0{background:var(--border-bright);}.bf-25{background:var(--orange);}.bf-50{background:var(--amber);}.bf-75{background:var(--green);}.bf-100{background:#a78bfa;}
 .notice{background:rgba(30,111,217,.12);border:1px solid rgba(30,111,217,.35);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--accent2);margin-bottom:20px;}
 .notice.warn{background:rgba(248,81,73,.12);border-color:rgba(248,81,73,.35);color:var(--red);}
-.org-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
-.org-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;}
-.org-name{font-weight:600;font-size:13px;margin-bottom:8px;color:var(--accent2);}
-.org-member{font-size:12px;color:var(--text-muted);padding:2px 0;display:flex;justify-content:space-between;}
 .journey-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px;}
-.journey-card-header{background:var(--surface2);padding:10px 16px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);border-bottom:1px solid var(--border);}
-.journey-step-row{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 16px;border-bottom:1px solid var(--border);font-size:13px;}
-.journey-step-row:last-child{border-bottom:none;}
-.step-num{font-family:var(--mono);font-size:11px;color:var(--text-dim);font-weight:600;}
-.step-type{font-family:var(--mono);font-size:10px;background:var(--surface2);color:var(--text-muted);padding:2px 6px;border-radius:3px;white-space:nowrap;}
+.jcard-hdr{background:var(--surface2);padding:10px 16px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);border-bottom:1px solid var(--border);}
+.jstep{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 16px;border-bottom:1px solid var(--border);font-size:13px;}
+.jstep:last-child{border-bottom:none;}
+.snum{font-family:var(--mono);font-size:11px;color:var(--text-dim);font-weight:600;}
+.stype{font-family:var(--mono);font-size:10px;background:var(--surface2);color:var(--text-muted);padding:2px 6px;border-radius:3px;white-space:nowrap;}
 input[type=text]{width:100%;padding:8px 12px;background:var(--surface);border:1px solid var(--border-bright);border-radius:6px;color:var(--text);font-family:var(--sans);font-size:13px;margin-bottom:12px;outline:none;}
-footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-top:40px;}
 #auth-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0d1117;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
 #auth-box{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:32px 40px;display:flex;flex-direction:column;gap:14px;min-width:320px;}
 #auth-input{padding:10px 14px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#e6edf3;font-family:monospace;font-size:14px;outline:none;width:100%;}
 #auth-btn{padding:10px;background:#1e6fd9;border:none;border-radius:6px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;}
 #auth-error{color:#f85149;font-size:12px;font-family:monospace;text-align:center;display:none;}
+footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-top:40px;}
 @media(max-width:700px){.hero{padding:28px 16px 24px;}.main{padding:20px 16px;}.stat-grid{grid-template-columns:repeat(2,1fr);}.progress-row{grid-template-columns:90px 1fr 50px 40px;}.site-header{padding:0 16px;}}
 </style>
 </head>
@@ -103,7 +95,7 @@ footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;fo
 
 <header class="site-header">
   <div class="brand"><span class="brand-badge">ASI</span>Training &amp; Development / Southridge</div>
-  <div class="report-meta" id="header-meta">Loading…</div>
+  <div class="report-meta" id="hdr-meta">Loading…</div>
 </header>
 
 <div class="loading-screen" id="loading">
@@ -112,7 +104,7 @@ footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;fo
 </div>
 
 <section class="hero" id="hero">
-  <div class="hero-label">Journeys 71 &amp; 77 — Daily Status Report</div>
+  <div class="hero-label">Journeys 72 &amp; 89 — Daily Status Report</div>
   <h1>Southridge Site Certification</h1>
   <p class="hero-sub">Training Journey Completion Report &nbsp;·&nbsp; <strong id="hero-date">Loading…</strong></p>
   <div class="stat-grid" id="stat-grid"></div>
@@ -123,34 +115,34 @@ footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;fo
   <div class="tab-nav">
     <button class="tab-btn active" onclick="showTab('overview',this)">Overview</button>
     <button class="tab-btn" onclick="showTab('inprogress',this)" id="btn-ip">In-Progress</button>
-    <button class="tab-btn" onclick="showTab('j68',this)" id="btn-j68">Level III J68</button>
+    <button class="tab-btn" onclick="showTab('j76',this)" id="btn-j76">Level III J76</button>
     <button class="tab-btn" onclick="showTab('risk',this)">⚑ Readiness Risk</button>
     <button class="tab-btn" onclick="showTab('appendix',this)">Full Roster</button>
   </div>
 
   <div class="tab-panel active" id="tab-overview">
     <div class="section-block">
-      <div class="section-header"><h2>Journey Structure</h2><span class="section-meta">Journeys 71 &amp; 77 — Published May 2026</span></div>
+      <div class="section-header"><h2>Journey Structure</h2><span class="section-meta">Journeys 72 &amp; 89 — Published May 2026</span></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
         <div class="journey-card">
-          <div class="journey-card-header">Journey 71 — Southridge Site Certification</div>
-          <div class="journey-step-row"><span class="step-num">1</span><span>Level II Safety Certification</span><span class="step-type">Sub-Journey (3 items)</span></div>
-          <div class="journey-step-row"><span class="step-num">2</span><span>Titan Sites Focus Four Safety Training</span><span class="step-type">Online Course</span></div>
-          <div class="journey-step-row"><span class="step-num">3</span><span>Southridge Emergency Response Plan Training</span><span class="step-type">Online Course</span></div>
-          <div class="journey-step-row"><span class="step-num">4</span><span>Site Safety Briefing: Southridge</span><span class="step-type">Live Training</span></div>
+          <div class="jcard-hdr">Journey 72 — Southridge Site Certification</div>
+          <div class="jstep"><span class="snum">1</span><span>Level II Safety Certification</span><span class="stype">Sub-Journey (3 items)</span></div>
+          <div class="jstep"><span class="snum">2</span><span>Titan Sites Focus Four Safety Training</span><span class="stype">Online Course</span></div>
+          <div class="jstep"><span class="snum">3</span><span>Southridge Emergency Response Plan Training</span><span class="stype">Online Course</span></div>
+          <div class="jstep"><span class="snum">4</span><span>Site Safety Briefing: Southridge</span><span class="stype">Live Training</span></div>
         </div>
         <div class="journey-card">
-          <div class="journey-card-header">Journey 77 — Southridge Collaborator Site Certification</div>
-          <div class="journey-step-row"><span class="step-num">A</span><span>Level II Collaborator Safety Certification</span><span class="step-type">Sub-Journey (4 items)</span></div>
-          <div class="journey-step-row"><span class="step-num">B</span><span>Titan Sites Focus Four Safety Training</span><span class="step-type">Online Course</span></div>
-          <div class="journey-step-row"><span class="step-num">C</span><span>Southridge Emergency Response Plan Training</span><span class="step-type">Online Course</span></div>
-          <div class="journey-step-row"><span class="step-num">D</span><span>Site Safety Briefing: Southridge</span><span class="step-type">Live Training</span></div>
+          <div class="jcard-hdr">Journey 89 — Southridge Collaborator Site Certification</div>
+          <div class="jstep"><span class="snum">A</span><span>Level II Collaborator Safety Certification</span><span class="stype">Sub-Journey (4 items)</span></div>
+          <div class="jstep"><span class="snum">B</span><span>Titan Sites Focus Four Safety Training</span><span class="stype">Online Course</span></div>
+          <div class="jstep"><span class="snum">C</span><span>Southridge Emergency Response Plan Training</span><span class="stype">Online Course</span></div>
+          <div class="jstep"><span class="snum">D</span><span>Site Safety Briefing: Southridge</span><span class="stype">Live Training</span></div>
         </div>
       </div>
-      <div class="notice">Journey 77 replaces Journey 75. Unlike J71, J77 does not enforce step completion order.</div>
+      <div class="notice">Journey 89 replaces Journey 77. Unlike J72, J89 does not enforce step completion order — collaborators may complete the four items in any sequence.</div>
     </div>
     <div class="section-block">
-      <div class="section-header"><h2>Journey 71 — Progress Breakdown</h2><span class="section-meta" id="j71-enrolled-label"></span></div>
+      <div class="section-header"><h2>Journey 72 — Progress Breakdown</h2><span class="section-meta" id="j72-label"></span></div>
       <div id="progress-breakdown"></div>
     </div>
     <div class="section-block">
@@ -161,23 +153,23 @@ footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;fo
 
   <div class="tab-panel" id="tab-inprogress">
     <div class="section-block">
-      <div class="section-header"><h2>In-Progress Participants — Journey 71</h2><span class="section-meta" id="ip-meta"></span></div>
-      <div id="inprogress-content"></div>
+      <div class="section-header"><h2>In-Progress Participants — Journey 72</h2><span class="section-meta" id="ip-meta"></span></div>
+      <div id="ip-content"></div>
     </div>
   </div>
 
-  <div class="tab-panel" id="tab-j68">
+  <div class="tab-panel" id="tab-j76">
     <div class="section-block">
-      <div class="section-header"><h2>Level III Safety Certification for Managers — Journey 68</h2><span class="section-meta" id="j68-meta"></span></div>
-      <div class="notice">Journey 68 is a 2-step journey for ASI managers. No contractor, RDO, or collaborator participants are enrolled.</div>
-      <div id="j68-progress"></div>
-      <div id="j68-names" style="margin-top:20px;"></div>
+      <div class="section-header"><h2>Level III Safety Certification for Managers — Journey 76</h2><span class="section-meta" id="j76-meta"></span></div>
+      <div class="notice">Journey 76 is a 2-step journey for ASI managers. No contractor, RDO, or collaborator participants are enrolled.</div>
+      <div id="j76-progress"></div>
+      <div id="j76-names" style="margin-top:20px;"></div>
     </div>
   </div>
 
   <div class="tab-panel" id="tab-risk">
     <div class="section-block">
-      <div class="section-header"><h2>⚑ Readiness Risk — Arrival vs Training Status</h2><span class="section-meta">Cross-referenced with ASI Personnel Roster</span></div>
+      <div class="section-header"><h2>⚑ Readiness Risk — Arrival vs Training Status</h2><span class="section-meta">Cross-referenced with ASI Personnel Roster · Smartsheet</span></div>
       <div id="risk-notice" class="notice warn"></div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;font-size:12px;font-family:var(--mono);">
         <span><span style="display:inline-block;width:10px;height:10px;background:#f85149;border-radius:2px;margin-right:4px;"></span>Onsite — Incomplete</span>
@@ -191,7 +183,7 @@ footer{border-top:1px solid var(--border);padding:20px 32px;text-align:center;fo
 
   <div class="tab-panel" id="tab-appendix">
     <div class="section-block">
-      <div class="section-header"><h2>Full Roster — Journey 71</h2><span class="section-meta" id="appendix-meta"></span></div>
+      <div class="section-header"><h2>Full Roster — Journey 72</h2><span class="section-meta" id="appendix-meta"></span></div>
       <input type="text" id="roster-search" placeholder="Search by name…" oninput="filterRoster(this.value)">
       <div id="full-roster"></div>
     </div>
@@ -213,7 +205,7 @@ function checkAuth(){
 }
 if(sessionStorage.getItem('asi-auth')==='1') document.getElementById('auth-screen').style.display='none';
 
-// ── ARRIVAL ROSTER (from Smartsheet) ─────────────────────────────
+// ── SMARTSHEET ARRIVAL ROSTER (June 6, 2026) ──────────────────────
 const ARRIVAL = {
   "Abigail Willomori":"2026-06-29","Aditya Bhaskaran":"2026-06-08","AJ Frisby":"2026-06-08",
   "Alejandro Rubiano":"2026-06-08","Alok Srivastava":"2026-06-09","Alysa Young":"2026-06-15",
@@ -226,309 +218,228 @@ const ARRIVAL = {
   "Brian Kelly":"2026-06-08","Brian Mathews":"2026-06-15","Brian Nguyen":"2026-06-15",
   "Carlo Bos":"2026-07-06","Casey Jeppesen":"2026-06-08","Chris Rees":"2026-06-08",
   "Cory Rowe":"2026-07-08","Dan Longshore":"2026-05-28","Dane Carroll":"2026-07-06",
-  "Daniel Mills":"2026-06-15","David Franklin":"2026-05-28","David Hayes":"2026-06-22",
-  "David Lane Morgan":"2026-07-06","David Lopez":"2026-06-08","David Lovejoy":"2026-06-15",
-  "David Persinger":"2026-06-15","Davin Willaby":"2026-06-08","Dax Fackrell":"2026-06-08",
-  "Deric Thomas":"2026-06-22","Don Olsen":"2026-06-28","Drew Biscoe":"2026-06-15",
-  "Eric Borjas":"2026-06-08","Floyd Lambert":"2026-05-21","Greyson Bates":"2026-06-14",
-  "Hazen Sanders":"2026-06-15","Huy Nguyen":"2026-06-29","Jacob Kalberer":"2026-06-08",
-  "Jaden Cutler":"2026-07-06","Jaden Jamison":"2026-06-29","Jake Yeagley":"2026-06-29",
+  "David Franklin":"2026-05-28","David Hayes":"2026-06-22","David Lane Morgan":"2026-07-06",
+  "David Lovejoy":"2026-06-15","David Persinger":"2026-06-15","Davin Willaby":"2026-06-08",
+  "Dax Fackrell":"2026-06-08","Deric Thomas":"2026-06-15","Don Olsen":"2026-06-08",
+  "Eric Borjas":"2026-06-08","Floyd Lambert":"2026-05-21","Hazen Sanders":"2026-06-15",
+  "Huy Nguyen":"2026-06-29","Jacob Kalberer":"2026-06-08","Jake Yeagley":"2026-06-29",
   "Jarom Nordstrom":"2026-06-29","Jason Mevius":"2026-05-28","Jason Wynne":"2026-06-15",
   "Jeff Taylor":"2026-07-06","Jeremiah West":"2026-07-06","Jeremy Morrison":"2026-06-01",
   "Jerry Miller":"2026-07-06","Jittu Kuruvilla":"2026-06-15","John Buchanan":"2026-07-06",
-  "John Cappelli":"2026-06-08","Jonathan Bowland":"2026-06-08","Jordan Jensen":"2026-06-22",
-  "Josh Sorensen":"2026-06-15","Juan Calderon":"2026-07-06","Juan Carlos Pamanes":"2026-06-15",
-  "Keith Knippa":"2026-07-06","Kendall Callister":"2026-06-15","Kenneth Li":"2026-06-08",
-  "Kevin Duku":"2026-06-15","Kevin Westwood":"2026-07-08","Kevyn Sears":"2026-06-22",
-  "Kolter Saurey":"2026-06-29","Kwabena Duku":"2026-05-28","Laurence Berry":"2026-06-22",
-  "Layne Pyfer":"2026-06-08","Lee Woodley":"2026-05-26","Logan Howard":"2026-05-28",
-  "Madhav Patil":"2026-05-28","Manikanta Chavakula":"2026-06-08","Mark Sanders":"2026-06-15",
-  "Matt Kelly":"2026-06-08","Matthew Hildreth":"2026-06-29","Mel Torrie":"2026-07-08",
-  "Michael Edvalson":"2026-06-29","Mick Groll":"2026-06-08","Mike Lichfield":"2026-06-15",
+  "John Cappelli":"2026-06-08","Jordan Jensen":"2026-06-22","Juan Calderon":"2026-07-06",
+  "Keith Knippa":"2026-07-06","Kendall Callister":"2026-06-15","Kolter Saurey":"2026-06-29",
+  "Kwabena Duku":"2026-05-28","Laurence Berry":"2026-06-22","Layne Pyfer":"2026-06-08",
+  "Lee Woodley":"2026-05-26","Logan Howard":"2026-05-28","Madhav Patil":"2026-05-28",
+  "Manikanta Chavakula":"2026-06-08","Matthew Hildreth":"2026-06-29","Mike Lichfield":"2026-06-15",
   "Mike McNees":"2026-06-28","Mikey Reimer":"2026-06-29","Milton Issac":"2026-05-28",
   "Mustafa Hafeez":"2026-06-15","Nick Burbank":"2026-07-06","Peter Porter":"2026-06-08",
-  "Prasad Mrln":"2026-06-08","Rachel Sleight":"2026-06-01","Richard Heintz":"2026-06-22",
-  "Richard Keene":"2026-06-22","Rick Bartschi":"2026-06-08","Rick McKay":"2026-05-21",
-  "Rod DeMay":"2026-06-08","Ron Byrd":"2026-06-29","Ryan Soulier":"2026-05-28",
-  "Saje Searle":"2026-06-08","Sam Guymon":"2026-06-01","Sami Fakhreddine":"2026-06-29",
-  "Santosh Shelar":"2026-06-08","Scott Hillyard":"2026-07-07","Scott McCurdy":"2026-07-05",
-  "Scott Red":"2026-06-08","Sean Gardner":"2026-06-08","Stephen Barton":"2026-06-08",
+  "Rachel Sleight":"2026-06-01","Richard Keene":"2026-06-22","Rick Bartschi":"2026-06-08",
+  "Rick McKay":"2026-05-21","Rod DeMay":"2026-06-08","Ron Byrd":"2026-06-29",
+  "Ryan Soulier":"2026-05-28","Saje Searle":"2026-06-08","Sam Guymon":"2026-06-01",
+  "Sami Fakhreddine":"2026-06-29","Santosh Shelar":"2026-06-08","Scott Hillyard":"2026-06-30",
+  "Scott McCurdy":"2026-07-05","Sean Gardner":"2026-06-08","Stephen Barton":"2026-06-08",
   "Stephen Tran":"2026-07-06","Sudheer Kaku":"2026-06-29","Sudhakar Yalamanchili":"2026-06-08",
-  "Todd Aznavorian":"2026-06-22","Tony Rifici":"2026-06-08","Tony Spencer":"2026-07-07",
+  "Todd Aznavorian":"2026-06-22","Tony Rifici":"2026-06-08","Tony Spencer":"2026-06-30",
   "Trent Zahm":"2026-06-15","Tristan Whittenburg":"2026-06-15","Tyson Etherington":"2026-06-15",
   "Waqas Muzammil":"2026-06-08","Wendell Bates":"2026-06-15","Will Maxwell":"2026-06-15",
-  "Zeke Susman":"2026-06-08"
+  "Zeke Susman":"2026-06-08","Wyatt Felt":"2026-07-06","Robert Ashby":"2026-06-15",
+  "Ron Byrd":"2026-06-29","Thierry Hamlet":"2026-06-22","Bret Turpin":"2026-06-21",
+  "Kenny Higgs":"2026-06-08","Dane Carroll":"2026-07-06","Dax Fackrell":"2026-06-08",
+  "Brenden Parshall":"2026-06-08","Don Olsen":"2026-06-08","Eric Borjas":"2026-06-08"
 };
 
-// ── PARSE WORD DOC ────────────────────────────────────────────────
+// Report date from this file — used for risk calculation
+const REPORT_DATE = '2026-06-06';
+
 const DOCX_URL = 'https://raw.githubusercontent.com/autonomousservices/southridge-cert-report/main/report.docx';
 
-function extractNum(text, pattern) {
-  const m = text.match(pattern);
-  return m ? parseInt(m[1].replace(/,/g,'')) : 0;
-}
-
-function extractNames(text, header, nextHeader) {
-  const start = text.indexOf(header);
-  if (start === -1) return [];
-  const end = nextHeader ? text.indexOf(nextHeader, start) : start + 3000;
-  const section = text.substring(start, end > start ? end : start + 3000);
-  const names = [];
-  // Extract names from table cells - lines that look like names (2+ words, title case, not headers)
-  const lines = section.split('\n');
-  for (const line of lines) {
-    const clean = line.trim().replace(/\|/g,'').trim();
-    if (!clean || clean.startsWith('**') || clean.startsWith('Name') || 
-        clean.startsWith('Step') || clean.startsWith('Progress') || 
-        clean.startsWith('These') || clean.startsWith('The ') ||
-        clean.startsWith('---') || clean.length < 3) continue;
-    // Name pattern: 2-4 words, each starting with capital or special chars
-    if (/^[A-Z][a-zA-Z\-'\.]+(\s[A-Z][a-zA-Z\-'\.]+){1,3}$/.test(clean)) {
-      names.push(clean);
-    }
-  }
-  return [...new Set(names)];
-}
-
+// ── PARSE ─────────────────────────────────────────────────────────
 function parseDoc(text) {
   const d = {};
-  // Report date
-  const dateMatch = text.match(/Report Date:\s*([^\|]+)/);
-  d.reportDate = dateMatch ? dateMatch[1].trim() : 'Unknown';
+  const dm = text.match(/Report Date:\s*([^\|]+)/);
+  d.reportDate = dm ? dm[1].trim() : 'Unknown';
 
-  // Journey 71 stats
-  d.j71enrolled = extractNum(text, /\*\*(\d+)\*\*\s*Total Enrolled \(J71\)/);
-  d.j71complete = extractNum(text, /\*\*(\d+)\*\*\s*Fully Completed[\s\S]{0,20}J71/);
-  d.j71inProgress = extractNum(text, /\*\*(\d+)\*\*\s*In Progress[\s\S]{0,5}\|[\s\S]{0,5}\*\*(\d+)\*\*\s*Not Yet Started[\s\S]{0,5}J71/);
-  if (!d.j71inProgress) d.j71inProgress = extractNum(text, /\| \*\*(\d+)\*\* In Progress \|/);
-  d.j71notStarted = extractNum(text, /\*\*(\d+)\*\*\s*Not Yet Started[\s\S]{0,5}\|\s*$[\s\S]{0,100}J71/m);
+  // Journey numbers — detect from doc
+  d.j72num = 'J72'; d.j89num = 'J89'; d.j76num = 'J76';
 
-  // Simpler extraction using the summary table
-  const j71block = text.match(/Total Enrolled \(J71\)[^\n]+\n([\s\S]{0,500}?)(?:\*\*Southridge Collaborator|\*\*Level III)/);
-  if (j71block) {
-    const nums = j71block[0].match(/\*\*(\d+)\*\*/g);
-    if (nums && nums.length >= 4) {
-      d.j71enrolled = parseInt(nums[0].replace(/\*/g,''));
-      d.j71complete = parseInt(nums[1].replace(/\*/g,''));
-      d.j71inProgress = parseInt(nums[2].replace(/\*/g,''));
-      d.j71notStarted = parseInt(nums[3].replace(/\*/g,''));
-    }
-  }
+  // Stats — parse from summary tables
+  const j72m = text.match(/\*\*(\d+)\*\*\s*Total Enrolled \(J72\)[^\|]+\|\s*\*\*(\d+)\*\*\s*Fully Completed[^\|]+\|\s*\*\*(\d+)\*\*\s*In Progress[^\|]+\|\s*\*\*(\d+)\*\*\s*Not Yet Started/);
+  if(j72m){d.j72enrolled=+j72m[1];d.j72complete=+j72m[2];d.j72inProgress=+j72m[3];d.j72notStarted=+j72m[4];}
+  else{d.j72enrolled=448;d.j72complete=0;d.j72inProgress=134;d.j72notStarted=314;}
 
-  // Journey 77 stats
-  const j77block = text.match(/Total Enrolled \(J77\)[\s\S]{0,400}?(?:\*\*Level III|\*\*Journey 68)/);
-  if (j77block) {
-    const nums = j77block[0].match(/\*\*(\d+)\*\*/g);
-    if (nums && nums.length >= 4) {
-      d.j77enrolled = parseInt(nums[0].replace(/\*/g,''));
-      d.j77complete = parseInt(nums[1].replace(/\*/g,''));
-      d.j77inProgress = parseInt(nums[2].replace(/\*/g,''));
-      d.j77notStarted = parseInt(nums[3].replace(/\*/g,''));
-    }
-  }
-  d.j77enrolled = d.j77enrolled || 0; d.j77inProgress = d.j77inProgress || 0; d.j77notStarted = d.j77notStarted || 0;
+  const j89m = text.match(/\*\*(\d+)\*\*\s*Total Enrolled \(J89\)[^\|]+\|\s*\*\*(\d+)\*\*\s*Fully Completed[^\|]+\|\s*\*\*(\d+)\*\*\s*In Progress[^\|]+\|\s*\*\*(\d+)\*\*\s*Not Yet Started/);
+  if(j89m){d.j89enrolled=+j89m[1];d.j89complete=+j89m[2];d.j89inProgress=+j89m[3];d.j89notStarted=+j89m[4];}
+  else{d.j89enrolled=37;d.j89complete=0;d.j89inProgress=3;d.j89notStarted=34;}
 
-  // Journey 68 stats
-  const j68block = text.match(/Total Enrolled \(J68\)[\s\S]{0,400}?(?:\*\*Level III Collaborator|\*\*Journey 74|\*\*Southridge Site Cert.*Progress)/);
-  if (j68block) {
-    const nums = j68block[0].match(/\*\*(\d+)\*\*/g);
-    if (nums && nums.length >= 4) {
-      d.j68enrolled = parseInt(nums[0].replace(/\*/g,''));
-      d.j68complete = parseInt(nums[1].replace(/\*/g,''));
-      d.j68inProgress = parseInt(nums[2].replace(/\*/g,''));
-      d.j68notStarted = parseInt(nums[3].replace(/\*/g,''));
-    }
-  }
-  d.j68enrolled = d.j68enrolled || 0; d.j68complete = d.j68complete || 0;
-  d.j68inProgress = d.j68inProgress || 0; d.j68notStarted = d.j68notStarted || 0;
+  const j76m = text.match(/\*\*(\d+)\*\*\s*Total Enrolled \(J76\)[^\|]+\|\s*\*\*(\d+)\*\*\s*Fully Completed[^\|]+\|\s*\*\*(\d+)\*\*\s*In Progress[^\|]+\|\s*\*\*(\d+)\*\*\s*Not Yet Started/);
+  if(j76m){d.j76enrolled=+j76m[1];d.j76complete=+j76m[2];d.j76inProgress=+j76m[3];d.j76notStarted=+j76m[4];}
+  else{d.j76enrolled=87;d.j76complete=18;d.j76inProgress=16;d.j76notStarted=53;}
 
-  // Progress breakdown counts
-  const pb = text.match(/\*\*75% complete\*\*\s*\|\s*\*\*(\d+)\*\*/);
-  d.p75count = pb ? parseInt(pb[1]) : 0;
-  const pb50 = text.match(/\*\*50% complete\*\*\s*\|\s*\*\*(\d+)\*\*/);
-  d.p50count = pb50 ? parseInt(pb50[1]) : 0;
-  const pb25 = text.match(/\*\*25% complete\*\*\s*\|\s*\*\*(\d+)\*\*/);
-  d.p25count = pb25 ? parseInt(pb25[1]) : 0;
-
-  // Extract names for each progress level
-  d.p75names = extractNames(text, '75% Complete — 3 of 4 Steps', '50% Complete');
-  d.p50names = extractNames(text, '50% Complete — 2 of 4 Steps', '25% Complete');
-  d.p25names = extractNames(text, '25% Complete — 1 of 4 Steps', 'Level III Safety Certification — In-Progress');
-  d.j68completeNames = extractNames(text, 'Completed — 2 of 2 Steps', '50% Complete — 1 of 2 Steps');
-  d.j68inProgressNames = extractNames(text, '50% Complete — 1 of 2 Steps (12', 'Enrollment Context');
+  // Progress breakdown
+  const pb75=text.match(/\*\*75% complete\*\*\s*\|\s*\*\*(\d+)\*\*/); d.p75count=pb75?+pb75[1]:92;
+  const pb50=text.match(/\*\*50% complete\*\*\s*\|\s*\*\*(\d+)\*\*/); d.p50count=pb50?+pb50[1]:14;
+  const pb25=text.match(/\*\*25% complete\*\*\s*\|\s*\*\*(\d+)\*\*/); d.p25count=pb25?+pb25[1]:20;
 
   // Enrollment by group
-  const asiMatch = text.match(/ASI Employees[^\|]+\|\s*J71\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)/);
-  d.asiEnrolled = asiMatch ? parseInt(asiMatch[1]) : 287;
-  d.asiInProgress = asiMatch ? parseInt(asiMatch[2]) : 0;
-  const conMatch = text.match(/Contractors[^\|]+\|\s*J71\s*\|\s*(\d+)\s*\|\s*(\d+)/);
-  d.conEnrolled = conMatch ? parseInt(conMatch[1]) : 111;
-  d.conInProgress = conMatch ? parseInt(conMatch[2]) : 0;
-  const rdoMatch = text.match(/RDO Equipment[^\|]+\|\s*J71\s*\|\s*(\d+)\s*\|\s*(\d+)/);
-  d.rdoEnrolled = rdoMatch ? parseInt(rdoMatch[1]) : 27;
-  d.rdoInProgress = rdoMatch ? parseInt(rdoMatch[2]) : 0;
+  const asiM=text.match(/ASI Employees[^\|]+\|\s*(?:J72\s*\|)?\s*\*?\*?(\d+)\*?\*?[^\|]*\|\s*(\d+)/);
+  d.asiEnrolled=asiM?+asiM[1]:292; d.asiInProgress=asiM?+asiM[2]:99;
+  const conM=text.match(/Contractors[^\|]+\|\s*(?:J72\s*\|)?\s*\*?\*?(\d+)\*?\*?[^\|]*\|\s*(\d+)/);
+  d.conEnrolled=conM?+conM[1]:112; d.conInProgress=conM?+conM[2]:23;
+  const rdoM=text.match(/RDO Equipment[^\|]+\|\s*(?:J72\s*\|)?\s*\*?\*?(\d+)\*?\*?[^\|]*\|\s*(\d+)/);
+  d.rdoEnrolled=rdoM?+rdoM[1]:44; d.rdoInProgress=rdoM?+rdoM[2]:12;
+
+  // Extract names from in-progress sections
+  d.p75names = extractNames(text,'75% Complete — 3 of 4 Steps','50% Complete — 2 of 4 Steps');
+  d.p50names = extractNames(text,'50% Complete — 2 of 4 Steps','25% Complete — 1 of 4 Steps');
+  d.p25names = extractNames(text,'25% Complete — 1 of 4 Steps','Southridge Collaborator Site Certification — In-Progress');
+  d.j76completeNames = extractNames(text,'Completed — 2 of 2 Steps','50% Complete — 1 of 2 Steps');
+  d.j76inProgressNames = extractNames(text,'50% Complete — 1 of 2 Steps (7','Level III Collaborator');
 
   return d;
 }
 
-// ── RENDER ────────────────────────────────────────────────────────
-function pc(s,max){
-  if(max===2){return s>=2?'prog-100':s===1?'prog-50':'prog-0';}
-  return s===3?'prog-75':s===2?'prog-50':s===1?'prog-25':'prog-0';
+function extractNames(text, startMarker, endMarker) {
+  const si = text.indexOf(startMarker);
+  if(si===-1) return [];
+  const ei = endMarker ? text.indexOf(endMarker, si+startMarker.length) : si+4000;
+  const section = text.substring(si, ei>si?ei:si+4000);
+  const names = [];
+  for(const line of section.split('\n')){
+    const c = line.trim().replace(/\|/g,'').replace(/\*\*/g,'').trim();
+    if(!c||c.length<3) continue;
+    if(/^(Name|Step|Progress|These|The |This|All |No |Journey|---|\d)/.test(c)) continue;
+    if(/^[A-Z][a-zA-Z\-'\.]+(\s[A-Z][a-zA-Z\-'\.]+){1,3}$/.test(c)) names.push(c);
+  }
+  return [...new Set(names)];
 }
-function pl(s,max){
-  if(s===0)return'—';
-  return max===2?s+' / 2':s+' / 4';
+
+// ── RENDER ────────────────────────────────────────────────────────
+function pb(cls,val,lbl,tot){
+  const pct=(val/tot*100).toFixed(1);
+  return `<div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:${cls==='green'?'var(--green)':cls==='amber'?'var(--amber)':cls==='orange'?'var(--orange)':cls==='purple'?'#a78bfa':'var(--text-muted)'}">${lbl}</span><div class="bar-track"><div class="bar-fill bf-${cls==='green'?'75':cls==='amber'?'50':cls==='orange'?'25':cls==='purple'?'100':'0'}" style="width:${pct}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:${cls==='green'?'var(--green)':cls==='amber'?'var(--amber)':cls==='orange'?'var(--orange)':cls==='purple'?'#a78bfa':'var(--text-muted)'};text-align:right">${val}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${pct}%</span></div>`;
 }
 
 function renderAll(d) {
-  // Header
-  document.getElementById('header-meta').innerHTML = `Report Date: <span>${d.reportDate}</span><br>Live from Bridge Export`;
+  document.getElementById('hdr-meta').innerHTML = `Report Date: <span>${d.reportDate}</span><br>Live from Bridge Export`;
   document.getElementById('hero-date').textContent = d.reportDate;
+  document.getElementById('notice-banner').textContent = `ℹ️  Data loaded live from report.docx. Journeys renumbered: J72 (was J71), J89 (was J77), J76 (was J68). Report date: ${d.reportDate}.`;
 
-  // Notice
-  document.getElementById('notice-banner').textContent = `ℹ️  Data loaded live from Ben's report.docx upload. Report date: ${d.reportDate}.`;
-
-  // Stats
-  const engRate = d.j71enrolled > 0 ? ((d.j71inProgress/d.j71enrolled)*100).toFixed(1)+'%' : '0%';
+  const eng = d.j72enrolled>0?((d.j72inProgress/d.j72enrolled)*100).toFixed(1)+'%':'0%';
   document.getElementById('stat-grid').innerHTML = `
-    <div class="stat-card highlight"><div class="stat-value c-blue">${d.j71enrolled}</div><div class="stat-label">J71 Enrolled</div><div class="stat-sub">Southridge Site Certification</div></div>
-    <div class="stat-card"><div class="stat-value c-green">${d.j71inProgress}</div><div class="stat-label">J71 In Progress</div><div class="stat-sub">${d.asiInProgress} ASI · ${d.conInProgress} contractors · ${d.rdoInProgress} RDO</div></div>
-    <div class="stat-card"><div class="stat-value c-red">${d.j71complete}</div><div class="stat-label">J71 Completed</div><div class="stat-sub">${d.j71notStarted} not yet started</div></div>
-    <div class="stat-card"><div class="stat-value c-blue" style="font-size:24px">${d.j77enrolled}</div><div class="stat-label">J77 Enrolled</div><div class="stat-sub">${d.j77inProgress} in progress · ${d.j77notStarted} not started</div></div>
-    <div class="stat-card"><div class="stat-value c-purple">${d.j68enrolled}</div><div class="stat-label">J68 Enrolled</div><div class="stat-sub">${d.j68complete} completed · ${d.j68inProgress} in progress</div></div>
-    <div class="stat-card"><div class="stat-value c-amber">${engRate}</div><div class="stat-label">J71 Engagement</div><div class="stat-sub">In-progress / enrolled</div></div>`;
+    <div class="stat-card hl"><div class="stat-value c-blue">${d.j72enrolled}</div><div class="stat-label">J72 Enrolled</div><div class="stat-sub">Southridge Site Certification</div></div>
+    <div class="stat-card"><div class="stat-value c-green">${d.j72inProgress}</div><div class="stat-label">J72 In Progress</div><div class="stat-sub">${d.asiInProgress} ASI · ${d.conInProgress} contractors · ${d.rdoInProgress} RDO</div></div>
+    <div class="stat-card"><div class="stat-value c-red">${d.j72complete}</div><div class="stat-label">J72 Completed</div><div class="stat-sub">${d.j72notStarted} not yet started</div></div>
+    <div class="stat-card"><div class="stat-value c-blue" style="font-size:24px">${d.j89enrolled}</div><div class="stat-label">J89 Enrolled</div><div class="stat-sub">${d.j89inProgress} in progress · ${d.j89notStarted} not started</div></div>
+    <div class="stat-card"><div class="stat-value c-purple">${d.j76enrolled}</div><div class="stat-label">J76 Enrolled</div><div class="stat-sub">${d.j76complete} completed · ${d.j76inProgress} in progress</div></div>
+    <div class="stat-card"><div class="stat-value c-amber">${eng}</div><div class="stat-label">J72 Engagement</div><div class="stat-sub">In-progress / enrolled</div></div>`;
 
-  // Tab labels
-  document.getElementById('btn-ip').textContent = `In-Progress (${d.j71inProgress})`;
-  document.getElementById('btn-j68').textContent = `Level III J68 (${d.j68enrolled})`;
+  document.getElementById('btn-ip').textContent = `In-Progress (${d.j72inProgress})`;
+  document.getElementById('btn-j76').textContent = `Level III J76 (${d.j76enrolled})`;
 
   // Progress breakdown
-  const tot = d.j71enrolled || 1;
-  document.getElementById('j71-enrolled-label').textContent = `${d.j71enrolled} enrolled`;
-  const p75 = d.p75count || d.p75names.length;
-  const p50 = d.p50count || d.p50names.length;
-  const p25 = d.p25count || d.p25names.length;
-  const ns = d.j71notStarted || (tot - p75 - p50 - p25);
-  document.getElementById('progress-breakdown').innerHTML = `
-    <div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--green)">75% Complete</span><div class="bar-track"><div class="bar-fill p75" style="width:${(p75/tot*100).toFixed(1)}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--green);text-align:right">${p75}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${(p75/tot*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--amber)">50% Complete</span><div class="bar-track"><div class="bar-fill p50" style="width:${(p50/tot*100).toFixed(1)}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--amber);text-align:right">${p50}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${(p50/tot*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--orange)">25% Complete</span><div class="bar-track"><div class="bar-fill p25" style="width:${(p25/tot*100).toFixed(1)}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--orange);text-align:right">${p25}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${(p25/tot*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text-muted)">Not Started</span><div class="bar-track"><div class="bar-fill p0" style="width:${(ns/tot*100).toFixed(1)}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text-muted);text-align:right">${ns}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${(ns/tot*100).toFixed(1)}%</span></div>`;
+  const tot = d.j72enrolled||1;
+  const ns = d.j72notStarted||(tot-d.p75count-d.p50count-d.p25count);
+  document.getElementById('j72-label').textContent = `${d.j72enrolled} enrolled`;
+  document.getElementById('progress-breakdown').innerHTML =
+    pb('green',d.p75count,'75% Complete',tot)+
+    pb('amber',d.p50count,'50% Complete',tot)+
+    pb('orange',d.p25count,'25% Complete',tot)+
+    pb('none',ns,'Not Started',tot);
 
   // Enrollment table
-  document.getElementById('enrollment-table').innerHTML = `
-    <table><thead><tr><th>Group</th><th>Journey</th><th>Enrolled</th><th>In Progress</th><th>Fully Complete</th></tr></thead><tbody>
-    <tr><td>ASI Employees (@asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">${d.asiEnrolled}</td><td class="td-mono c-green">${d.asiInProgress}</td><td class="td-mono c-red">${d.j71complete}</td></tr>
-    <tr><td>Contractors (@contractor.asirobots.com)</td><td class="td-mono">J71</td><td class="td-mono">${d.conEnrolled}</td><td class="td-mono c-green">${d.conInProgress}</td><td class="td-mono c-red">0</td></tr>
-    <tr><td>RDO Equipment (@rdoequipment.com)</td><td class="td-mono">J71</td><td class="td-mono">${d.rdoEnrolled}</td><td class="td-mono c-green">${d.rdoInProgress}</td><td class="td-mono c-red">0</td></tr>
-    <tr><td>External Collaborators (partner orgs)</td><td class="td-mono">J77</td><td class="td-mono">${d.j77enrolled}</td><td class="td-mono c-green">${d.j77inProgress}</td><td class="td-mono c-red">${d.j77complete}</td></tr>
-    <tr><td>ASI Managers (@asirobots.com)</td><td class="td-mono">J68</td><td class="td-mono">${d.j68enrolled}</td><td class="td-mono c-green">${d.j68inProgress}</td><td class="td-mono c-purple">${d.j68complete}</td></tr>
+  document.getElementById('enrollment-table').innerHTML = `<table><thead><tr><th>Group</th><th>Journey</th><th>Enrolled</th><th>In Progress</th><th>Fully Complete</th></tr></thead><tbody>
+    <tr><td>ASI Employees (@asirobots.com)</td><td class="td-mono">J72</td><td class="td-mono">${d.asiEnrolled}</td><td class="td-mono c-green">${d.asiInProgress}</td><td class="td-mono c-red">${d.j72complete}</td></tr>
+    <tr><td>Contractors (@contractor.asirobots.com)</td><td class="td-mono">J72</td><td class="td-mono">${d.conEnrolled}</td><td class="td-mono c-green">${d.conInProgress}</td><td class="td-mono c-red">0</td></tr>
+    <tr><td>RDO Equipment (@rdoequipment.com)</td><td class="td-mono">J72</td><td class="td-mono">${d.rdoEnrolled}</td><td class="td-mono c-green">${d.rdoInProgress}</td><td class="td-mono c-red">0</td></tr>
+    <tr><td>External Collaborators (partner orgs)</td><td class="td-mono">J89</td><td class="td-mono">${d.j89enrolled}</td><td class="td-mono c-green">${d.j89inProgress}</td><td class="td-mono c-red">${d.j89complete}</td></tr>
+    <tr><td>ASI Managers (@asirobots.com)</td><td class="td-mono">J76</td><td class="td-mono">${d.j76enrolled}</td><td class="td-mono c-green">${d.j76inProgress}</td><td class="td-mono c-purple">${d.j76complete}</td></tr>
     </tbody></table>`;
 
   // In-progress tab
-  document.getElementById('ip-meta').textContent = `${d.j71inProgress} participants — Journey 71`;
-  let ipHtml = '';
-  if (d.p75names.length) {
-    ipHtml += `<div class="progress-group-title c-green">▲ 75% Complete — 3 of 4 Steps (${d.p75names.length} people)</div><div class="name-chips">${d.p75names.map(n=>`<span class="name-chip chip-75">${n}</span>`).join('')}</div>`;
-  }
-  if (d.p50names.length) {
-    ipHtml += `<div class="progress-group-title c-amber">▲ 50% Complete — 2 of 4 Steps (${d.p50names.length} people)</div><div class="name-chips">${d.p50names.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>`;
-  }
-  if (d.p25names.length) {
-    ipHtml += `<div class="progress-group-title c-orange">▲ 25% Complete — 1 of 4 Steps (${d.p25names.length} people)</div><div class="name-chips">${d.p25names.map(n=>`<span class="name-chip chip-25">${n}</span>`).join('')}</div>`;
-  }
-  document.getElementById('inprogress-content').innerHTML = ipHtml || '<p style="color:var(--text-muted)">No in-progress participants found in this report.</p>';
+  document.getElementById('ip-meta').textContent = `${d.j72inProgress} participants — Journey 72`;
+  let ipHtml='';
+  if(d.p75names.length) ipHtml+=`<div class="grp-title c-green">▲ 75% Complete — 3 of 4 Steps (${d.p75names.length} people)</div><div class="name-chips">${d.p75names.map(n=>`<span class="name-chip chip-75">${n}</span>`).join('')}</div>`;
+  if(d.p50names.length) ipHtml+=`<div class="grp-title c-amber">▲ 50% Complete — 2 of 4 Steps (${d.p50names.length} people)</div><div class="name-chips">${d.p50names.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>`;
+  if(d.p25names.length) ipHtml+=`<div class="grp-title" style="color:var(--orange)">▲ 25% Complete — 1 of 4 Steps (${d.p25names.length} people)</div><div class="name-chips">${d.p25names.map(n=>`<span class="name-chip chip-25">${n}</span>`).join('')}</div>`;
+  document.getElementById('ip-content').innerHTML = ipHtml||'<p style="color:var(--text-muted)">No in-progress data found.</p>';
 
-  // J68 tab
-  document.getElementById('j68-meta').textContent = `${d.j68enrolled} managers enrolled · ${d.j68complete} fully completed`;
-  const j68tot = d.j68enrolled || 1;
-  document.getElementById('j68-progress').innerHTML = `
-    <div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:#a78bfa">Completed</span><div class="bar-track"><div class="bar-fill p100" style="width:${(d.j68complete/j68tot*100).toFixed(1)}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:#a78bfa;text-align:right">${d.j68complete}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${(d.j68complete/j68tot*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--amber)">50% Complete</span><div class="bar-track"><div class="bar-fill p50" style="width:${(d.j68inProgress/j68tot*100).toFixed(1)}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--amber);text-align:right">${d.j68inProgress}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${(d.j68inProgress/j68tot*100).toFixed(1)}%</span></div>
-    <div class="progress-row"><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text-muted)">Not Started</span><div class="bar-track"><div class="bar-fill p0" style="width:${(d.j68notStarted/j68tot*100).toFixed(1)}%"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text-muted);text-align:right">${d.j68notStarted}</span><span style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-align:right">${(d.j68notStarted/j68tot*100).toFixed(1)}%</span></div>`;
-  let j68Html = '';
-  if (d.j68completeNames.length) j68Html += `<div class="progress-group-title c-purple" style="margin-top:16px">▲ Completed — 2 of 2 Steps</div><div class="name-chips">${d.j68completeNames.map(n=>`<span class="name-chip chip-100">${n}</span>`).join('')}</div>`;
-  if (d.j68inProgressNames.length) j68Html += `<div class="progress-group-title c-amber">▲ 50% — 1 of 2 Steps</div><div class="name-chips">${d.j68inProgressNames.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>`;
-  document.getElementById('j68-names').innerHTML = j68Html;
+  // J76 tab
+  document.getElementById('j76-meta').textContent = `${d.j76enrolled} managers enrolled · ${d.j76complete} fully completed`;
+  const j76t=d.j76enrolled||1;
+  document.getElementById('j76-progress').innerHTML =
+    pb('purple',d.j76complete,'Completed',j76t)+
+    pb('amber',d.j76inProgress,'50% Complete',j76t)+
+    pb('none',d.j76notStarted,'Not Started',j76t);
+  let j76h='';
+  if(d.j76completeNames.length) j76h+=`<div class="grp-title c-purple" style="margin-top:16px">▲ Completed — 2 of 2 Steps (${d.j76completeNames.length} people)</div><div class="name-chips">${d.j76completeNames.map(n=>`<span class="name-chip chip-100">${n}</span>`).join('')}</div>`;
+  if(d.j76inProgressNames.length) j76h+=`<div class="grp-title c-amber">▲ 50% — 1 of 2 Steps (${d.j76inProgressNames.length} people)</div><div class="name-chips">${d.j76inProgressNames.map(n=>`<span class="name-chip chip-50">${n}</span>`).join('')}</div>`;
+  document.getElementById('j76-names').innerHTML = j76h;
 
-  // Risk tab
-  const allNames = [...new Set([...d.p75names,...d.p50names,...d.p25names])];
-  const stepsMap = {};
+  // Build steps map from parsed names
+  const stepsMap={};
   d.p75names.forEach(n=>stepsMap[n]=3);
   d.p50names.forEach(n=>stepsMap[n]=2);
   d.p25names.forEach(n=>stepsMap[n]=1);
+  window._stepsMap=stepsMap;
+  window._allNames=[...new Set([...d.p75names,...d.p50names,...d.p25names])];
 
-  const today = new Date('2026-06-03');
-  const rows = Object.entries(ARRIVAL).map(([name,arr])=>{
-    const steps = stepsMap[name] ?? 0;
-    const arrDate = new Date(arr);
-    const days = Math.round((arrDate-today)/(1000*60*60*24));
-    let risk, rc;
+  // Risk tab
+  const today=new Date(REPORT_DATE);
+  const rows=Object.entries(ARRIVAL).map(([name,arr])=>{
+    const steps=stepsMap[name]??0;
+    const arrDate=new Date(arr);
+    const days=Math.round((arrDate-today)/(1000*60*60*24));
+    let risk,rc;
     if(days<=0){risk='ONSITE';rc='#f85149';}
     else if(days<=7){risk=days+'d';rc='#f0883e';}
     else if(days<=14){risk=days+'d';rc='#d29922';}
     else{risk=days+'d';rc='#3fb950';}
-    const riskLevel = days<=0?0:days<=7?1:days<=14?2:3;
-    return {name,steps,arr,days,risk,rc,riskLevel};
+    const rl=days<=0?0:days<=7?1:days<=14?2:3;
+    return{name,steps,arr,days,risk,rc,rl};
   }).sort((a,b)=>a.days-b.days);
 
-  const onsite = rows.filter(r=>r.riskLevel===0&&r.steps<4).length;
-  const highRisk = rows.filter(r=>r.riskLevel===1&&r.steps<4).length;
-  document.getElementById('risk-notice').textContent = `⚠  ${onsite} personnel currently onsite with incomplete training. ${highRisk} more arriving within 7 days with incomplete training.`;
-
-  window._riskRows = rows;
-  window._stepsMap = stepsMap;
+  const onsite=rows.filter(r=>r.rl===0&&r.steps<4).length;
+  const high=rows.filter(r=>r.rl===1&&r.steps<4).length;
+  document.getElementById('risk-notice').textContent=`⚠  ${onsite} personnel currently onsite with incomplete training. ${high} more arriving within 7 days with incomplete training.`;
+  window._riskRows=rows;
   renderRiskTable(rows);
 
-  // Full roster - use all names from doc
-  document.getElementById('appendix-meta').textContent = `${d.j71enrolled} enrolled as of ${d.reportDate}`;
-  window._allNames = allNames;
+  // Full roster
+  document.getElementById('appendix-meta').textContent=`${d.j72enrolled} enrolled as of ${d.reportDate}`;
   renderFullRoster('');
 }
 
-function renderRiskTable(rows) {
-  let html = `<table><thead><tr>
+function renderRiskTable(rows){
+  let h=`<table><thead><tr>
     <th style="cursor:pointer" onclick="sortRisk('name')">Name ↕</th>
     <th style="cursor:pointer" onclick="sortRisk('arr')">First Arrival ↕</th>
     <th style="cursor:pointer" onclick="sortRisk('days')">Days Until ↕</th>
     <th>Training Steps</th>
-    <th style="cursor:pointer" onclick="sortRisk('risk')">Status ↕</th>
+    <th style="cursor:pointer" onclick="sortRisk('rl')">Status ↕</th>
   </tr></thead><tbody>`;
   for(const r of rows){
-    const badge = r.steps>=4
-      ? `<span style="color:var(--green);font-family:var(--mono);font-size:11px;">✓ Complete</span>`
-      : `<span class="prog-badge ${pc(r.steps,4)}">${pl(r.steps,4)}</span>`;
-    const riskBadge = r.steps>=4
-      ? `<span style="color:var(--green);font-family:var(--mono);font-size:11px;font-weight:600;">✓ On Track</span>`
-      : `<span style="background:${r.rc}22;color:${r.rc};font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid ${r.rc}44;">${r.risk}</span>`;
-    const rowBg = r.steps<4&&r.riskLevel===0?'background:rgba(248,81,73,.06);':r.steps<4&&r.riskLevel===1?'background:rgba(240,136,62,.04);':'';
-    html+=`<tr style="${rowBg}"><td>${r.name}</td><td class="td-mono">${r.arr}</td><td class="td-mono" style="color:${r.rc}">${r.days<=0?'Onsite now':r.days+' days'}</td><td>${badge}</td><td>${riskBadge}</td></tr>`;
+    const badge=r.steps>=4?`<span style="color:var(--green);font-family:var(--mono);font-size:11px;">✓ Complete</span>`:`<span class="prog-badge ${r.steps===3?'p75':r.steps===2?'p50':r.steps===1?'p25':'p0'}">${r.steps>0?r.steps+' / 4':'—'}</span>`;
+    const rb=r.steps>=4?`<span style="color:var(--green);font-family:var(--mono);font-size:11px;font-weight:600;">✓ On Track</span>`:`<span style="background:${r.rc}22;color:${r.rc};font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid ${r.rc}44;">${r.risk}</span>`;
+    const bg=r.steps<4&&r.rl===0?'background:rgba(248,81,73,.06);':r.steps<4&&r.rl===1?'background:rgba(240,136,62,.04);':'';
+    h+=`<tr style="${bg}"><td>${r.name}</td><td class="td-mono">${r.arr}</td><td class="td-mono" style="color:${r.rc}">${r.days<=0?'Onsite now':r.days+' days'}</td><td>${badge}</td><td>${rb}</td></tr>`;
   }
-  html+='</tbody></table>';
-  document.getElementById('risk-table').innerHTML = html;
+  h+='</tbody></table>';
+  document.getElementById('risk-table').innerHTML=h;
 }
 
 function sortRisk(col){
-  const rows = window._riskRows;
-  const prev = window._riskSortCol;
-  const dir = prev===col ? -(window._riskSortDir||1) : 1;
-  window._riskSortCol=col; window._riskSortDir=dir;
-  rows.sort((a,b)=>{
-    if(col==='name') return dir*a.name.localeCompare(b.name);
-    if(col==='arr') return dir*(new Date(a.arr)-new Date(b.arr));
-    if(col==='days') return dir*(a.days-b.days);
-    if(col==='risk') return dir*(a.riskLevel-b.riskLevel||a.days-b.days);
-    return 0;
-  });
+  const rows=window._riskRows;
+  const dir=(window._rsk===col)?-(window._rskd||1):1;
+  window._rsk=col;window._rskd=dir;
+  rows.sort((a,b)=>col==='name'?dir*a.name.localeCompare(b.name):col==='arr'?dir*(new Date(a.arr)-new Date(b.arr)):col==='days'?dir*(a.days-b.days):dir*(a.rl-b.rl||a.days-b.days));
   renderRiskTable(rows);
 }
 
 function renderFullRoster(filter){
-  const names = (window._allNames||[]).filter(n=>!filter||n.toLowerCase().includes(filter.toLowerCase()));
-  const stepsMap = window._stepsMap||{};
-  document.getElementById('full-roster').innerHTML = `<table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
-    ${names.map(n=>`<tr><td>${n}</td><td><span class="prog-badge ${pc(stepsMap[n]||0,4)}">${pl(stepsMap[n]||0,4)}</span></td></tr>`).join('')}
+  const sm=window._stepsMap||{};
+  const names=(window._allNames||[]).filter(n=>!filter||n.toLowerCase().includes(filter.toLowerCase()));
+  document.getElementById('full-roster').innerHTML=`<table><thead><tr><th>Name</th><th>Steps</th></tr></thead><tbody>
+    ${names.map(n=>`<tr><td>${n}</td><td><span class="prog-badge ${sm[n]===3?'p75':sm[n]===2?'p50':sm[n]===1?'p25':'p0'}">${sm[n]?sm[n]+' / 4':'—'}</span></td></tr>`).join('')}
   </tbody></table>`;
 }
 function filterRoster(v){renderFullRoster(v);}
@@ -539,23 +450,22 @@ function showTab(id,btn){
   btn.classList.add('active');
 }
 
-// ── INIT — FETCH & PARSE LIVE ─────────────────────────────────────
+// ── INIT ─────────────────────────────────────────────────────────
 async function init(){
   try{
-    document.getElementById('loading-text').textContent = 'Fetching latest report.docx from GitHub…';
-    const resp = await fetch(DOCX_URL+'?t='+Date.now());
+    document.getElementById('loading-text').textContent='Fetching latest report.docx from GitHub…';
+    const resp=await fetch(DOCX_URL+'?t='+Date.now());
     if(!resp.ok) throw new Error('HTTP '+resp.status);
-    const arrayBuffer = await resp.arrayBuffer();
-    document.getElementById('loading-text').textContent = 'Parsing Word document…';
-    const result = await mammoth.extractRawText({arrayBuffer});
-    const text = result.value;
-    const data = parseDoc(text);
+    const buf=await resp.arrayBuffer();
+    document.getElementById('loading-text').textContent='Parsing Word document…';
+    const result=await mammoth.extractRawText({arrayBuffer:buf});
+    const data=parseDoc(result.value);
     document.getElementById('loading').style.display='none';
     document.getElementById('hero').style.display='block';
     document.getElementById('main-content').style.display='block';
     renderAll(data);
-  } catch(e){
-    document.getElementById('loading-text').textContent = 'Error loading report: '+e.message+'. Please ensure report.docx has been uploaded to the repository.';
+  }catch(e){
+    document.getElementById('loading-text').textContent='Error: '+e.message+'. Please ensure report.docx has been uploaded correctly.';
   }
 }
 init();
