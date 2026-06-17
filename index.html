@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Southridge Site Certification — Training Journey Report</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <style>
 :root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2230;--border:#21262d;--border-bright:#30363d;--text:#e6edf3;--text-muted:#7d8590;--text-dim:#484f58;--accent:#f0a500;--accent2:#58a6ff;--green:#3fb950;--amber:#d29922;--orange:#f0883e;--red:#f85149;--asi-blue:#1e6fd9;--purple:#a78bfa;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -554,6 +555,135 @@ document.getElementById('j76-complete-chips').innerHTML=chips(J76_COMPLETE,'chip
 document.getElementById('j76-50-chips').innerHTML=chips(J76_50,'chip-50');
 document.getElementById('lii-complete-chips').innerHTML=chips(LII_COMPLETE,'chip-lii');
 document.getElementById('j89-org-grid').innerHTML=J89_ORGS.map(org=>`<div class="org-card"><div class="org-name">${org.name} <span style="color:var(--text-muted);font-size:10px">(${org.members.length})</span></div>${org.members.map(m=>`<div class="org-member"><span>${m.n}</span><span class="badge ${m.s===4?'b100':m.s===3?'b75':m.s===1?'b25':'b0'}">${m.s===4?'✓ Done':m.s===3?'75%':m.s===1?'25%':'—'}</span></div>`).join('')}</div>`).join('');
+// ── LIVE PARSE FROM BEN'S REPORT.DOCX ────────────────────────────
+const DOCX_URL='https://raw.githubusercontent.com/autonomousservices/southridge-cert-report/main/report.docx';
+
+function getNum(text,pattern){const m=text.match(pattern);return m?parseInt(m[1].replace(/,/g,'')):null;}
+
+function parseAndUpdate(text){
+  try{
+    // Report date
+    const dm=text.match(/Report Date:\s*([^\|]+)\|/);
+    if(dm){
+      const rd=dm[1].trim();
+      document.querySelector('.report-meta').innerHTML=`Report Date: <span>${rd}</span><br>Live from Bridge Export`;
+      document.querySelector('.hero-sub strong').textContent=rd;
+    }
+
+    // J72 summary stats
+    const j72e=getNum(text,/\*\*(\d+)\*\*\s*Total Enrolled \(J72\)/);
+    const j72c=getNum(text,/\*\*(\d+)\*\*\s*Fully Completed[\s\S]{0,10}\|[\s\S]{0,10}\*\*(\d+)\*\*\s*In Progress[\s\S]{0,10}\|[\s\S]{0,10}\*\*(\d+)\*\*\s*Not Yet Started[\s\S]{0,5}\(J72\)/)||getNum(text,/\| \*\*(\d+)\*\* Fully Completed \|/);
+    const j72ip=getNum(text,/\*\*(\d+)\*\* In Progress \|[\s\S]{0,10}\*\*\d+\*\* Not Yet Started[\s\S]{0,5}\(J72\)/);
+    const j72ns=getNum(text,/\*\*(\d+)\*\* Not Yet Started[\s\S]{0,5}\(J72\)/);
+
+    // J76
+    const j76e=getNum(text,/\*\*(\d+)\*\*\s*Total Enrolled \(J76\)/);
+    const j76c=getNum(text,/Completed[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,5}25\.8%/);
+    const j76ip=getNum(text,/50% complete[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,5}9\.0%/)||getNum(text,/\*\*8\*\* In Progress \(1\/2 steps\)/);
+
+    // J89
+    const j89e=getNum(text,/\*\*(\d+)\*\*\s*Total Enrolled \(J89\)/);
+    const j89c=getNum(text,/\*\*(\d+)\*\*\s*Fully Completed[\s\S]{0,10}\*\*\d+\*\*\s*In Progress[\s\S]{0,10}\(J89\)/);
+
+    // Level II
+    const liie=getNum(text,/\*\*(\d+)\*\* Total Enrolled \| \*\*(\d+)\*\* Fully Completed \(3\/3\)/);
+    const liic=getNum(text,/\*\*(\d+)\*\*\s*Fully Completed \(3\/3\)/);
+    const liip=getNum(text,/\*\*(\d+)\*\*\s*In Progress \(1.2\/3\)/);
+
+    // Progress breakdown
+    const p100=getNum(text,/\| \*\*Completed\*\* \| \*\*(\d+)\*\* \|[\s\S]{0,10}6\.7%/);
+    const p75=getNum(text,/\*\*75% complete\*\*[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,10}21\.8%/)||getNum(text,/\| \*\*75% complete\*\* \| \*\*(\d+)\*\*/);
+    const p50=getNum(text,/\*\*50% complete\*\*[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,10}4\.5%/)||getNum(text,/\| \*\*50% complete\*\* \| \*\*(\d+)\*\*/);
+    const p25=getNum(text,/\*\*25% complete\*\*[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,10}2\.9%/)||getNum(text,/\| \*\*25% complete\*\* \| \*\*(\d+)\*\*/);
+
+    // Names — extract from in-progress sections
+    function extractNames(startMarker,endMarker){
+      const si=text.indexOf(startMarker);
+      if(si===-1)return null;
+      const ei=endMarker?text.indexOf(endMarker,si+startMarker.length):-1;
+      const section=text.substring(si,ei>si?ei:si+5000);
+      const names=[];
+      for(const line of section.split('\n')){
+        const c=line.trim().replace(/\|/g,'').replace(/\*\*/g,'').trim();
+        if(!c||c.length<3)continue;
+        if(/^(Name|Step|Progress|These|The |This|All |No |Journey|---|Completed|75%|50%|25%|\d)/.test(c))continue;
+        if(/^[A-Z][a-zA-ZÀ-ÿ\-'\.]+(\s[A-Z][a-zA-ZÀ-ÿ\-'\.()]+){1,4}$/.test(c))names.push(c);
+      }
+      return [...new Set(names)];
+    }
+
+    const live100=extractNames('Completed — 4 of 4 Steps','75% Complete — 3 of 4 Steps');
+    const live75=extractNames('75% Complete — 3 of 4 Steps','50% Complete — 2 of 4 Steps');
+    const live50=extractNames('50% Complete — 2 of 4 Steps','25% Complete — 1 of 4 Steps');
+    const live25=extractNames('25% Complete — 1 of 4 Steps','Southridge Collaborator Site Certification — In-Progress');
+    const livej76c=extractNames('Completed — 2 of 2 Steps','50% Complete — 1 of 2 Steps');
+    const livej76ip=extractNames('50% Complete — 1 of 2 Steps (','Level III Collaborator');
+    const liveLIIc=extractNames('Level II Safety Certification — Completed Participants','Level II Safety Certification — Full Enrollment List');
+
+    // Update stat cards
+    const updates={
+      j72e,j72ip,p100,p75,p50,p25,j76e,j76c,j76ip,j89e,j89c,liie,liic
+    };
+
+    // Update hero stat cards if we got numbers
+    if(j72e) document.querySelector('.stat-card.hl .stat-value').textContent=j72e;
+    if(p100!=null) document.querySelector('.stat-card.hl3 .stat-value').textContent=p100||0;
+    if(j72ip) document.querySelector('.stat-grid .stat-card:nth-child(3) .stat-value').textContent=j72ip;
+    if(j76e) document.querySelector('.stat-card.hl2 .stat-value').textContent=j76e;
+
+    // Update progress bars
+    const tot=j72e||449;
+    if(p100!=null){
+      const bars=document.querySelectorAll('#tab-overview .prow');
+      if(bars.length>=5){
+        const vals=[p100||0,p75||0,p50||0,p25||0,(j72ns||(tot-(p100||0)-(p75||0)-(p50||0)-(p25||0)))];
+        const colors=['var(--purple)','var(--green)','var(--amber)','var(--orange)','var(--border-bright)'];
+        bars.forEach((row,i)=>{
+          if(i<5){
+            const fill=row.querySelector('.bar-fill');
+            const valEl=row.querySelectorAll('span')[2];
+            const pctEl=row.querySelectorAll('span')[3];
+            if(fill){fill.style.width=(vals[i]/tot*100).toFixed(1)+'%';}
+            if(valEl)valEl.textContent=vals[i];
+            if(pctEl)pctEl.textContent=(vals[i]/tot*100).toFixed(1)+'%';
+          }
+        });
+      }
+    }
+
+    // Update name chips if parsed
+    if(live100&&live100.length>0){document.getElementById('j72-complete-chips').innerHTML=chips(live100,'chip-100');}
+    if(live75&&live75.length>0){document.getElementById('j72-75-chips').innerHTML=chips(live75,'chip-75');}
+    if(live50&&live50.length>0){document.getElementById('j72-50-chips').innerHTML=chips(live50,'chip-50');}
+    if(live25&&live25.length>0){document.getElementById('j72-25-chips').innerHTML=chips(live25,'chip-25');}
+    if(livej76c&&livej76c.length>0){document.getElementById('j76-complete-chips').innerHTML=chips(livej76c,'chip-100');}
+    if(livej76ip&&livej76ip.length>0){document.getElementById('j76-50-chips').innerHTML=chips(livej76ip,'chip-50');}
+    if(liveLIIc&&liveLIIc.length>0){document.getElementById('lii-complete-chips').innerHTML=chips(liveLIIc,'chip-lii');}
+
+    // Update tab labels
+    if(j72ip)document.querySelector('[onclick="showTab(\'j72\',this)"]').textContent=`J72 Progress (${j72e||449})`;
+    if(j76e)document.querySelector('[onclick="showTab(\'j76\',this)"]').textContent=`Level III J76 (${j76e})`;
+    if(j89e)document.querySelector('[onclick="showTab(\'j89\',this)"]').textContent=`Collaborators J89 (${j89e})`;
+
+    console.log('Live parse successful. J72 enrolled:',j72e,'completed:',p100,'75%:',p75);
+  } catch(err){
+    console.warn('Live parse error:',err);
+  }
+}
+
+async function init(){
+  try{
+    const resp=await fetch(DOCX_URL+'?t='+Date.now());
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    const buf=await resp.arrayBuffer();
+    const result=await mammoth.extractRawText({arrayBuffer:buf});
+    parseAndUpdate(result.value);
+  } catch(e){
+    console.warn('Could not load live report:',e.message);
+  }
+}
+init();
+
 renderJ72NotStarted();
 renderLevelII();
 renderJ76NotStarted();
