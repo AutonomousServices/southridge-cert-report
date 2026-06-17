@@ -570,46 +570,44 @@ function parseAndUpdate(text){
       document.querySelector('.hero-sub strong').textContent=rd;
     }
 
-    // J72 summary stats
-    const j72e=getNum(text,/\*\*(\d+)\*\*\s*Total Enrolled \(J72\)/);
-    const j72c=getNum(text,/\*\*(\d+)\*\*\s*Fully Completed[\s\S]{0,10}\|[\s\S]{0,10}\*\*(\d+)\*\*\s*In Progress[\s\S]{0,10}\|[\s\S]{0,10}\*\*(\d+)\*\*\s*Not Yet Started[\s\S]{0,5}\(J72\)/)||getNum(text,/\| \*\*(\d+)\*\* Fully Completed \|/);
-    const j72ip=getNum(text,/\*\*(\d+)\*\* In Progress \|[\s\S]{0,10}\*\*\d+\*\* Not Yet Started[\s\S]{0,5}\(J72\)/);
-    const j72ns=getNum(text,/\*\*(\d+)\*\* Not Yet Started[\s\S]{0,5}\(J72\)/);
+    // J72 summary stats — patterns verified against actual doc format
+    const j72e=getNum(text,/\*\*(\d+)\*\* Total Enrolled \(J72\)/);
+    const j72c=getNum(text,/\*\*(\d+)\*\* Fully Completed \|/);
+    const j72ip=getNum(text,/\*\*(\d+)\*\* In Progress \|/);
+    const j72ns=getNum(text,/\*\*(\d+)\*\* Not Yet Started \|/);
 
     // J76
-    const j76e=getNum(text,/\*\*(\d+)\*\*\s*Total Enrolled \(J76\)/);
-    const j76c=getNum(text,/Completed[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,5}25\.8%/);
-    const j76ip=getNum(text,/50% complete[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,5}9\.0%/)||getNum(text,/\*\*8\*\* In Progress \(1\/2 steps\)/);
+    const j76e=getNum(text,/\*\*(\d+)\*\* Total Enrolled \(J76\)/);
 
     // J89
-    const j89e=getNum(text,/\*\*(\d+)\*\*\s*Total Enrolled \(J89\)/);
-    const j89c=getNum(text,/\*\*(\d+)\*\*\s*Fully Completed[\s\S]{0,10}\*\*\d+\*\*\s*In Progress[\s\S]{0,10}\(J89\)/);
+    const j89e=getNum(text,/\*\*(\d+)\*\* Total Enrolled \(J89\)/);
 
     // Level II
-    const liie=getNum(text,/\*\*(\d+)\*\* Total Enrolled \| \*\*(\d+)\*\* Fully Completed \(3\/3\)/);
-    const liic=getNum(text,/\*\*(\d+)\*\*\s*Fully Completed \(3\/3\)/);
-    const liip=getNum(text,/\*\*(\d+)\*\*\s*In Progress \(1.2\/3\)/);
+    const liie=getNum(text,/\*\*(\d+)\*\* Total Enrolled \| \*\*\d+\*\* Fully Completed \(3\/3\)/);
+    const liic=getNum(text,/\*\*(\d+)\*\* Fully Completed \(3\/3\)/);
 
-    // Progress breakdown
-    const p100=getNum(text,/\| \*\*Completed\*\* \| \*\*(\d+)\*\* \|[\s\S]{0,10}6\.7%/);
-    const p75=getNum(text,/\*\*75% complete\*\*[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,10}21\.8%/)||getNum(text,/\| \*\*75% complete\*\* \| \*\*(\d+)\*\*/);
-    const p50=getNum(text,/\*\*50% complete\*\*[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,10}4\.5%/)||getNum(text,/\| \*\*50% complete\*\* \| \*\*(\d+)\*\*/);
-    const p25=getNum(text,/\*\*25% complete\*\*[\s\S]{0,5}\*\*(\d+)\*\*[\s\S]{0,10}2\.9%/)||getNum(text,/\| \*\*25% complete\*\* \| \*\*(\d+)\*\*/);
+    // Progress breakdown — patterns verified, NOT anchored to hardcoded percentages
+    const p100=getNum(text,/\| \*\*Completed\*\* \| \*\*(\d+)\*\* \|/);
+    const p75=getNum(text,/\| \*\*75% complete\*\* \| \*\*(\d+)\*\* \|/);
+    const p50=getNum(text,/\| \*\*50% complete\*\* \| \*\*(\d+)\*\* \|/);
+    const p25=getNum(text,/\| \*\*25% complete\*\* \| \*\*(\d+)\*\* \|/);
 
-    // Names — extract from in-progress sections
+    // Names — table-based extractor (names are in | Name1 | Name2 | format)
     function extractNames(startMarker,endMarker){
       const si=text.indexOf(startMarker);
-      if(si===-1)return null;
+      if(si===-1)return[];
       const ei=endMarker?text.indexOf(endMarker,si+startMarker.length):-1;
-      const section=text.substring(si,ei>si?ei:si+5000);
+      const section=text.substring(si,ei>si?ei:si+6000);
       const names=[];
       for(const line of section.split('\n')){
-        const c=line.trim().replace(/\|/g,'').replace(/\*\*/g,'').trim();
-        if(!c||c.length<3)continue;
-        if(/^(Name|Step|Progress|These|The |This|All |No |Journey|---|Completed|75%|50%|25%|\d)/.test(c))continue;
-        if(/^[A-Z][a-zA-ZÀ-ÿ\-'\.]+(\s[A-Z][a-zA-ZÀ-ÿ\-'\.()]+){1,4}$/.test(c))names.push(c);
+        if(line.indexOf('|')===-1||line.indexOf('---')!==-1)continue;
+        const parts=line.split('|').map(p=>p.trim().replace(/\*\*/g,'').trim());
+        for(const p of parts){
+          if(!p||p.length<3)continue;
+          if(/^[A-Z][a-zA-ZÀ-ÿ\-'\.]+(\s[A-Z][a-zA-ZÀ-ÿ\-'\.()]+){1,4}$/.test(p))names.push(p);
+        }
       }
-      return [...new Set(names)];
+      return[...new Set(names)];
     }
 
     const live100=extractNames('Completed — 4 of 4 Steps','75% Complete — 3 of 4 Steps');
@@ -621,15 +619,11 @@ function parseAndUpdate(text){
     const liveLIIc=extractNames('Level II Safety Certification — Completed Participants','Level II Safety Certification — Full Enrollment List');
 
     // Update stat cards
-    const updates={
-      j72e,j72ip,p100,p75,p50,p25,j76e,j76c,j76ip,j89e,j89c,liie,liic
-    };
-
-    // Update hero stat cards if we got numbers
-    if(j72e) document.querySelector('.stat-card.hl .stat-value').textContent=j72e;
-    if(p100!=null) document.querySelector('.stat-card.hl3 .stat-value').textContent=p100||0;
-    if(j72ip) document.querySelector('.stat-grid .stat-card:nth-child(3) .stat-value').textContent=j72ip;
-    if(j76e) document.querySelector('.stat-card.hl2 .stat-value').textContent=j76e;
+    if(j72e!=null)document.querySelector('.stat-card.hl .stat-value').textContent=j72e;
+    if(p100!=null){document.querySelector('.stat-card.hl3 .stat-value').textContent=p100;document.querySelector('.stat-card.hl3 .stat-sub').textContent=`All 4 steps done · ${(p100/(j72e||449)*100).toFixed(1)}%`;}
+    if(j72ip!=null)document.querySelectorAll('.stat-grid .stat-card')[2].querySelector('.stat-value').textContent=j72ip;
+    if(j76e!=null)document.querySelector('.stat-card.hl2 .stat-value').textContent=j76e;
+    if(liie!=null)document.querySelectorAll('.stat-grid .stat-card')[5].querySelector('.stat-value').textContent=liie;
 
     // Update progress bars
     const tot=j72e||449;
@@ -665,7 +659,7 @@ function parseAndUpdate(text){
     if(j76e)document.querySelector('[onclick="showTab(\'j76\',this)"]').textContent=`Level III J76 (${j76e})`;
     if(j89e)document.querySelector('[onclick="showTab(\'j89\',this)"]').textContent=`Collaborators J89 (${j89e})`;
 
-    console.log('Live parse successful. J72 enrolled:',j72e,'completed:',p100,'75%:',p75);
+    console.log('✓ Live parse OK — J72:',j72e,'completed:',p100,'75%:',p75,'50%:',p50,'25%:',p25);
   } catch(err){
     console.warn('Live parse error:',err);
   }
